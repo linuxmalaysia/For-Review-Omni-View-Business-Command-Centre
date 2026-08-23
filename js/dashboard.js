@@ -1,53 +1,4 @@
 let stockChart;
-/*async function loadMonthlyGMV() {
-    const now = new Date();
-
-    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
-    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
-    const lastmonthLabel = startOfLastMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
-    document.getElementById('monthly-gmv-label').textContent = `GMV amount (${lastmonthLabel})`;
-
-    const { data,error } = await supabaseClient
-        .from('Live')
-        .select('gmv_amount')
-        .gte('session_date',startOfLastMonth.toISOString())
-        .lte('session_date',endOfLastMonth.toISOString());
-
-    if (error) {
-        console.error('Error fetching monthly GMV:', error);
-        return;
-    }
-
-    const totalGMV = data.reduce((sum, record) => sum + Number(record.gmv_amount||0), 0);
-
-    document.getElementById('monthly-gmv').textContent = `RM${totalGMV.toFixed(2)}`;
-}
-
-async function loadMonthlyItemsSold() {
-    const now = new Date();
-
-    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
-    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
-    const lastmonthLabel = startOfLastMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
-    document.getElementById('monthly-item-sold-label').textContent = `Items Sold (${lastmonthLabel})`;
-
-    const { data,error } = await supabaseClient
-        .from('Live')
-        .select('items_sold')
-        .gte('session_date',startOfLastMonth.toISOString())
-        .lte('session_date',endOfLastMonth.toISOString());
-
-    if (error) {
-        console.error('Error fetching monthly items sold:', error);
-        return;
-    }
-
-    const totalItemsSold = data.reduce((sum, record) => sum + Number(record.items_sold||0), 0);
-
-    document.getElementById('monthly-item-sold').textContent = `${totalItemsSold}`;
-}*/
 async function loaddailyGMV() {
     const now = new Date();
     const { data,error } = await supabaseClient
@@ -135,20 +86,22 @@ async function loadstock(){
 
 async function loadTopEmployees() {
     const date = new Date();
-    const month = date.getMonth() + 1; // Months are zero-based
-    const year = date.getFullYear();
+
+    const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+    const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 1); // JS Date auto-rolls Dec -> next Jan
+
+    const formatDate = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    };
 
     const { data, error } = await supabaseClient
         .from('employee_gmv_summary')
         .select('employee_id, total_gmv')
-        .gte(
-            'session_date',
-            `${year}-${month.toString().padStart(2, '0')}-01`
-        )
-        .lt(
-            'session_date',
-            `${year}-${(month + 1).toString().padStart(2, '0')}-01`
-        );
+        .gte('session_date', formatDate(startDate))
+        .lt('session_date', formatDate(endDate));
 
     if (error) {
         console.error('Error fetching top employees:', error);
