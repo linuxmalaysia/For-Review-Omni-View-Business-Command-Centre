@@ -1,5 +1,19 @@
 let productTable;
 
+function setTableSortLock(locked, tableSelector) {
+    const wrapper = document.querySelector(tableSelector);
+    if (!wrapper) return;
+    const thead = wrapper.querySelector('thead');
+    const paginate = wrapper.closest('.dataTables_wrapper')?.querySelector('.dataTables_paginate');
+
+    [thead, paginate].forEach(el => {
+        if (!el) return;
+        el.style.pointerEvents = locked ? 'none' : '';
+        el.style.opacity = locked ? '0.6' : '';
+        el.style.cursor = locked ? 'not-allowed' : '';
+    });
+}
+
 async function loadProducts() {
 
     const{data,error}=await supabaseClient
@@ -83,39 +97,37 @@ async function deleteProduct(ProductId) {
 }
 
 async function editProduct(button, ProductId) {
-
-    const row = productTable.row(button.closest('tr'));
+    const tr = button.closest('tr');
+    const row = productTable.row(tr);
     const data = row.data();
 
-    if(!row) {
+    if (!row || !data) {
         console.error('Row not found for Product ID:', ProductId);
         return;
     }
 
-    row.data([
-        data[0],
+    const cells = tr.querySelectorAll('td');
 
-        `<input type="text" class="form-control"
-                value="${data[1]}">`,
-
-        `<input type="text" class="form-control"
-                value="${data[2]}">`,
-
-        `<input type="number" class="form-control"
-                value="${data[3]}">`,
-
-        `
+    cells[1].innerHTML = `<input type="text" class="form-control" value="${data[1]}">`;
+    cells[2].innerHTML = `<input type="text" class="form-control" value="${data[2]}">`;
+    cells[3].innerHTML = `<input type="number" class="form-control" value="${data[3]}">`;
+    cells[4].innerHTML = `
         <button class="btn btn-success btn-sm"
             onclick="confirmEdit(this, '${ProductId}')">
             <i class="bi bi-check"></i> Confirm
         </button>
-
         <button class="btn btn-secondary btn-sm"
-            onclick="loadProducts()">
+            onclick="cancelEditProduct()">
             <i class="bi bi-x"></i> Cancel
         </button>
-        `
-    ]).draw(false);
+    `;
+
+    setTableSortLock(true);
+}
+
+function cancelEditProduct() {
+    setTableSortLock(false);
+    loadProducts();
 }
 
 async function confirmEdit(button, ProductId) {
@@ -160,6 +172,7 @@ async function confirmEdit(button, ProductId) {
 
     alert("Product updated successfully!");
 
+    setTableSortLock(false);
     loadProducts();
 }
 
