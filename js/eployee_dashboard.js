@@ -32,7 +32,7 @@ async function loaddaily() {
         return;
     }
 
-    if (!profile || profile.length === 0) {
+    if (!profile) {
         console.error("Employee profile not found.");
         return;
     }
@@ -54,13 +54,14 @@ async function loaddaily() {
     const total_gmv = today.reduce((sum, session) => sum + (session.gmv_amount || 0), 0);
     const total_views = today.reduce((sum, session) => sum + (session.views || 0), 0);
 
-    if(total_gmv>0 && total_views>0){
-        
-        today_sales=document.getElementById('todaysales');
-        today_live_views=document.getElementById('todayliveviews');
+    const todaySalesEl = document.getElementById('todaysales');
+    const todayViewsEl = document.getElementById('todayliveviews');
 
-        today_sales.textContent = total_gmv;
-        today_live_views.textContent = total_views;
+    if (todaySalesEl) {
+        todaySalesEl.textContent = `RM${total_gmv.toFixed(2)}`;
+    }
+    if (todayViewsEl) {
+        todayViewsEl.textContent = `${total_views}`;
     }
 }
 

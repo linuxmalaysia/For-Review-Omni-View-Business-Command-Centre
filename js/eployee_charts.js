@@ -37,7 +37,7 @@ async function loadcharts(){
         return;
     }
 
-    if (!profile || profile.length === 0) {
+    if (!profile) {
         console.error("Employee profile not found.");
         return;
     }

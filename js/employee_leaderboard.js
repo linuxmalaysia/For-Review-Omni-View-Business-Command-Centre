@@ -45,7 +45,7 @@ async function loadLeaderboard() {
         .from('profiles')
         .select('*')
         .eq('email', user.email)
-        .limit(1);
+        .single();
 
 
     if (currentProfileError) {
@@ -58,7 +58,7 @@ async function loadLeaderboard() {
     }
 
 
-    if (!currentProfile ||currentProfile.length === 0) {
+    if (!currentProfile) {
 
         showLeaderboardError("Employee profile was not found.");
 
