@@ -9,31 +9,30 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     const togglePassword = document.querySelector('#togglePassword');
     const togglePasswordIcon = togglePassword ? togglePassword.querySelector('i') : null;
-    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-    const toggleConfirmPasswordIcon = toggleConfirmPassword ? toggleConfirmPassword.querySelector('i') : null;
 
-    // Toggle password visibility
-    if(!togglePassword || !toggleConfirmPassword|| !togglePasswordIcon || !toggleConfirmPasswordIcon) {
-        console.error("Toggle password elements not found.");
-        return;
-    }
-
-    if (togglePassword) {
+    if (togglePassword && togglePasswordIcon && newPassword) {
         togglePassword.addEventListener('click', () => {
             const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
             newPassword.setAttribute('type', type);
             togglePasswordIcon.classList.toggle('bi-eye');
             togglePasswordIcon.classList.toggle('bi-eye-slash');
         });
+    } else {
+        console.warn('Password toggle not available.');
     }
 
-    if (toggleConfirmPassword) {
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const toggleConfirmPasswordIcon = toggleConfirmPassword ? toggleConfirmPassword.querySelector('i') : null;
+    
+    if (toggleConfirmPassword && toggleConfirmPasswordIcon && confirmPassword) {
         toggleConfirmPassword.addEventListener('click', () => {
             const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
             confirmPassword.setAttribute('type', type);
             toggleConfirmPasswordIcon.classList.toggle('bi-eye');
             toggleConfirmPasswordIcon.classList.toggle('bi-eye-slash');
         });
+    } else {
+        console.warn('Confirm-password toggle not available.');
     }
 
     function showMessage(text, type = "danger") {
