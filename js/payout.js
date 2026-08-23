@@ -265,10 +265,7 @@ async function loadEmployees() {
 
     select.innerHTML = '<option value="">Loading employees...</option>';
 
-    const { data, error } = await supabaseClient
-        .from('profiles')
-        .select('userid, username, role')
-        .in('role', ['employee', 'Owner']);
+    const { data, error } = await fetchStaffProfiles();
 
     if (error) {
         console.error('Error loading employee IDs:', error);
