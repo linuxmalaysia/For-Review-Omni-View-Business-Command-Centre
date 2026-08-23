@@ -1,5 +1,38 @@
 let LiveTable;
 
+function calculateDurationHours(startTime, endTime) {
+    if (!startTime || !endTime) return null;
+
+    const [startH, startM] = startTime.split(':').map(Number);
+    const [endH, endM] = endTime.split(':').map(Number);
+
+    if ([startH, startM, endH, endM].some(Number.isNaN)) return null;
+
+    let startMinutes = startH * 60 + startM;
+    let endMinutes = endH * 60 + endM;
+
+    // handle sessions that cross midnight (end time earlier than or equal to start time)
+    if (endMinutes <= startMinutes) {
+        endMinutes += 24 * 60;
+    }
+
+    return Number(((endMinutes - startMinutes) / 60).toFixed(2));
+}
+
+function setTableSortLock(locked, tableSelector) {
+    const wrapper = document.querySelector(tableSelector);
+    if (!wrapper) return;
+    const thead = wrapper.querySelector('thead');
+    const paginate = wrapper.closest('.dataTables_wrapper')?.querySelector('.dataTables_paginate');
+
+    [thead, paginate].forEach(el => {
+        if (!el) return;
+        el.style.pointerEvents = locked ? 'none' : '';
+        el.style.opacity = locked ? '0.6' : '';
+        el.style.cursor = locked ? 'not-allowed' : '';
+    });
+}
+
 async function loadlives() {
 
     const{data,error}=await supabaseClient
@@ -55,37 +88,54 @@ async function loadlives() {
 }
 
 async function editLives(button, sessionId) {
-
-    const row = LiveTable.row(button.closest('tr'));
+    const tr = button.closest('tr');
+    const row = LiveTable.row(tr);
     const data = row.data();
 
-    if(!row) {
+    if (!row || !data) {
         console.error('Row not found for Session ID:', sessionId);
         return;
     }
-    
-    row.data([
-        data[0], // Session ID
-        data[1], // Employee ID
-        `<input type="date" class="form-control" value="${data[2]}">`, // Session Date
-        `<input type="text" class="form-control" style="width: 100px;" value="${data[3]}">`, // Day of Week
-        `<input type="time" class="form-control" value="${data[4]}">`,  // Start Time
-        `<input type="time" class="form-control" value="${data[5]}">`, // End Time
-        `<input type="number" class="form-control" value="${data[6]}">`, // Duration (Hours)
-        `<input type="number" class="form-control" value="${data[7]}">`, // Items Sold
-        `<input type="number" class="form-control" value="${data[8]}">`, // Sold Amount
-        `<input type="number" class="form-control" value="${data[9]}">`, // Views
-        `
-            <button class="btn btn-success btn-sm"
-                onclick="saveLives(this, '${data[0]}')">
-                <i class="bi bi-check"></i> Save
-            </button>
-            <button class="btn btn-secondary btn-sm"
-                onclick="loadlives()">
-                <i class="bi bi-x"></i> Cancel
-            </button>
-        `
-    ]).draw(false);
+
+    const cells = tr.querySelectorAll('td');
+
+    cells[2].innerHTML  = `<input type="date" class="form-control" value="${data[2]}">`;
+    cells[3].innerHTML  = `<input type="text" class="form-control" style="width: 100px;" value="${data[3]}">`;
+    cells[4].innerHTML  = `<input type="time" class="form-control edit-start-time" value="${data[4]}">`;
+    cells[5].innerHTML  = `<input type="time" class="form-control edit-end-time" value="${data[5]}">`;
+    cells[6].innerHTML  = `<input type="number" class="form-control edit-duration" value="${data[6]}" readonly style="background-color:#f2efe7;">`;
+    cells[7].innerHTML  = `<input type="number" class="form-control" value="${data[7]}">`;
+    cells[8].innerHTML  = `<input type="number" class="form-control" value="${data[8]}">`;
+    cells[9].innerHTML  = `<input type="number" class="form-control" value="${data[9]}">`;
+    cells[10].innerHTML = `
+        <button class="btn btn-success btn-sm"
+            onclick="saveLives(this, '${data[0]}')">
+            <i class="bi bi-check"></i> Save
+        </button>
+        <button class="btn btn-secondary btn-sm"
+            onclick="cancelEditLives()">
+            <i class="bi bi-x"></i> Cancel
+        </button>
+    `;
+
+    setTableSortLock(true);
+
+    const startInput = tr.querySelector('.edit-start-time');
+    const endInput = tr.querySelector('.edit-end-time');
+    const durationInput = tr.querySelector('.edit-duration');
+
+    function refreshDuration() {
+        const duration = calculateDurationHours(startInput.value, endInput.value);
+        durationInput.value = duration === null ? '' : duration;
+    }
+
+    startInput.addEventListener('change', refreshDuration);
+    endInput.addEventListener('change', refreshDuration);
+}
+
+function cancelEditLives() {
+    setTableSortLock(false);
+    loadlives();
 }
 
 async function saveLives(button, sessionId) {
@@ -96,23 +146,22 @@ async function saveLives(button, sessionId) {
     const newDayOfWeek = inputs[1].value.trim();
     const newStart_time = inputs[2].value.trim();
     const newEnd_time = inputs[3].value.trim();
-    const newDurationHours = inputs[4].value.trim();
     const newItemsSold = inputs[5].value.trim();
     const newSoldAmount = inputs[6].value.trim();
     const newViews = inputs[7].value.trim();
 
-    if (!newSessionDate || !newDayOfWeek || !newStart_time || !newEnd_time || !newDurationHours || !newItemsSold || !newSoldAmount || !newViews) {
+    if (!newSessionDate || !newDayOfWeek || !newStart_time || !newEnd_time || !newItemsSold || !newSoldAmount || !newViews) {
         alert("All fields are required!");
         return;
     }
 
-    const durationHours = Number(newDurationHours);
+    const durationHours = calculateDurationHours(newStart_time, newEnd_time);
     const itemsSold = Number(newItemsSold);
     const soldAmount = Number(newSoldAmount);
     const views = Number(newViews);
 
-    if (isNaN(durationHours) || isNaN(itemsSold) || isNaN(soldAmount) || isNaN(views)) {
-        alert("Duration, Items Sold, Sold Amount, and Views must be valid numbers!");
+    if (durationHours === null || isNaN(itemsSold) || isNaN(soldAmount) || isNaN(views)) {
+        alert("Start Time, End Time, Items Sold, Sold Amount, and Views must be valid!");
         return;
     }
 
@@ -142,7 +191,8 @@ async function saveLives(button, sessionId) {
     }
 
     alert('Live data updated successfully!');
-    
+
+    setTableSortLock(false);
     loadlives();
 }
 
@@ -178,10 +228,7 @@ async function loadEmployeeOptions() {
 
     select.innerHTML = '<option value="">Loading employees...</option>';
 
-    const { data, error } = await supabaseClient
-        .from('profiles')
-        .select('userid, username, role')
-        .in('role', ['employee', 'Owner']);
+    const { data, error } = await fetchStaffProfiles();
 
     if (error) {
         console.error('Error loading employee IDs:', error);
@@ -272,23 +319,22 @@ async function addLiveData() {
     const dayOfWeek = document.getElementById("dayOfWeek").value.trim();
     const startTime = document.getElementById("startTime").value.trim();
     const endTime = document.getElementById("endTime").value.trim();
-    const durationHours = document.getElementById("durationHours").value.trim();
     const itemsSold = document.getElementById("itemsSold").value.trim();
     const gmvAmount = document.getElementById("gmvAmount").value.trim();
     const views = document.getElementById("views").value.trim();
     
-    if (!sessionId || !employeeId || !liveDate || !dayOfWeek || !startTime || !endTime || !durationHours || !itemsSold || !gmvAmount || !views) {
+    if (!sessionId || !employeeId || !liveDate || !dayOfWeek || !startTime || !endTime || !itemsSold || !gmvAmount || !views) {
         alert("All fields are required!");
         return;
     }
 
-    const duration = Number(durationHours);
+    const duration = calculateDurationHours(startTime, endTime);
     const items = Number(itemsSold);
     const gmv = Number(gmvAmount);
     const viewCount = Number(views);
 
-    if (isNaN(duration) || isNaN(items) || isNaN(gmv) || isNaN(viewCount)) {
-        alert("Duration, Items Sold, GMV Amount, and Views must be valid numbers!");
+    if (duration === null || isNaN(items) || isNaN(gmv) || isNaN(viewCount)) {
+        alert("Start Time, End Time, Items Sold, GMV Amount, and Views must be valid!");
         return;
     }
 
