@@ -6,6 +6,20 @@ let isDeletingUser = false;
 // At least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special character for password validation
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
+function setTableSortLock(locked, tableSelector) {
+    const wrapper = document.querySelector(tableSelector);
+    if (!wrapper) return;
+    const thead = wrapper.querySelector('thead');
+    const paginate = wrapper.closest('.dataTables_wrapper')?.querySelector('.dataTables_paginate');
+
+    [thead, paginate].forEach(el => {
+        if (!el) return;
+        el.style.pointerEvents = locked ? 'none' : '';
+        el.style.opacity = locked ? '0.6' : '';
+        el.style.cursor = locked ? 'not-allowed' : '';
+    });
+}
+
 async function loadUser() {
     const {data:{session},error}=await supabaseClient.auth.getSession();
 
@@ -109,10 +123,11 @@ async function loadUser() {
 }
 
 async function editUser(button, userId) {
-    const row = UserTable.row(button.closest('tr'));
+    const tr = button.closest('tr');
+    const row = UserTable.row(tr);
     const data = row.data();
 
-    if(!row){
+    if (!row || !data) {
         console.error("Row not found for the clicked button.");
         return;
     }
@@ -121,22 +136,23 @@ async function editUser(button, userId) {
         ? '<option value="employee">Employee</option><option value="admin">Admin</option>'
         : '<option value="employee">Employee</option>';
 
-    row.data([
-        data[0],
-        `<input type="text" class="form-control" value="${data[1]}">`,
-        data[2],
-        `<input type="text" class="form-control" value="${data[3]}">`,
-        `<select class="form-select" id="editRole">${roleOptions}</select>`,
-        `<input type="number" class="form-control" value="${data[5]}">`,
-        `<button class="btn btn-success btn-sm" onclick="saveUser('${data[0]}', this)"><i class="bi bi-check"></i> Save</button> ` +
-        `<button class="btn btn-secondary btn-sm" onclick="loadUser()"><i class="bi bi-x"></i> Cancel</button>`
-    ]).draw(false);
+    const cells = tr.querySelectorAll('td');
 
-    // pre-select the current role now that the <select> is in the DOM
-    const rowNode = UserTable.row(row.index()).node();
-    const roleSelect = rowNode.querySelector('#editRole');
+    cells[1].innerHTML = `<input type="text" class="form-control" value="${data[1]}">`;
+    cells[3].innerHTML = `<input type="text" class="form-control" value="${data[3]}">`;
+    cells[4].innerHTML = `<select class="form-select" id="editRole">${roleOptions}</select>`;
+    cells[5].innerHTML = `<input type="number" class="form-control" value="${data[5]}">`;
+    cells[6].innerHTML = `
+        <button class="btn btn-success btn-sm" onclick="saveUser('${data[0]}', this)"><i class="bi bi-check"></i> Save</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadUser()"><i class="bi bi-x"></i> Cancel</button>
+    `;
+
+    const roleSelect = tr.querySelector('#editRole');
     if (roleSelect) roleSelect.value = data[4];
+
+    setTableSortLock(true, '#UserTable');
 }
+
 
 async function deleteUser(userId) {
     if (isDeletingUser) {
@@ -378,8 +394,19 @@ async function saveUser(userId, button) {
 
     const newUsername = inputs[0].value;
     const newPhone = inputs[1].value;
-    const newHourlyRate = inputs[2].value;
+    const newHourlyRateRaw = inputs[2].value;
     const newRole = roleSelect ? roleSelect.value : undefined;
+
+    if (!newUsername || !newPhone || !newHourlyRateRaw || !newRole) {
+        alert("All fields are required.");
+        return;
+    }
+
+    const newHourlyRate = Number(newHourlyRateRaw);
+    if (isNaN(newHourlyRate) || newHourlyRate < 0) {
+        alert("Hourly Rate must be a non-negative number.");
+        return;
+    }
 
     const { error } = await supabaseClient
         .from('profiles')
