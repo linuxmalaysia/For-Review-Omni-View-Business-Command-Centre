@@ -546,15 +546,20 @@ body{
 }
 
 .product-card .card-body {
-    padding: 1.75rem 1.5rem 1.5rem;
+    padding: 1.75rem 1.75rem 2rem;
 }
 
 .product-card .table-responsive {
-    margin: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
     border-radius: 1rem;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
     box-shadow: 0 0 0 1px var(--border);
+}
+
+.product-card .table-responsive:last-child {
+    margin-bottom: 0;
 }
 
 .product-card table.table {
@@ -598,6 +603,109 @@ body{
     padding: 0.95rem 1rem;
 }
 
+/* DataTables 2.x (dt-3.0.1) uses new class names: dt-container, dt-length,
+   dt-search, dt-info, dt-paging — NOT the old dataTables_wrapper family. */
+.product-card .dt-container {
+    width: 100%;
+    padding: 0 0.25rem;
+}
+
+.product-card .dt-container .dt-layout-row:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.product-card .dt-length,
+.product-card .dt-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-card .dt-length label,
+.product-card .dt-search label {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.product-card .dt-length select,
+.product-card .dt-search input {
+    min-width: 120px;
+    border-radius: 0.7rem;
+    border: 1px solid var(--border);
+    padding: 0.65rem 0.9rem;
+    background: #ffffff;
+}
+
+.product-card .dt-length select:focus,
+.product-card .dt-search input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 .15rem rgba(185, 135, 60, .18);
+}
+
+.product-card .dt-container .dt-layout-row:has(.dt-info) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1.25rem;
+}
+
+.product-card .dt-info {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.product-card .dt-paging {
+    margin: 0;
+}
+
+.product-card .dt-paging .dt-paging-list {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.product-card .dt-paging .dt-paging-button {
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    min-width: 40px;
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.product-card .dt-paging .dt-paging-button.current {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #201404;
+    font-weight: 700;
+}
+
+.product-card .dt-paging .dt-paging-button:not(.disabled):hover {
+    background: var(--gold-tint);
+    color: var(--gold-dark);
+}
+
+.product-card .dt-paging .dt-paging-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* legacy DataTables 1.x classes kept as a harmless fallback,
+   in case any page still loads the old build */
 .product-card .dataTables_wrapper {
     width: 100%;
 }
@@ -609,7 +717,7 @@ body{
     gap: 10px;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .product-card .dataTables_wrapper .dataTables_length select,
@@ -677,8 +785,97 @@ body{
         align-items: flex-start;
     }
 
+    .product-card .dt-container .dt-layout-row:first-child,
     .product-card .dataTables_wrapper .dataTables_length,
     .product-card .dataTables_wrapper .dataTables_filter {
         justify-content: space-between;
+    }
+}
+
+@media print {
+    /* hide anything not meant for the printed report */
+    .no-print {
+        display: none !important;
+    }
+
+    /* reclaim full width now that the sidebar is gone */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* page margin - space from the physical paper edge */
+    @page {
+        margin: 1.5cm;
+    }
+
+    /* center the report content with its own breathing room */
+    .container-fluid {
+        max-width: 900px;
+        margin: 0 auto !important;
+        padding: 0 20px !important;
+    }
+
+    /* a little top spacing so the title isn't flush against the page edge */
+    .product-header {
+        margin-top: 20px !important;
+    }
+
+    /* one page per report section */
+    #salesSection,
+    #liveViewsSection,
+    #employeeSection,
+    #payoutSection,
+    #inventorySection {
+        page-break-before: always;
+        break-before: page;
+    }
+
+    /* whichever section actually renders first (set by JS) skips the leading break */
+    .first-print-section {
+        page-break-before: auto !important;
+        break-before: auto !important;
+    }
+
+    /* let content flow inside a section if it's long (e.g. Employee/Inventory tables) */
+    #salesSection,
+    #liveViewsSection,
+    #employeeSection,
+    #payoutSection,
+    #inventorySection,
+    .card {
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+
+    /* never slice a stat card or table row in half */
+    .row,
+    .card.border-0.bg-light,
+    tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* repeat table column headers on every page a table spans */
+    thead {
+        display: table-header-group;
+    }
+
+    /* keep a section/card title glued to the content right after it */
+    h5.fw-bold {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border-bottom: 1px solid #ddd !important;
+        margin-bottom: 20px !important;
+    }
+
+    .card-body {
+        padding: 0 !important;
     }
 }
