@@ -19,8 +19,8 @@
     <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
 </head>
 <body>
-    <div class="d-flex">
-        <aside class="sidebar no-print" id="sidebar">
+    <div class="d-flex app-shell">
+        <aside class="sidebar offcanvas-md offcanvas-start no-print" id="sidebar" tabindex="-1" aria-label="Main navigation">
             <div class="sidebar-brand">
                 <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
                 <span class="brand-text">Capt Empire</span>
@@ -54,6 +54,9 @@
 
         <main class="main-content">
             <div class="content-topbar no-print">
+                <button class="sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Open navigation">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="user-name" id="user_name"></span>
