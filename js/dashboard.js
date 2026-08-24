@@ -415,7 +415,8 @@ async function loadStockChart() {
         },
         options: {
             indexAxis: "y",
-            responsive: true,   
+            responsive: true,
+            maintainAspectRatio: false,   
             plugins: {
                 legend: {
                     display: false

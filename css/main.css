@@ -356,10 +356,21 @@ body{
     padding: 20px 24px 24px;
 }
 
-.card-body canvas{
+.card-body canvas:not(#stockChart){
     width: 100% !important;
     height: auto !important;
     max-height: 300px;
+}
+
+.stock-chart-container{
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
+#stockChart{
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .chartjs-render-monitor{
