@@ -75,18 +75,18 @@
             </div>
 
             <div class="container-fluid">
+                    
+
+                <div class="container-fluid mt-4">
                     <div class="product-header">
-                        <div class="row col-lg-12 g-4 justify-content-center">
-                            <h1 class="mt-4">Welcome Back, <span id="welcome_name">User</span>!</h1>
-                            <h1 class="mt-4 col-lg-11">Dashboard</h1>
-                            <a href="report.html" class="btn btn-primary col-lg-1 col-md-6" id="report_download">
+                        <div class="dashboard-header-row">
+                            <!-- <h1 class="mt-4">Welcome Back, <span id="welcome_name">User</span>!</h1> -->
+                            <h1>Dashboard</h1>
+                            <a href="report.html" class="btn btn-primary" id="report_download">
                                 <i class="bi bi-download"></i> Report
                             </a>
                         </div>
-                        
                     </div>
-
-                <div class="container-fluid mt-4">
                     <div class="row g-4">
                         <div class="col-lg-6">
                             <div class="stat-card ">
@@ -187,19 +187,21 @@
                                     <h1 class="card-title mb-0 text-primary">Recent Payout </h1>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Payout ID</th>
-                                                <th scope="col">Employee</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="recent-payouts">
-                                            <!-- Recent payouts will be populated here -->
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive recent-payout-table">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Payout ID</th>
+                                                    <th scope="col">Employee</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recent-payouts">
+                                                <!-- Recent payouts will be populated here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <a href="payout.html" class="btn" style="background-color: #007bff; color: white;">View All Payouts</a>
                                 </div>
                             </div>
