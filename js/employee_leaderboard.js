@@ -66,7 +66,7 @@ async function loadLeaderboard() {
     }
 
 
-    const currentEmployeeId =currentProfile[0].userid;
+    const currentEmployeeId =currentProfile.userid;
 
 
     const period =document.getElementById('leaderboardPeriod').value;
