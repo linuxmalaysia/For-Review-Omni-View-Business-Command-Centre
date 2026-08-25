@@ -464,6 +464,17 @@ body{
     border-color: var(--danger);
 }
 
+button:active,
+button.active,
+.btn:active,
+.btn.active,
+.btn:focus:active{
+    background-color: #eaeaea !important;
+    border-color: #7f7f7f !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+}
+
 .form-control,
 .form-select{
     border: 1px solid var(--border);
