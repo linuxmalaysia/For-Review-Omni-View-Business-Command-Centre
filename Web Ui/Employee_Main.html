@@ -16,14 +16,15 @@
     <script src="../js/eployee_dashboard.js"></script>
     <script src="../js/eployee_charts.js"></script>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/view-transitions.css">
     <link rel="stylesheet" href="../css/leader_board.css">
     <title>Employee Dashboard</title>
     <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
 </head>
 <body>
-    <div class="d-flex">
+    <div class="d-flex app-shell">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar offcanvas-md offcanvas-start" id="sidebar" tabindex="-1" aria-label="Main navigation">
             <div class="sidebar-brand">
                 <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
                 <span class="brand-text">Capt Empire</span>
@@ -49,7 +50,10 @@
         </aside>
 
         <main class="main-content">
-            <div class="content-topbar " >
+            <div class="content-topbar">
+                <button class="sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Open navigation">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="user-name" id="user_name"></span>

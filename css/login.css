@@ -14,7 +14,7 @@ body{
 
 /* ---------- Left panel ---------- */
 .left-panel{
-    background: var(--ink, #15171b);
+    background: var(--ink, #0A0B0D);
     color: white;
     display: flex;
     justify-content: center;
@@ -151,6 +151,26 @@ body{
     height: 1rem;
     margin-right: 8px;
     vertical-align: -2px;
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled{
+    background-color: var(--gold, #b9873c) !important;
+    border-color: var(--gold, #b9873c) !important;
+    color: #ffffff !important;
+    opacity: 1;
+    box-shadow: none !important;
+}
+
+button:active,
+button.active,
+.btn:active,
+.btn.active,
+.btn:focus:active {
+    background-color: var(--gold, #b9873c) !important;
+    border-color: var(--gold, #b9873c) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
 }
 
 /* ---------- Small screens ---------- */

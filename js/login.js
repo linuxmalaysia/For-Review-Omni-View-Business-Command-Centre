@@ -1,42 +1,64 @@
 async function login(event) {
     event.preventDefault();
 
-    document.getElementById('loginError').style.display = "none";
+    const loginButton = document.getElementById('loginButton');
+    const loginButtonLabel = loginButton.querySelector('.button-label');
+    const loginError = document.getElementById('loginError');
+    const loginSuccess = document.getElementById('loginSuccess');
+
+    loginError.style.display = "none";
+    loginSuccess.style.display = "none";
+    loginButton.disabled = true;
+    loginButtonLabel.innerHTML = '<span class="spinner-border" role="status" aria-hidden="true"></span>Logging in...';
 
     const email = document.getElementById('email').value.trim().toLowerCase();
     const password = document.getElementById('password').value;
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
+    try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-    if (error) {
-        document.getElementById('loginError').innerText ="Login failed. Please try again.";
-        document.getElementById('loginError').style.display = "block";
-        return;
-    }
+        if (error) {
+            loginError.innerText = "Login failed. Please try again.";
+            loginError.style.display = "block";
+            return;
+        }
 
-    const{data:profile,error:profileError}=await supabaseClient
-        .from("profiles")
-        .select("role")
-        .eq("email",email)
-        .single();
+        const{data:profile,error:profileError}=await supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("email",email)
+            .single();
 
-    if(profileError || !profile) {
-        console.error("Profile not found");
-        document.getElementById('loginError').innerText ="Profile not found. Please contact support.";
-        document.getElementById('loginError').style.display = "block";
-        await supabaseClient.auth.signOut();
-        return;
-    }
-    if(profile.role==="admin" || profile.role==="owner"){
-        console.log('Login successful:', data);
-        window.location.href = 'main.html';
-    }
-    else if(profile.role==="employee"){
-        console.log('Login successful:', data);
-        window.location.href = 'Employee_Main.html';
+        if(profileError || !profile) {
+            console.error("Profile not found");
+            loginError.innerText = "Profile not found. Please contact support.";
+            loginError.style.display = "block";
+            await supabaseClient.auth.signOut();
+            return;
+        }
+
+        loginSuccess.innerText = "Login successful. Redirecting...";
+        loginSuccess.style.display = "block";
+        await new Promise(resolve => setTimeout(resolve, 700));
+
+        if(profile.role==="admin" || profile.role==="owner"){
+            console.log('Login successful:', data);
+            window.location.href = 'main.html';
+        }
+        else if(profile.role==="employee"){
+            console.log('Login successful:', data);
+            window.location.href = 'Employee_Main.html';
+        }
+    } catch (error) {
+        console.error("Login error", error);
+        loginError.innerText = "Login failed. Please try again.";
+        loginError.style.display = "block";
+    } finally {
+        loginButton.disabled = false;
+        loginButtonLabel.innerText = "Login";
     }
 }
 

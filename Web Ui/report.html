@@ -15,12 +15,13 @@
     <script src="../js/report.js"></script>
     <script src="../js/print_PDF_report.js"></script>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/view-transitions.css">
     <title>Report Page</title>
     <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
 </head>
 <body>
-    <div class="d-flex">
-        <aside class="sidebar no-print" id="sidebar">
+    <div class="d-flex app-shell">
+        <aside class="sidebar offcanvas-md offcanvas-start no-print" id="sidebar" tabindex="-1" aria-label="Main navigation">
             <div class="sidebar-brand">
                 <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
                 <span class="brand-text">Capt Empire</span>
@@ -54,6 +55,9 @@
 
         <main class="main-content">
             <div class="content-topbar no-print">
+                <button class="sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Open navigation">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="user-name" id="user_name"></span>
@@ -93,9 +97,9 @@
                             <i class="bi bi-funnel"></i> Report Filters
                         </h5>
                     </div>
-                    <div class="row g-3">
+                    <div class="row g-3 px-3 pb-3">
                          <!-- Quick Period -->
-                        <div class="col-md-3" style="margin-left: 15px; margin-bottom: 15px;">
+                        <div class="col-12 col-md-3">
                             <label for="periodFilter" class="form-label">
                                 Period
                             </label>
@@ -108,7 +112,7 @@
                             </select>
                         </div>
                         <!-- Employee -->
-                        <div class="col-md-3">
+                        <div class="col-12 col-md-3">
                             <label for="employeeFilter" class="form-label">
                                 Staff
                             </label>
@@ -120,7 +124,7 @@
                             </select>   
                         </div>
                         <!-- Report Type -->
-                        <div class="col-md-3">
+                        <div class="col-12 col-md-3">
                             <label for="reportTypeFilter" class="form-label">
                                 Report Type
                             </label>
@@ -134,15 +138,15 @@
                                 <option value="live">Live</option>
                             </select>
                         </div>
-                        <div class="col-md-3 align-self-end" style="margin-bottom: 15px;margin-left: 15px;">
+                        <div class="col-12 col-md-3 align-self-end">
                             <button type="button" id="applyFilterBtn" class="btn btn-primary w-100"><i class="bi bi-search"></i>
                                 Apply Filter
                             </button>
                         </div>
                     </div>
                     <!-- Custom Date Range -->
-                    <div id="customDateRange" class="row g-3 mt-1 d-none" style="margin-left: 15px; margin-bottom: 15px;">      
-                        <div class="col-md-3">
+                    <div id="customDateRange" class="row g-3 mt-1 px-3 pb-3 d-none">
+                        <div class="col-12 col-md-3">
                             <label for="startDate" class="form-label">
                                 Start Date
                             </label>
@@ -152,7 +156,7 @@
                                 id="startDate"
                                 class="form-control">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-12 col-md-3">
                             <label for="endDate" class="form-label">
                                 End Date
                             </label>

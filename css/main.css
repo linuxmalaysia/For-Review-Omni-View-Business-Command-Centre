@@ -2,7 +2,7 @@
 
 :root{
     /* -- core palette -- */
-    --ink: #15171b;
+    --ink: #0A0B0D;
     --ink-soft: #23262c;
     --paper: #f5f4f0;
     --surface: #ffffff;
@@ -50,11 +50,13 @@ body{
     margin: 0;
     background: var(--paper);
     color: var(--text);
+    overflow: hidden;
 }
 
 /* ---------- Sidebar ---------- */
 .sidebar{
     width: var(--sidebar-width);
+    height: 100vh;
     min-height: 100vh;
     background: var(--ink);
     color: #ffffff;
@@ -62,7 +64,21 @@ body{
     flex-direction: column;
     position: sticky;
     top: 0;
-    flex-shrink: 0;
+    flex: 0 0 var(--sidebar-width);
+}
+
+@media (min-width: 769px){
+    .sidebar.offcanvas-md{
+        background-color: var(--ink) !important;
+        background-image: none !important;
+        color: #ffffff;
+    }
+}
+
+.app-shell{
+    height: 100vh;
+    min-height: 100vh;
+    align-items: flex-start;
 }
 
 .sidebar-brand{
@@ -147,9 +163,25 @@ body{
 /* ---------- Main content ---------- */
 .main-content{
     flex: 1;
+    height: 100vh;
     min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
     padding: 0 30px 30px;
     position: relative;
+}
+
+.sidebar-toggle{
+    display: none;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    background: var(--surface);
+    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
 }
 
 .content-topbar{
@@ -356,10 +388,29 @@ body{
     padding: 20px 24px 24px;
 }
 
-.card-body canvas{
+.card-body canvas:not(#stockChart){
     width: 100% !important;
     height: auto !important;
     max-height: 300px;
+}
+
+.stock-chart-container{
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
+.recent-payout-table {
+    overflow-x: auto;
+}
+
+.recent-payout-table table {
+    min-width: 620px;
+}
+
+#stockChart{
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .chartjs-render-monitor{
@@ -411,6 +462,17 @@ body{
 .btn-danger{
     background: var(--danger);
     border-color: var(--danger);
+}
+
+button:active,
+button.active,
+.btn:active,
+.btn.active,
+.btn:focus:active{
+    background-color: #eaeaea !important;
+    border-color: #7f7f7f !important;
+    color: #000000 !important;
+    box-shadow: none !important;
 }
 
 .form-control,
@@ -482,6 +544,24 @@ body{
     font-size: 1.9rem;
     font-weight: 800;
     color: var(--text);
+}
+
+.dashboard-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    width: 100%;
+}
+
+.dashboard-header-row h1 {
+    min-width: 0;
+}
+
+.dashboard-header-row #report_download {
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 
 .product-breadcrumb {
@@ -780,6 +860,41 @@ body{
 }
 
 @media (max-width: 768px) {
+    body{
+        overflow: hidden;
+    }
+
+    .app-shell{
+        height: 100dvh;
+        min-height: 100dvh;
+    }
+
+    .sidebar.offcanvas-md{
+        width: min(86vw, var(--sidebar-width));
+        height: 100dvh;
+        min-height: 100dvh;
+        border: 0;
+        position: fixed;
+        top: 0;
+    }
+
+    .main-content{
+        height: 100dvh;
+        padding: 0 16px 24px;
+    }
+
+    .content-topbar{
+        justify-content: space-between;
+        width: calc(100% + 32px);
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 12px 16px;
+    }
+
+    .sidebar-toggle{
+        display: inline-flex;
+    }
+
     .product-header {
         flex-direction: column;
         align-items: flex-start;
@@ -802,6 +917,20 @@ body{
     .main-content {
         margin-left: 0 !important;
         width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+    }
+
+    .app-shell {
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .sidebar {
+        position: static !important;
+        height: auto !important;
+        min-height: 0 !important;
     }
 
     /* page margin - space from the physical paper edge */

@@ -767,6 +767,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     });
 
+    const defaultFilter = getReportFilter();
+    if (defaultFilter) {
+        await loadReport(defaultFilter);
+    }
+
     //load employee select options
     async function loadEmployees() {
         const { data, error } = await fetchStaffProfiles();

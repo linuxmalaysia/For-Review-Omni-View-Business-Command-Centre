@@ -1,0 +1,76 @@
+@view-transition {
+    navigation: auto;
+}
+
+html {
+    background: #f5f4f0;
+    --sidebar-old-animation: none;
+}
+
+html.no-sidebar {
+    --sidebar-old-animation: sidebar-out 180ms ease both;
+}
+
+::view-transition {
+    background: #f5f4f0;
+}
+
+::view-transition-old(root) {
+    animation: page-out 180ms ease both;
+}
+
+::view-transition-new(root) {
+    animation: page-in 220ms ease both;
+}
+
+@keyframes page-out {
+    to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+@keyframes sidebar-out {
+    to {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.no-sidebar {
+        --sidebar-old-animation: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 1ms;
+    }
+}
+
+.sidebar {
+    view-transition-name: sidebar;
+}
+
+.app-shell,
+.main-content {
+    background: #f5f4f0;
+}
+
+::view-transition-group(sidebar),
+::view-transition-image-pair(sidebar),
+::view-transition-old(sidebar),
+::view-transition-new(sidebar) {
+    animation: none;
+}
+
+::view-transition-old(sidebar) {
+    animation: var(--sidebar-old-animation);
+}
