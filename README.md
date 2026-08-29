@@ -4,6 +4,12 @@ A web-based Integrated Operations Management System developed for **Capt Empire*
 
 ---
 
+## 🚀 Quick Start & Onboarding Standard
+
+For rapid onboarding of human developers and autonomous AI agents, start at **[START-HERE.md](START-HERE.md)**.
+
+---
+
 ## 📚 Documentation (Diátaxis Framework)
 
 This project adopts the [Diátaxis Documentation Framework](https://diataxis.fr/) to organize technical documentation into four distinct quadrants:
