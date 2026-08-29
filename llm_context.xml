@@ -621,7 +621,6 @@ DSOM defines operational boundaries and execution constraints for autonomous age
 - **Minimal Sufficient Context**: AI agents must ingest only files directly pertinent to assigned tasks.
 - **Reference Anchoring**: `docs/reference/file-structure-and-api.md` serves as the single source of truth for file paths and backend schemas.
 - **Deterministic Verification Contract**: Every code change must be validated by running automated unit tests (`uv run pytest`) prior to PR submission.
-
 </content>
       </document>
     </section>
