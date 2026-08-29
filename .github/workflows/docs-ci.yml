@@ -27,7 +27,7 @@ jobs:
       - name: Install Pinned uv with Checksum Verification
         run: |
           UV_VERSION="0.6.3"
-          UV_SHA256="77112028ddc32308726e6d19ebf4f1dbefd164ce68f519ebff50bb20d6ccb23f"
+          UV_SHA256="b7a37a33d62cb7672716c695226450231e8c02a8eb2b468fa61cd28a8f86eab2"
 
           curl -sSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" -o uv.tar.gz
           echo "${UV_SHA256}  uv.tar.gz" | sha256sum -c -
