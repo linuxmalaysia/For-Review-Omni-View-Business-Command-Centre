@@ -59,10 +59,18 @@ def test_generate_llms_txt_and_full():
     llms_full = parse_llms_txt.generate_llms_full()
     assert "llms-full.txt" in llms_full
     assert "FILE:" in llms_full
+    assert llms_full.endswith("\n")
+    assert not llms_full.endswith("\n\n")
 
 
 def test_generate_sitemaps():
     stxt, sxml = parse_llms_txt.generate_sitemaps()
-    assert "https://linuxmalaysia.github.io/openwiki/" in stxt
+    target_base = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre"
+    obsolete_base = "https://linuxmalaysia.github.io/openwiki"
+
+    assert target_base in stxt
+    assert target_base in sxml
+    assert obsolete_base not in stxt
+    assert obsolete_base not in sxml
     assert "<urlset" in sxml
     assert "<loc>" in sxml
