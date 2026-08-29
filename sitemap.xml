@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/START-HERE</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/tutorials/getting-started</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/tutorials/llms-txt-setup</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/how-to/manage-inventory-and-payouts</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/how-to/generate-llms-context</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/reference/file-structure-and-api</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/reference/cli-and-tools</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/explanation/architecture-and-diataxis</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/openwiki/docs/explanation/okf-02-and-diataxis</loc>
+  </url>
+</urlset>

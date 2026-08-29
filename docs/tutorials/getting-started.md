@@ -1,57 +1,72 @@
+---
+title: "Tutorial: Getting Started with Omni-View"
+description: "Step-by-step onboarding tutorial for navigating and using Omni-View Business Command Centre."
+nav_order: 1
+layout: default
+---
+
 # Tutorial: Getting Started with Omni-View Command Centre
 
-Welcome to **Omni-View Business Command Centre**! This tutorial takes you step-by-step through setting up and navigating the platform for the first time.
+Welcome to **Omni-View Business Command Centre**! This tutorial guides you step-by-step through setting up and navigating the platform.
 
 ---
 
 ## 🎯 Learning Objectives
 
-By the end of this tutorial, you will be able to:
-1. Access and navigate the Omni-View web interface.
-2. Log in using administrator and staff user credentials.
-3. Access key modules including Dashboard, Products, Lives, and Payouts.
+By completing this tutorial, you will:
+- Launch the application interface locally.
+- Authenticate using administrator or staff credentials.
+- Navigate core operational modules: Dashboard, Products, Lives, and Payouts.
 
 ---
 
 ## 📋 Prerequisites
 
-- A web browser (Google Chrome, Firefox, or Microsoft Edge).
-- Internet connection (to connect to the Supabase backend).
+- Modern web browser (Chrome, Edge, or Firefox).
+- Python 3.9+ with `uv` package manager installed.
+- Internet connectivity for Supabase REST API access.
 
 ---
 
-## 🚀 Step 1: Open the Application
+## 🚀 Step 1: Initialize Local Workspace
 
-1. Open `index.html` in your web browser or navigate to your local web server address.
-2. The root `index.html` will automatically redirect you to `./Web Ui/login.html`.
+Run the following shell commands to start the local application server:
 
----
+```bash
+uv sync
+python3 -m http.server 8000 --directory .
+```
 
-## 🔐 Step 2: Log In to the Platform
-
-1. On the login page (`login.html`), enter your user credentials:
-   - **For Administrator access**: Log in with an admin-assigned email address and password.
-   - **For Staff access**: Log in with an employee-assigned email address and password.
-2. Click **Login**.
-3. Upon successful authentication:
-   - **Administrators** are redirected to `main.html` (Admin Dashboard).
-   - **Employees / Staff** are redirected to `Employee_Main.html` (Employee Dashboard).
+Open `http://localhost:8000` in your web browser. The entry point (`index.html`) automatically routes to `./Web Ui/login.html`.
 
 ---
 
-## 📊 Step 3: Explore the Dashboard
+## 🔐 Step 2: Authenticate and Sign In
 
-1. Check the top summary metrics:
-   - Daily GMV (Gross Merchandise Value)
-   - Items Sold Today
-   - Active Staff Count
-   - Views Today
-2. Review the **Inventory Summary** and **Stock by Product** chart.
-3. Observe **Top Employees This Month** and **Recent Payouts**.
+1. Open the sign-in page at `http://localhost:8000/Web Ui/login.html`.
+2. Input target credentials:
+   - **Administrator Login**: Enter admin email and password.
+   - **Employee Login**: Enter staff email and password.
+3. Click **Login**.
+4. System redirects based on user role:
+   - **Administrators**: Navigated to `main.html` (Admin Command Dashboard).
+   - **Employees**: Navigated to `Employee_Main.html` (Staff Dashboard).
+
+---
+
+## 📊 Step 3: Explore Operational Metrics
+
+1. Review key performance indicators at the top:
+   - **Daily GMV**: Real-time gross merchandise value.
+   - **Items Sold Today**: Total merchandise units processed.
+   - **Active Staff Count**: Active host staff on shift.
+2. Inspect the **Inventory Summary** table and live sales bar charts.
+3. Check **Top Employees This Month** and recent payout records.
 
 ---
 
 ## 🎓 Next Steps
 
-Now that you have logged in and toured the main dashboard, explore our How-To guides:
-- [Managing Inventory & Payouts](../how-to/manage-inventory-and-payouts.md)
+Now that you have completed basic setup:
+- Learn procedural workflows in [Managing Inventory & Payouts](../how-to/manage-inventory-and-payouts.md).
+- Learn LLM context generation in [LLMs.txt Setup Guide](llms-txt-setup.md).

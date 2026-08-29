@@ -1,0 +1,20 @@
+# Omni-View Business Command Centre
+
+> Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.
+
+## Core Documentation Quadrants
+
+- [Getting Started Tutorial](docs/tutorials/getting-started.md): Guided onboarding tutorial for system usage.
+- [LLMs.txt Setup Tutorial](docs/tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.
+- [Manage Inventory and Payouts](docs/how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.
+- [Generate LLMs Context Guide](docs/how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.
+- [File Structure and API Reference](docs/reference/file-structure-and-api.md): Technical reference for frontend and database schema.
+- [CLI and Tools Reference](docs/reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.
+- [Architecture and Diátaxis Explanation](docs/explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.
+- [OKF 0.2 and DSOM Integration](docs/explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.
+
+## Optional & System Documents
+
+- [Documentation Index](docs/README.md): Primary documentation home page.
+- [SUMMARY Table of Contents](docs/SUMMARY.md): GitBook-compatible navigation summary.
+- [START-HERE Onboarding Index](START-HERE.md): Dual-audience developer and AI agent onboarding entry point.

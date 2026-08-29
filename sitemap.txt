@@ -1,0 +1,11 @@
+https://linuxmalaysia.github.io/openwiki/
+https://linuxmalaysia.github.io/openwiki/START-HERE
+https://linuxmalaysia.github.io/openwiki/docs/
+https://linuxmalaysia.github.io/openwiki/docs/tutorials/getting-started
+https://linuxmalaysia.github.io/openwiki/docs/tutorials/llms-txt-setup
+https://linuxmalaysia.github.io/openwiki/docs/how-to/manage-inventory-and-payouts
+https://linuxmalaysia.github.io/openwiki/docs/how-to/generate-llms-context
+https://linuxmalaysia.github.io/openwiki/docs/reference/file-structure-and-api
+https://linuxmalaysia.github.io/openwiki/docs/reference/cli-and-tools
+https://linuxmalaysia.github.io/openwiki/docs/explanation/architecture-and-diataxis
+https://linuxmalaysia.github.io/openwiki/docs/explanation/okf-02-and-diataxis
