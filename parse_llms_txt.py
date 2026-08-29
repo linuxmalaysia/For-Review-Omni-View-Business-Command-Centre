@@ -193,7 +193,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
             full_text.append(cleaned_content)
             full_text.append("")
 
-    return "\n".join(full_text) + "\n"
+    return "\n".join(full_text).rstrip() + "\n"
 
 
 def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
