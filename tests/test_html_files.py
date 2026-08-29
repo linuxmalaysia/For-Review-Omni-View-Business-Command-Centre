@@ -8,6 +8,7 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class SimpleHTMLValidator(HTMLParser):
     def __init__(self):
+        """Initialize collections for tracking parsed HTML elements and attributes."""
         super().__init__()
         self.tags = []
         self.ids = set()
@@ -16,6 +17,13 @@ class SimpleHTMLValidator(HTMLParser):
         self.meta_refresh = None
 
     def handle_starttag(self, tag, attrs):
+        """
+        Record an HTML start tag and its relevant attributes.
+        
+        Parameters:
+            tag (str): The name of the HTML element.
+            attrs (list[tuple[str, str]]): Attribute name-value pairs associated with the element.
+        """
         self.tags.append(tag)
         attr_dict = dict(attrs)
         if 'id' in attr_dict:
@@ -28,6 +36,12 @@ class SimpleHTMLValidator(HTMLParser):
             self.meta_refresh = attr_dict.get('content', '')
 
 def get_html_files():
+    """
+    Collects the project's HTML file paths.
+    
+    Returns:
+    	list: The root `index.html` path and any HTML files found in the `Web Ui` directory.
+    """
     html_files = [os.path.join(ROOT_DIR, 'index.html')]
     web_ui_dir = os.path.join(ROOT_DIR, 'Web Ui')
     if os.path.exists(web_ui_dir):
@@ -36,6 +50,11 @@ def get_html_files():
 
 @pytest.mark.parametrize("filepath", get_html_files())
 def test_html_file_validity(filepath):
+    """Validate that an HTML file exists, contains content, and has basic document structure.
+    
+    Parameters:
+        filepath: Path to the HTML file to validate.
+    """
     assert os.path.isfile(filepath), f"HTML file does not exist: {filepath}"
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -68,6 +87,7 @@ def test_index_html_redirect():
     )
 
 def test_web_ui_critical_elements():
+    """Verify that the main dashboard HTML contains the required DOM element IDs when the file exists."""
     main_html_path = os.path.join(ROOT_DIR, 'Web Ui', 'main.html')
     assert os.path.isfile(main_html_path), f"Required dashboard template main.html missing at {main_html_path}"
 
