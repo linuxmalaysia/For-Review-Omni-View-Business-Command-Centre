@@ -196,7 +196,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     return "\n".join(full_text) + "\n"
 
 
-def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/openwiki") -> Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
     """
     Generate text and XML sitemaps for the documentation site.
     

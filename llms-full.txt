@@ -710,7 +710,7 @@ Generates canonical `llms.txt` string adhering to llmstxt.org format.
 #### `generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str`
 Generates consolidated `llms-full.txt` string containing all documentation.
 
-#### `generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/openwiki") -> Tuple[str, str]`
+#### `generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]`
 Generates `sitemap.txt` and `sitemap.xml` strings.
 
 ---

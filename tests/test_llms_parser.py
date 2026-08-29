@@ -63,6 +63,6 @@ def test_generate_llms_txt_and_full():
 
 def test_generate_sitemaps():
     stxt, sxml = parse_llms_txt.generate_sitemaps()
-    assert "https://linuxmalaysia.github.io/openwiki/" in stxt
+    assert "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/" in stxt
     assert "<urlset" in sxml
     assert "<loc>" in sxml
