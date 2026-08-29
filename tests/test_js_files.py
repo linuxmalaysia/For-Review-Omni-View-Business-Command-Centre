@@ -6,6 +6,12 @@ import pytest
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def get_js_files():
+    """
+    Find all JavaScript files in the project's `js` directory.
+    
+    Returns:
+    	list[str]: Paths to the JavaScript files found.
+    """
     js_dir = os.path.join(ROOT_DIR, 'js')
     assert os.path.exists(js_dir), "js directory missing"
     return glob.glob(os.path.join(js_dir, '*.js'))

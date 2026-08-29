@@ -6,6 +6,15 @@ import pytest
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def get_css_files():
+    """
+    Collect all CSS files in the project's CSS directory.
+    
+    Returns:
+    	list[str]: Paths to the CSS files found.
+    
+    Raises:
+    	AssertionError: If the CSS directory does not exist.
+    """
     css_dir = os.path.join(ROOT_DIR, 'css')
     assert os.path.exists(css_dir), "css directory missing"
     return glob.glob(os.path.join(css_dir, '*.css'))
