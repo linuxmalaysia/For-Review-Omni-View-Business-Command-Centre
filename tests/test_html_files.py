@@ -1,5 +1,6 @@
 import os
 import glob
+import re
 from html.parser import HTMLParser
 import pytest
 
@@ -12,7 +13,7 @@ class SimpleHTMLValidator(HTMLParser):
         self.ids = set()
         self.script_srcs = []
         self.link_hrefs = []
-        self.errors = []
+        self.meta_refresh = None
 
     def handle_starttag(self, tag, attrs):
         self.tags.append(tag)
@@ -23,6 +24,8 @@ class SimpleHTMLValidator(HTMLParser):
             self.script_srcs.append(attr_dict['src'])
         if tag == 'link' and 'href' in attr_dict:
             self.link_hrefs.append(attr_dict['href'])
+        if tag == 'meta' and attr_dict.get('http-equiv', '').lower() == 'refresh':
+            self.meta_refresh = attr_dict.get('content', '')
 
 def get_html_files():
     html_files = [os.path.join(ROOT_DIR, 'index.html')]
@@ -48,19 +51,32 @@ def test_html_file_validity(filepath):
 
 def test_index_html_redirect():
     index_path = os.path.join(ROOT_DIR, 'index.html')
+    assert os.path.isfile(index_path), "index.html missing"
     with open(index_path, 'r', encoding='utf-8') as f:
         content = f.read()
-    assert 'Web%20Ui/login.html' in content or 'login.html' in content
+
+    parser = SimpleHTMLValidator()
+    parser.feed(content)
+
+    # Validate exact meta refresh redirect target or window.location.replace expression
+    assert parser.meta_refresh is not None, "Missing meta refresh header in index.html"
+    assert re.search(r'url=\.?/?[Ww]eb%20[Uu]i/login\.html', parser.meta_refresh), (
+        f"meta refresh content '{parser.meta_refresh}' does not target Web Ui/login.html"
+    )
+    assert re.search(r'window\.location\.replace\(["\']\.?/?Web%20Ui/login\.html["\']\)', content), (
+        "window.location.replace script does not target Web Ui/login.html"
+    )
 
 def test_web_ui_critical_elements():
     main_html_path = os.path.join(ROOT_DIR, 'Web Ui', 'main.html')
-    if os.path.exists(main_html_path):
-        with open(main_html_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        parser = SimpleHTMLValidator()
-        parser.feed(content)
+    assert os.path.isfile(main_html_path), f"Required dashboard template main.html missing at {main_html_path}"
 
-        # Verify required key DOM IDs for dashboard JS calculations
-        expected_ids = {'daily-gmv', 'daily-item-sold', 'active_staff', 'top-employee', 'stockChart'}
-        for elem_id in expected_ids:
-            assert elem_id in parser.ids, f"Missing critical DOM ID '{elem_id}' in main.html"
+    with open(main_html_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    parser = SimpleHTMLValidator()
+    parser.feed(content)
+
+    # Verify required key DOM IDs for dashboard JS calculations
+    expected_ids = {'daily-gmv', 'daily-item-sold', 'active_staff', 'top-employee', 'stockChart'}
+    for elem_id in expected_ids:
+        assert elem_id in parser.ids, f"Missing critical DOM ID '{elem_id}' in main.html"

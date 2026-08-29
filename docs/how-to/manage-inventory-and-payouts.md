@@ -7,6 +7,7 @@ This guide provides step-by-step instructions for common operational tasks in Om
 ## 📦 How to Manage Product Inventory
 
 ### Adding a New Product
+
 1. Navigate to **Product Management** (`product.html`).
 2. Click **Add Product**.
 3. Fill in product details:
@@ -17,6 +18,7 @@ This guide provides step-by-step instructions for common operational tasks in Om
 4. Click **Save Product**.
 
 ### Updating Inventory Stock
+
 1. Find the product in the product table.
 2. Click **Edit** next to the product item.
 3. Adjust the stock quantity as needed.

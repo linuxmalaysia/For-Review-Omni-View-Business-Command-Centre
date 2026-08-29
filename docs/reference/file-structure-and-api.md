@@ -6,7 +6,7 @@ This reference document provides technical specifications for files, frontend co
 
 ## 📂 Directory Structure
 
-```
+```text
 .
 ├── index.html                   # Entry redirect page to login
 ├── README.md                    # Main project overview & Diátaxis navigation
@@ -50,7 +50,7 @@ This reference document provides technical specifications for files, frontend co
 │   ├── manage_user.js           # User administration CRUD
 │   ├── payout.js                # Payout creation and list loader
 │   ├── print_PDF_report.js      # PDF report renderer
-│   ├── product.html             # Product management CRUD script
+│   ├── product.js               # Product management CRUD script
 │   ├── report.js                # Analytics report calculator
 │   └── reset_password.js        # Password reset handler
 └── css/                         # System stylesheets
@@ -71,10 +71,12 @@ This reference document provides technical specifications for files, frontend co
 The application interacts with Supabase backend (`database.js`).
 
 ### Client Configuration
+
 - **Supabase URL**: `https://uvmsvoyuzcwncwkghzml.supabase.co`
 - **Key**: Configured in `js/database.js` using `supabaseClient`.
 
 ### Core Database Tables
+
 - `profiles`: User IDs, roles (`administrator`, `employee`, `owner`), usernames, email addresses.
 - `products`: Product ID, title, stock quantity, unit price, category.
 - `lives`: Live streaming sales records, host user ID, GMV, items sold, views.

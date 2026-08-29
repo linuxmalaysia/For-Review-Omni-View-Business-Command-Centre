@@ -22,21 +22,27 @@ def test_js_file_syntax_and_structure(filepath):
     stack = []
     pairs = {')': '(', '}': '{', ']': '['}
 
-    # Clean comments, string literals, template literals, and regex literals
-    clean_content = re.sub(r'//.*', '', content)
-    clean_content = re.sub(r'/\*[\s\S]*?\*/', '', clean_content)
-    clean_content = re.sub(r'/(?:\\/|[^/\n])+/[gimsuy]*', '""', clean_content)
-    clean_content = re.sub(r'`(?:\\`|[^`])*`', '""', clean_content)
-    clean_content = re.sub(r'(["\'])(?:(?=(\\?))\2[\s\S])*?\1', '""', clean_content)
+    # Token-aware cleaning of comments, string literals, template strings, and regex literals
+    token_pattern = r'/\*[\s\S]*?\*/|//.*|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`|/(?![/*])(?:\\/|[^/\n])+/[gimsuy]*'
+
+    def strip_token(match):
+        tok = match.group(0)
+        if tok.startswith('//') or tok.startswith('/*'):
+            return ''
+        return '""'
+
+    clean_content = re.sub(token_pattern, strip_token, content)
 
     for char in clean_content:
         if char in pairs.values():
             stack.append(char)
         elif char in pairs.keys():
-            if stack and stack[-1] == pairs[char]:
-                stack.pop()
+            assert len(stack) > 0 and stack[-1] == pairs[char], (
+                f"Unmatched closing bracket '{char}' in JS file: {os.path.basename(filepath)}"
+            )
+            stack.pop()
 
-    assert len(stack) == 0, f"Unbalanced brackets/parentheses in JS file: {os.path.basename(filepath)}"
+    assert len(stack) == 0, f"Unclosed open bracket in JS file: {os.path.basename(filepath)}"
 
 def test_database_js_supabase_configuration():
     db_js_path = os.path.join(ROOT_DIR, 'js', 'database.js')
@@ -51,9 +57,11 @@ def test_database_js_supabase_configuration():
 
 def test_dashboard_js_functions():
     dashboard_js_path = os.path.join(ROOT_DIR, 'js', 'dashboard.js')
-    if os.path.exists(dashboard_js_path):
-        with open(dashboard_js_path, 'r', encoding='utf-8') as f:
-            content = f.read()
+    assert os.path.exists(dashboard_js_path), "js/dashboard.js missing"
+    with open(dashboard_js_path, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-        # Check presence of primary load/render functions
-        assert 'fetch' in content or 'supabaseClient' in content or 'function' in content
+    # Assert concrete consumer-contract identifiers
+    assert 'loaddailyGMV' in content, "Missing function loaddailyGMV in dashboard.js"
+    assert 'daily-gmv' in content, "Missing DOM element binding 'daily-gmv' in dashboard.js"
+    assert 'supabaseClient' in content, "Missing supabaseClient invocation in dashboard.js"

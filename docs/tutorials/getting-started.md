@@ -8,7 +8,7 @@ Welcome to **Omni-View Business Command Centre**! This tutorial takes you step-b
 
 By the end of this tutorial, you will be able to:
 1. Access and navigate the Omni-View web interface.
-2. Log in with test administrator and staff accounts.
+2. Log in using administrator and staff user credentials.
 3. Access key modules including Dashboard, Products, Lives, and Payouts.
 
 ---
@@ -29,9 +29,9 @@ By the end of this tutorial, you will be able to:
 
 ## 🔐 Step 2: Log In to the Platform
 
-1. On the login page (`login.html`), enter your credentials:
-   - **Email**: Enter your authorized account email.
-   - **Password**: Enter your account password.
+1. On the login page (`login.html`), enter your user credentials:
+   - **For Administrator access**: Log in with an admin-assigned email address and password.
+   - **For Staff access**: Log in with an employee-assigned email address and password.
 2. Click **Login**.
 3. Upon successful authentication:
    - **Administrators** are redirected to `main.html` (Admin Dashboard).

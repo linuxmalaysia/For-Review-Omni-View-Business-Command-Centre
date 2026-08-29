@@ -20,11 +20,19 @@ def test_css_file_validity(filepath):
 
     # Strip comments
     clean_css = re.sub(r'/\*[\s\S]*?\*/', '', content)
+    # Strip quoted strings to ignore braces inside quoted CSS values
+    clean_css = re.sub(r'(["\'])(?:(?=(\\?))\2[\s\S])*?\1', '""', clean_css)
 
-    # Check brace balance
-    open_braces = clean_css.count('{')
-    close_braces = clean_css.count('}')
-    assert open_braces == close_braces, f"Unbalanced braces in CSS file: {os.path.basename(filepath)}"
+    # Stack-based token-aware scan for braces
+    stack = []
+    for char in clean_css:
+        if char == '{':
+            stack.append('{')
+        elif char == '}':
+            assert len(stack) > 0, f"Unmatched closing brace '}}' in CSS file: {os.path.basename(filepath)}"
+            stack.pop()
+
+    assert len(stack) == 0, f"Unclosed open brace '{{' in CSS file: {os.path.basename(filepath)}"
 
 def test_main_css_theme_variables():
     main_css_path = os.path.join(ROOT_DIR, 'css', 'main.css')
@@ -32,4 +40,19 @@ def test_main_css_theme_variables():
     with open(main_css_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    assert len(content.strip()) > 0
+    assert len(content.strip()) > 0, "main.css is empty"
+
+    required_variables = [
+        '--ink',
+        '--paper',
+        '--surface',
+        '--border',
+        '--text',
+        '--gold',
+        '--navy',
+        '--success',
+        '--danger',
+    ]
+
+    for var in required_variables:
+        assert var in content, f"Required theme variable '{var}' missing in main.css"

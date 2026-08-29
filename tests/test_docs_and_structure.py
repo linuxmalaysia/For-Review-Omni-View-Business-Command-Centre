@@ -41,6 +41,8 @@ def test_all_repository_files_accounted_for():
     # Enumerate all key directories and verify non-empty files
     for folder in ['Web Ui', 'js', 'css', 'proposal']:
         dir_path = os.path.join(ROOT_DIR, folder)
-        if os.path.exists(dir_path):
-            files = os.listdir(dir_path)
-            assert len(files) > 0, f"Directory {folder} is empty"
+        assert os.path.isdir(dir_path), f"Required directory {folder} missing"
+
+        entries = os.listdir(dir_path)
+        regular_files = [f for f in entries if os.path.isfile(os.path.join(dir_path, f))]
+        assert len(regular_files) > 0, f"Directory {folder} contains no regular files"

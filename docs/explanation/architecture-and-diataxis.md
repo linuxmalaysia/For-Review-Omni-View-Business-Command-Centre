@@ -19,7 +19,8 @@ Omni-View Business Command Centre is built using a modern decoupled web architec
 
 3. **Role-Based Access Control (RBAC)**:
    - System distinguishes between `administrator`, `employee`, and `owner` roles.
-   - Script guards (`admin_authcheck.js`, `authcheck.js`) enforce security at the client routing level.
+   - Client-side navigation script guards (`admin_authcheck.js`, `authcheck.js`) check user sessions to provide seamless page redirects and UI navigation control.
+   - Data security and API authorization for direct Supabase requests are strictly enforced server-side via Supabase Row Level Security (RLS) policies and PostgreSQL database rules for administrator, employee, and owner roles.
 
 ---
 
