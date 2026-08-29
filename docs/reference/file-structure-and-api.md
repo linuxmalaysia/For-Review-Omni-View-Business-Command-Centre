@@ -1,83 +1,115 @@
-# Technical Reference: File Structure, Architecture & Schema
+---
+title: "Technical Reference: File Structure, Architecture & Schema"
+description: "Factual specification of files, HTML UI views, JavaScript modules, CSS stylesheets, and Supabase database schema."
+nav_order: 1
+layout: default
+---
 
-This reference document provides technical specifications for files, frontend components, JavaScript scripts, CSS stylesheets, and backend Supabase integration in Omni-View.
+# Technical Reference: File Structure, Architecture & Database Schema
+
+This document provides factual specifications for repository organization, JavaScript modules, CSS stylesheets, and Supabase integration.
 
 ---
 
-## 📂 Directory Structure
+## 📂 Directory Map
 
 ```text
 .
-├── index.html                   # Entry redirect page to login
-├── README.md                    # Main project overview & Diátaxis navigation
-├── docs/                        # Diátaxis documentation framework
-│   ├── tutorials/               # Learning-oriented guides
-│   ├── how-to/                  # Goal-oriented practical steps
-│   ├── reference/               # Factual specifications
-│   └── explanation/             # Architectural background & design decisions
-├── Web Ui/                      # HTML views
+├── index.html                   # Redirect entry point to login page
+├── parse_llms_txt.py            # LLM text parser, XML generator, and sitemap builder
+├── llms.txt                     # Standard LLM discovery index file
+├── llms-full.txt                # Consolidated markdown documentation file
+├── sitemap.txt                  # Plaintext documentation URL sitemap
+├── sitemap.xml                  # Standard XML sitemap
+├── START-HERE.md                # Dual-audience onboarding specification
+├── README.md                    # Primary project landing page
+├── docs/                        # Diátaxis documentation system
+│   ├── README.md                # Documentation hub home page
+│   ├── SUMMARY.md               # GitBook table of contents
+│   ├── tutorials/               # Guided learning lessons
+│   ├── how-to/                  # Practical operational guides
+│   ├── reference/               # Factual technical specifications
+│   └── explanation/             # Design rationale and background
+├── Web Ui/                      # HTML5 interface views
 │   ├── login.html               # Authentication login view
-│   ├── main.html                # Administrator dashboard view
-│   ├── Employee_Main.html       # Employee dashboard view
-│   ├── product.html             # Product and inventory management
-│   ├── lives.html               # Admin live session tracking
-│   ├── Employee_Lives.html      # Employee live session tracking
-│   ├── payout.html              # Payout management view
-│   ├── Employee_Payout.html     # Employee payout view
-│   ├── report.html              # Analytics & PDF report view
+│   ├── main.html                # Administrator command dashboard
+│   ├── Employee_Main.html       # Staff member dashboard
+│   ├── product.html             # Inventory CRUD interface
+│   ├── lives.html               # Admin live session tracker
+│   ├── Employee_Lives.html      # Staff live session tracker
+│   ├── payout.html              # Payout processing interface
+│   ├── Employee_Payout.html     # Staff payout view
+│   ├── report.html              # Analytics & PDF export view
 │   ├── user_management.html     # User administration view
-│   ├── edit_profile.html        # Admin edit profile view
-│   ├── Employee_edit_profile.html# Employee edit profile view
-│   ├── profile.html             # User profile view
-│   ├── employee_profile.html    # Employee profile view
+│   ├── edit_profile.html        # Admin profile editor
+│   ├── Employee_edit_profile.html # Staff profile editor
+│   ├── profile.html             # Profile details view
+│   ├── employee_profile.html    # Staff profile details view
 │   ├── forgot-password.html     # Password recovery view
 │   └── reset_password.html      # Password reset view
 ├── js/                          # Client-side JavaScript modules
-│   ├── database.js              # Supabase client initialization & queries
-│   ├── admin_authcheck.js       # Admin authentication guard
-│   ├── authcheck.js             # General authentication guard
-│   ├── dashboard.js             # Dashboard metrics & rendering logic
-│   ├── eployee_dashboard.js     # Employee dashboard metrics & charts
-│   ├── eployee_charts.js        # Employee analytics charts
-│   ├── editprofile.js           # User profile updating
+│   ├── database.js              # Supabase client initialization
+│   ├── admin_authcheck.js       # Admin session RBAC guard
+│   ├── authcheck.js             # General session guard
+│   ├── dashboard.js             # Admin dashboard data loader
+│   ├── eployee_dashboard.js     # Employee dashboard data loader
+│   ├── eployee_charts.js        # Analytics chart renderer
+│   ├── editprofile.js           # Profile update handler
 │   ├── employee_leaderboard.js  # Live session leaderboard logic
-│   ├── live.js                  # Live session data handler
-│   ├── load_employee_live.js    # Employee live session loader
-│   ├── load_employee_payout.js  # Employee payout data loader
-│   ├── loaddata.js              # Shared data loader utilities
-│   ├── login.js                 # Authentication login logic
-│   ├── logout.js                # Session teardown logic
-│   ├── manage_user.js           # User administration CRUD
-│   ├── payout.js                # Payout creation and list loader
-│   ├── print_PDF_report.js      # PDF report renderer
-│   ├── product.js               # Product management CRUD script
-│   ├── report.js                # Analytics report calculator
-│   └── reset_password.js        # Password reset handler
-└── css/                         # System stylesheets
-    ├── main.css                 # Primary system styling
-    ├── login.css                # Authentication page styles
-    ├── edit_profile.css         # Profile editor styles
-    ├── forget.css               # Password recovery styles
-    ├── leader_board.css         # Leaderboard component styles
-    ├── profile.css              # Profile view styles
-    ├── reset_password.css       # Password reset view styles
-    └── view-transitions.css     # Navigation animation styles
+│   ├── live.js                  # Live streaming session CRUD
+│   ├── load_employee_live.js    # Staff live streaming view loader
+│   ├── load_employee_payout.js  # Staff payout view loader
+│   ├── loaddata.js              # Shared DOM data utilities
+│   ├── login.js                 # Authentication handler
+│   ├── logout.js                # Session teardown handler
+│   ├── manage_user.js           # User administration logic
+│   ├── payout.js                # Payout creation logic
+│   ├── print_PDF_report.js      # PDF report exporter
+│   ├── product.js               # Product CRUD logic
+│   ├── report.js                # Report analytics engine
+│   └── reset_password.js        # Password reset engine
+└── css/                         # Application CSS stylesheets
+    ├── main.css                 # Global system styling
+    ├── login.css                # Authentication view styling
+    ├── edit_profile.css         # Profile view styling
+    ├── forget.css               # Password recovery styling
+    ├── leader_board.css         # Leaderboard component styling
+    ├── profile.css              # Profile view styling
+    ├── reset_password.css       # Password reset styling
+    └── view-transitions.css     # Navigation transitions styling
 ```
 
 ---
 
-## ⚡ Supabase Backend Integration
+## ⚡ Supabase Database Schema
 
-The application interacts with Supabase backend (`database.js`).
+Client configuration initialized in `js/database.js`.
 
-### Client Configuration
+### Table Specifications
 
-- **Supabase URL**: `https://uvmsvoyuzcwncwkghzml.supabase.co`
-- **Key**: Configured in `js/database.js` using `supabaseClient`.
+1. **`profiles`**: User account credentials and roles.
+   - `id` (uuid, primary key)
+   - `username` (text)
+   - `email` (text)
+   - `role` (text: `administrator`, `employee`, `owner`)
 
-### Core Database Tables
+2. **`products`**: Inventory items catalog.
+   - `id` (uuid, primary key)
+   - `title` (text)
+   - `category` (text)
+   - `stock` (integer)
+   - `price` (numeric)
 
-- `profiles`: User IDs, roles (`administrator`, `employee`, `owner`), usernames, email addresses.
-- `products`: Product ID, title, stock quantity, unit price, category.
-- `lives`: Live streaming sales records, host user ID, GMV, items sold, views.
-- `payouts`: Payout record ID, employee ID, amount, payout date, status.
+3. **`lives`**: Live stream session records.
+   - `id` (uuid, primary key)
+   - `user_id` (uuid, foreign key -> profiles.id)
+   - `gmv` (numeric)
+   - `units_sold` (integer)
+   - `session_date` (timestamp)
+
+4. **`payouts`**: Employee compensation records.
+   - `id` (uuid, primary key)
+   - `employee_id` (uuid, foreign key -> profiles.id)
+   - `amount` (numeric)
+   - `payout_date` (date)
+   - `status` (text: `Completed`, `Pending`)

@@ -15,15 +15,44 @@ def test_diataxis_directories_exist():
 def test_diataxis_documents_exist():
     expected_files = [
         os.path.join(ROOT_DIR, 'docs', 'tutorials', 'getting-started.md'),
+        os.path.join(ROOT_DIR, 'docs', 'tutorials', 'llms-txt-setup.md'),
         os.path.join(ROOT_DIR, 'docs', 'how-to', 'manage-inventory-and-payouts.md'),
+        os.path.join(ROOT_DIR, 'docs', 'how-to', 'generate-llms-context.md'),
         os.path.join(ROOT_DIR, 'docs', 'reference', 'file-structure-and-api.md'),
+        os.path.join(ROOT_DIR, 'docs', 'reference', 'cli-and-tools.md'),
         os.path.join(ROOT_DIR, 'docs', 'explanation', 'architecture-and-diataxis.md'),
+        os.path.join(ROOT_DIR, 'docs', 'explanation', 'okf-02-and-diataxis.md'),
     ]
     for filepath in expected_files:
         assert os.path.isfile(filepath), f"Expected documentation file missing: {filepath}"
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         assert len(content.strip()) > 100, f"Documentation file {filepath} content is too short"
+        assert content.startswith("---"), f"Documentation file {filepath} missing YAML frontmatter"
+        assert "title:" in content, f"Documentation file {filepath} missing title in frontmatter"
+
+def test_summary_and_navigation_files():
+    summary_path = os.path.join(ROOT_DIR, 'docs', 'SUMMARY.md')
+    assert os.path.isfile(summary_path), "docs/SUMMARY.md missing"
+    with open(summary_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    assert "# Summary" in content
+    assert "tutorials/" in content
+    assert "how-to/" in content
+    assert "reference/" in content
+    assert "explanation/" in content
+
+def test_llm_index_files_exist():
+    required_index_files = [
+        'llms.txt', 'llms-full.txt', 'sitemap.txt', 'sitemap.xml',
+        os.path.join('docs', 'llms.txt'),
+        os.path.join('docs', 'llms-full.txt'),
+        os.path.join('docs', 'sitemap.txt'),
+        os.path.join('docs', 'sitemap.xml'),
+    ]
+    for filename in required_index_files:
+        filepath = os.path.join(ROOT_DIR, filename)
+        assert os.path.isfile(filepath), f"Required index file {filename} missing"
 
 def test_start_here_document_exists():
     start_here_path = os.path.join(ROOT_DIR, 'START-HERE.md')
