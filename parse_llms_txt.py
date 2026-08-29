@@ -132,20 +132,37 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
     root_p = "../" if relative_to_docs else ""
 
     content = [
-        "# Omni-View Business Command Centre",
+        "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
         "",
-        "> Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.",
+        "> DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.",
         "",
-        "## Core Documentation Quadrants",
+        "## Core Governance & Architecture",
         "",
-        f"- [Getting Started Tutorial]({p}tutorials/getting-started.md): Guided onboarding tutorial for system usage.",
-        f"- [LLMs.txt Setup Tutorial]({p}tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.",
-        f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
-        f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
+        f"- [DSOM Governance]({p}explanation/dsom-governance.md): Metacognitive context management and protocol standards.",
+        f"- [Diátaxis Framework]({p}explanation/diataxis.md): Quadrant layout and documentation structure.",
+        f"- [System Architecture]({p}explanation/system-architecture.md): Subsystem topologies and integration points.",
+        f"- [Architecture and Diátaxis Explanation]({p}explanation/architecture-and-diataxis.md): Decoupled system architecture and framework adoption.",
+        f"- [OKF 0.2 and DSOM Integration]({p}explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.",
+        "",
+        "## Tools & Component References",
+        "",
+        f"- [Tool Index]({p}reference/index.md): Exhaustive list of scripts, modules, and API signatures.",
         f"- [File Structure and API Reference]({p}reference/file-structure-and-api.md): Technical reference for frontend and database schema.",
         f"- [CLI and Tools Reference]({p}reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.",
-        f"- [Architecture and Diátaxis Explanation]({p}explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.",
-        f"- [OKF 0.2 and DSOM Integration]({p}explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.",
+        f"- [OpenWiki Engine Specification]({p}reference/openwiki-emulator.md): Specifications for OpenWiki Python tools and batch operations.",
+        "",
+        "## Practical Operational Guides",
+        "",
+        f"- [Operational Recipes Index]({p}how-to/index.md): Operational recipes index.",
+        f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
+        f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
+        f"- [Execute Tool Workflows]({p}how-to/run-tool.md): Task-oriented execution recipes for tools and pipelines.",
+        "",
+        "## Tutorials & Onboarding",
+        "",
+        f"- [Quickstart Onboarding Guide]({p}tutorials/01-getting-started.md): Beginner step-by-step onboarding walkthrough.",
+        f"- [Getting Started Tutorial]({p}tutorials/getting-started.md): Guided onboarding tutorial for system usage.",
+        f"- [LLMs.txt Setup Tutorial]({p}tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.",
         "",
         "## Optional & System Documents",
         "",
@@ -172,14 +189,22 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         "START-HERE.md",
         os.path.join(docs_dir, "README.md"),
         os.path.join(docs_dir, "SUMMARY.md"),
-        os.path.join(docs_dir, "tutorials", "getting-started.md"),
-        os.path.join(docs_dir, "tutorials", "llms-txt-setup.md"),
-        os.path.join(docs_dir, "how-to", "manage-inventory-and-payouts.md"),
-        os.path.join(docs_dir, "how-to", "generate-llms-context.md"),
-        os.path.join(docs_dir, "reference", "file-structure-and-api.md"),
-        os.path.join(docs_dir, "reference", "cli-and-tools.md"),
+        os.path.join(docs_dir, "explanation", "dsom-governance.md"),
+        os.path.join(docs_dir, "explanation", "diataxis.md"),
+        os.path.join(docs_dir, "explanation", "system-architecture.md"),
         os.path.join(docs_dir, "explanation", "architecture-and-diataxis.md"),
         os.path.join(docs_dir, "explanation", "okf-02-and-diataxis.md"),
+        os.path.join(docs_dir, "tutorials", "01-getting-started.md"),
+        os.path.join(docs_dir, "tutorials", "getting-started.md"),
+        os.path.join(docs_dir, "tutorials", "llms-txt-setup.md"),
+        os.path.join(docs_dir, "how-to", "index.md"),
+        os.path.join(docs_dir, "how-to", "manage-inventory-and-payouts.md"),
+        os.path.join(docs_dir, "how-to", "generate-llms-context.md"),
+        os.path.join(docs_dir, "how-to", "run-tool.md"),
+        os.path.join(docs_dir, "reference", "index.md"),
+        os.path.join(docs_dir, "reference", "file-structure-and-api.md"),
+        os.path.join(docs_dir, "reference", "cli-and-tools.md"),
+        os.path.join(docs_dir, "reference", "openwiki-emulator.md"),
     ]
 
     full_text = ["# Omni-View Complete Documentation (llms-full.txt)", ""]
@@ -210,14 +235,22 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/",
         f"{base_url}/START-HERE",
         f"{base_url}/docs/",
+        f"{base_url}/docs/explanation/dsom-governance",
+        f"{base_url}/docs/explanation/diataxis",
+        f"{base_url}/docs/explanation/system-architecture",
+        f"{base_url}/docs/explanation/architecture-and-diataxis",
+        f"{base_url}/docs/explanation/okf-02-and-diataxis",
+        f"{base_url}/docs/tutorials/01-getting-started",
         f"{base_url}/docs/tutorials/getting-started",
         f"{base_url}/docs/tutorials/llms-txt-setup",
+        f"{base_url}/docs/how-to/index",
         f"{base_url}/docs/how-to/manage-inventory-and-payouts",
         f"{base_url}/docs/how-to/generate-llms-context",
+        f"{base_url}/docs/how-to/run-tool",
+        f"{base_url}/docs/reference/index",
         f"{base_url}/docs/reference/file-structure-and-api",
         f"{base_url}/docs/reference/cli-and-tools",
-        f"{base_url}/docs/explanation/architecture-and-diataxis",
-        f"{base_url}/docs/explanation/okf-02-and-diataxis"
+        f"{base_url}/docs/reference/openwiki-emulator"
     ]
 
     sitemap_txt = "\n".join(urls) + "\n"
@@ -247,7 +280,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.generate_all:
+    if getattr(args, "generate_all", False):
         print("Generating documentation indexes and sitemaps...")
 
         # llms.txt

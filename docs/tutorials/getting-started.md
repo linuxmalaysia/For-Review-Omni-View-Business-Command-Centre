@@ -1,8 +1,20 @@
 ---
 title: "Tutorial: Getting Started with Omni-View"
 description: "Step-by-step onboarding tutorial for navigating and using Omni-View Business Command Centre."
+type: "tutorial"
+id: "docs/tutorials/getting-started.md"
+dsom_governance:
+  domain: "Automation"
+  context_tier: "L1-Overview"
+tags:
+  - "dsom-protocol"
+  - "tutorial"
+  - "onboarding"
+related_links:
+  - "docs/tutorials/01-getting-started.md"
+  - "docs/tutorials/llms-txt-setup.md"
 nav_order: 1
-layout: default
+layout: "default"
 ---
 
 # Tutorial: Getting Started with Omni-View Command Centre
@@ -23,50 +35,33 @@ By completing this tutorial, you will:
 ## 📋 Prerequisites
 
 - Modern web browser (Chrome, Edge, or Firefox).
-- Python 3.9+ with `uv` package manager installed.
-- Internet connectivity for Supabase REST API access.
+- Local Python runtime for serving application files (`python3 -m http.server 8000 --bind 127.0.0.1`).
 
 ---
 
-## 🚀 Step 1: Initialize Local Workspace
+## 🚀 Step 1: Launch the Application
 
-Run the following shell commands to start the local application server:
+1. Open your terminal in the project root directory.
+2. Start the local server:
 
-```bash
-uv sync
-python3 -m http.server 8000 --directory .
-```
+   ```bash
+   python3 -m http.server 8000 --bind 127.0.0.1 --directory .
+   ```
 
-Open `http://localhost:8000` in your web browser. The entry point (`index.html`) automatically routes to `./Web Ui/login.html`.
-
----
-
-## 🔐 Step 2: Authenticate and Sign In
-
-1. Open the sign-in page at `http://localhost:8000/Web Ui/login.html`.
-2. Input target credentials:
-   - **Administrator Login**: Enter admin email and password.
-   - **Employee Login**: Enter staff email and password.
-3. Click **Login**.
-4. System redirects based on user role:
-   - **Administrators**: Navigated to `main.html` (Admin Command Dashboard).
-   - **Employees**: Navigated to `Employee_Main.html` (Staff Dashboard).
+3. Open `http://127.0.0.1:8000/Web Ui/login.html` in your web browser.
 
 ---
 
-## 📊 Step 3: Explore Operational Metrics
+## 🔐 Step 2: User Authentication
 
-1. Review key performance indicators at the top:
-   - **Daily GMV**: Real-time gross merchandise value.
-   - **Items Sold Today**: Total merchandise units processed.
-   - **Active Staff Count**: Active host staff on shift.
-2. Inspect the **Inventory Summary** table and live sales bar charts.
-3. Check **Top Employees This Month** and recent payout records.
+- **Administrator Access**: Enter admin credentials to access `main.html` (Administrator Command Dashboard).
+- **Staff Access**: Enter employee credentials to access `Employee_Main.html` (Staff Member Dashboard).
 
 ---
 
-## 🎓 Next Steps
+## 📊 Step 3: Explore Core Quadrants
 
-Now that you have completed basic setup:
-- Learn procedural workflows in [Managing Inventory & Payouts](../how-to/manage-inventory-and-payouts.md).
-- Learn LLM context generation in [LLMs.txt Setup Guide](llms-txt-setup.md).
+- **Products (`product.html`)**: Manage product inventory items, stock levels, and prices.
+- **Live Streams (`lives.html` / `Employee_Lives.html`)**: Monitor live streaming session performance, GMV, and units sold.
+- **Payouts (`payout.html` / `Employee_Payout.html`)**: Process and review employee payout allocations.
+- **Reports (`report.html`)**: Export analytics and generate PDF performance reports.

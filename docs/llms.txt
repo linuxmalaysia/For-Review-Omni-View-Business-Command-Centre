@@ -1,17 +1,34 @@
-# Omni-View Business Command Centre
+# Omni-View Business Command Centre - DSOM AI Knowledge Base
 
-> Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.
+> DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.
 
-## Core Documentation Quadrants
+## Core Governance & Architecture
 
-- [Getting Started Tutorial](tutorials/getting-started.md): Guided onboarding tutorial for system usage.
-- [LLMs.txt Setup Tutorial](tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.
-- [Manage Inventory and Payouts](how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.
-- [Generate LLMs Context Guide](how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.
+- [DSOM Governance](explanation/dsom-governance.md): Metacognitive context management and protocol standards.
+- [Diátaxis Framework](explanation/diataxis.md): Quadrant layout and documentation structure.
+- [System Architecture](explanation/system-architecture.md): Subsystem topologies and integration points.
+- [Architecture and Diátaxis Explanation](explanation/architecture-and-diataxis.md): Decoupled system architecture and framework adoption.
+- [OKF 0.2 and DSOM Integration](explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.
+
+## Tools & Component References
+
+- [Tool Index](reference/index.md): Exhaustive list of scripts, modules, and API signatures.
 - [File Structure and API Reference](reference/file-structure-and-api.md): Technical reference for frontend and database schema.
 - [CLI and Tools Reference](reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.
-- [Architecture and Diátaxis Explanation](explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.
-- [OKF 0.2 and DSOM Integration](explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.
+- [OpenWiki Engine Specification](reference/openwiki-emulator.md): Specifications for OpenWiki Python tools and batch operations.
+
+## Practical Operational Guides
+
+- [Operational Recipes Index](how-to/index.md): Operational recipes index.
+- [Manage Inventory and Payouts](how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.
+- [Generate LLMs Context Guide](how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.
+- [Execute Tool Workflows](how-to/run-tool.md): Task-oriented execution recipes for tools and pipelines.
+
+## Tutorials & Onboarding
+
+- [Quickstart Onboarding Guide](tutorials/01-getting-started.md): Beginner step-by-step onboarding walkthrough.
+- [Getting Started Tutorial](tutorials/getting-started.md): Guided onboarding tutorial for system usage.
+- [LLMs.txt Setup Tutorial](tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.
 
 ## Optional & System Documents
 
