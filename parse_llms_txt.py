@@ -174,11 +174,12 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         if os.path.isfile(full_path):
             with open(full_path, "r", encoding="utf-8") as f:
                 content = f.read()
+            cleaned_content = "\n".join(line.rstrip() for line in content.splitlines())
             full_text.append(f"--- FILE: {path} ---")
-            full_text.append(content)
+            full_text.append(cleaned_content)
             full_text.append("")
 
-    return "\n".join(full_text)
+    return "\n".join(full_text) + "\n"
 
 
 def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/openwiki") -> Tuple[str, str]:

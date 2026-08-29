@@ -32,7 +32,7 @@ Capt Empire relies on Omni-View to manage daily operations. This system provides
 - Develop a web-based Integrated Operations Management System.
 - Centralize sales, inventory, employee, and KPI management.
 - Monitor employee performance through KPI tracking.
-- Provide dashboards and reports for business analysis and decision-making. 
+- Provide dashboards and reports for business analysis and decision-making.
 
 ---
 
@@ -78,4 +78,4 @@ uv run pytest
 
 ## 📄 License
 
-This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology). 
+This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology).
