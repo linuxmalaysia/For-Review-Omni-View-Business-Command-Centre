@@ -1,6 +1,6 @@
 # Omni-View Business Command Centre
 
-> Integrated Operations Management System documentation system adhering to Diátaxis and Google OKF 0.2 specifications.
+> Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.
 
 ## Core Documentation Quadrants
 
@@ -11,7 +11,7 @@
 - [File Structure and API Reference](docs/reference/file-structure-and-api.md): Technical reference for frontend and database schema.
 - [CLI and Tools Reference](docs/reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.
 - [Architecture and Diátaxis Explanation](docs/explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.
-- [OKF 0.2 and DSOM Integration](docs/explanation/okf-02-and-diataxis.md): Conceptual overview of Ontological Knowledge Frame 0.2 and Domain-Specific Operational Model.
+- [OKF 0.2 and DSOM Integration](docs/explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.
 
 ## Optional & System Documents
 

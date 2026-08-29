@@ -1,13 +1,13 @@
 ---
 title: "Omni-View Documentation Hub"
-description: "Production-ready documentation system for Omni-View Business Command Centre adhering to Diátaxis and Google OKF 0.2 framework."
+description: "Production-ready documentation system for Omni-View Business Command Centre adhering to Diátaxis and Open Knowledge Format (OKF 0.2)."
 nav_order: 1
 layout: default
 ---
 
 # 📚 Omni-View Documentation Hub
 
-Welcome to the official documentation hub for **Omni-View Business Command Centre**. This documentation system adheres strictly to the **Diátaxis Documentation Framework** and **Google OKF 0.2 (Ontological Knowledge Frame)** standards to support both human developers and autonomous AI agents (e.g., Jules, LLM context pipelines).
+Welcome to the official documentation hub for **Omni-View Business Command Centre**. This documentation system adheres strictly to the **Diátaxis Documentation Framework** and **Open Knowledge Format (OKF 0.2)** standards to support both human developers and autonomous AI agents (e.g., Jules, LLM context pipelines).
 
 ---
 

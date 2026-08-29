@@ -10,6 +10,7 @@ import argparse
 import os
 import re
 import xml.etree.ElementTree as ET
+import xml.sax.saxutils
 from xml.dom import minidom
 from typing import Dict, List, Any, Tuple, Optional
 
@@ -99,7 +100,7 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Attempt to embed local document content if file exists
+            # Embed local document content if file exists
             rel_path = item.get("url", "").lstrip("/")
             file_path = os.path.join(root_dir, rel_path)
             if os.path.isfile(file_path):
@@ -108,39 +109,42 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                         file_content = f.read()
                     content_elem = ET.SubElement(doc_elem, "content")
                     content_elem.text = file_content
-                except Exception:
-                    pass
+                except (OSError, UnicodeDecodeError) as err:
+                    raise RuntimeError(f"Failed to read indexed document '{file_path}': {err}") from err
 
     xml_str = ET.tostring(root, encoding="utf-8")
     parsed = minidom.parseString(xml_str)
     return parsed.toprettyxml(indent="  ")
 
 
-def generate_llms_txt(docs_dir: str = "docs") -> str:
+def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) -> str:
     """
     Generates the standard llms.txt index content from docs directory tree.
     """
+    p = "" if relative_to_docs else "docs/"
+    root_p = "../" if relative_to_docs else ""
+
     content = [
         "# Omni-View Business Command Centre",
         "",
-        "> Integrated Operations Management System documentation system adhering to Diátaxis and Google OKF 0.2 specifications.",
+        "> Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.",
         "",
         "## Core Documentation Quadrants",
         "",
-        "- [Getting Started Tutorial](docs/tutorials/getting-started.md): Guided onboarding tutorial for system usage.",
-        "- [LLMs.txt Setup Tutorial](docs/tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.",
-        "- [Manage Inventory and Payouts](docs/how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
-        "- [Generate LLMs Context Guide](docs/how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
-        "- [File Structure and API Reference](docs/reference/file-structure-and-api.md): Technical reference for frontend and database schema.",
-        "- [CLI and Tools Reference](docs/reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.",
-        "- [Architecture and Diátaxis Explanation](docs/explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.",
-        "- [OKF 0.2 and DSOM Integration](docs/explanation/okf-02-and-diataxis.md): Conceptual overview of Ontological Knowledge Frame 0.2 and Domain-Specific Operational Model.",
+        f"- [Getting Started Tutorial]({p}tutorials/getting-started.md): Guided onboarding tutorial for system usage.",
+        f"- [LLMs.txt Setup Tutorial]({p}tutorials/llms-txt-setup.md): Step-by-step tutorial on generating and consuming LLM context files.",
+        f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
+        f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
+        f"- [File Structure and API Reference]({p}reference/file-structure-and-api.md): Technical reference for frontend and database schema.",
+        f"- [CLI and Tools Reference]({p}reference/cli-and-tools.md): Command line parameters, environment specs, and Python utility documentation.",
+        f"- [Architecture and Diátaxis Explanation]({p}explanation/architecture-and-diataxis.md): System architecture and Diátaxis framework implementation.",
+        f"- [OKF 0.2 and DSOM Integration]({p}explanation/okf-02-and-diataxis.md): Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.",
         "",
         "## Optional & System Documents",
         "",
-        "- [Documentation Index](docs/README.md): Primary documentation home page.",
-        "- [SUMMARY Table of Contents](docs/SUMMARY.md): GitBook-compatible navigation summary.",
-        "- [START-HERE Onboarding Index](START-HERE.md): Dual-audience developer and AI agent onboarding entry point."
+        f"- [Documentation Index]({p}README.md): Primary documentation home page.",
+        f"- [SUMMARY Table of Contents]({p}SUMMARY.md): GitBook-compatible navigation summary.",
+        f"- [START-HERE Onboarding Index]({root_p}START-HERE.md): Dual-audience developer and AI agent onboarding entry point."
     ]
     return "\n".join(content) + "\n"
 
@@ -202,8 +206,9 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
     ]
     for url in urls:
+        escaped_url = xml.sax.saxutils.escape(url)
         xml_lines.append("  <url>")
-        xml_lines.append(f"    <loc>{url}</loc>")
+        xml_lines.append(f"    <loc>{escaped_url}</loc>")
         xml_lines.append("  </url>")
     xml_lines.append("</urlset>\n")
 
@@ -224,11 +229,13 @@ def main():
         print("Generating documentation indexes and sitemaps...")
 
         # llms.txt
-        llms_content = generate_llms_txt()
+        root_llms = generate_llms_txt(relative_to_docs=False)
+        docs_llms = generate_llms_txt(relative_to_docs=True)
+
         with open("llms.txt", "w", encoding="utf-8") as f:
-            f.write(llms_content)
+            f.write(root_llms)
         with open("docs/llms.txt", "w", encoding="utf-8") as f:
-            f.write(llms_content)
+            f.write(docs_llms)
 
         # llms-full.txt
         llms_full_content = generate_llms_full(root_dir=args.root)
