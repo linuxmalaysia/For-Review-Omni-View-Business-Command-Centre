@@ -10,10 +10,31 @@
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/</loc>
   </url>
   <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/dsom-governance</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/diataxis</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/system-architecture</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/architecture-and-diataxis</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/okf-02-and-diataxis</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/tutorials/01-getting-started</loc>
+  </url>
+  <url>
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/tutorials/getting-started</loc>
   </url>
   <url>
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/tutorials/llms-txt-setup</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/how-to/index</loc>
   </url>
   <url>
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/how-to/manage-inventory-and-payouts</loc>
@@ -22,15 +43,18 @@
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/how-to/generate-llms-context</loc>
   </url>
   <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/how-to/run-tool</loc>
+  </url>
+  <url>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/reference/index</loc>
+  </url>
+  <url>
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/reference/file-structure-and-api</loc>
   </url>
   <url>
     <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/reference/cli-and-tools</loc>
   </url>
   <url>
-    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/architecture-and-diataxis</loc>
-  </url>
-  <url>
-    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/explanation/okf-02-and-diataxis</loc>
+    <loc>https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/docs/reference/openwiki-emulator</loc>
   </url>
 </urlset>

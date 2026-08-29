@@ -1,8 +1,20 @@
 ---
 title: "Technical Reference: File Structure, Architecture & Schema"
 description: "Factual specification of files, HTML UI views, JavaScript modules, CSS stylesheets, and Supabase database schema."
+type: "reference"
+id: "docs/reference/file-structure-and-api.md"
+dsom_governance:
+  domain: "Infrastructure"
+  context_tier: "L3-TechnicalReference"
+tags:
+  - "dsom-protocol"
+  - "reference"
+  - "schema"
+related_links:
+  - "docs/reference/index.md"
+  - "docs/reference/cli-and-tools.md"
 nav_order: 1
-layout: default
+layout: "default"
 ---
 
 # Technical Reference: File Structure, Architecture & Database Schema

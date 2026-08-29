@@ -1,8 +1,20 @@
 ---
 title: "Explanation: Open Knowledge Format (OKF 0.2) & DSOM Integration Rationale"
 description: "Conceptual explanation of Open Knowledge Format 0.2 and Domain-Specific Operational Model for AI agents."
+type: "architecture"
+id: "docs/explanation/okf-02-and-diataxis.md"
+dsom_governance:
+  domain: "AI"
+  context_tier: "L1-Overview"
+tags:
+  - "dsom-protocol"
+  - "okf-02"
+  - "explanation"
+related_links:
+  - "docs/explanation/dsom-governance.md"
+  - "docs/explanation/diataxis.md"
 nav_order: 2
-layout: default
+layout: "default"
 ---
 
 # Explanation: Open Knowledge Format (OKF 0.2) & DSOM Integration Rationale

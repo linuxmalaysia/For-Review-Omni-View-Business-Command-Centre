@@ -1,317 +1,336 @@
 <?xml version="1.0" ?>
-<llm_context title="Omni-View Business Command Centre">
-  <summary>Integrated Operations Management System documentation system adhering to Diátaxis and Open Knowledge Format specifications.</summary>
+<llm_context title="Omni-View Business Command Centre - DSOM AI Knowledge Base">
+  <summary>DSOM-governed, OKF v0.2 compliant documentation index for AI Agents and LLMs.</summary>
   <sections>
-    <section name="Core Documentation Quadrants">
-      <document href="docs/tutorials/getting-started.md">
-        <title>Getting Started Tutorial</title>
-        <description>Guided onboarding tutorial for system usage.</description>
+    <section name="Core Governance &amp; Architecture">
+      <document href="docs/explanation/dsom-governance.md">
+        <title>DSOM Governance</title>
+        <description>Metacognitive context management and protocol standards.</description>
         <content>---
-title: &quot;Tutorial: Getting Started with Omni-View&quot;
-description: &quot;Step-by-step onboarding tutorial for navigating and using Omni-View Business Command Centre.&quot;
+title: &quot;DSOM Governance Framework &amp; Metacognitive Protocol&quot;
+description: &quot;Conceptual explanation of Deep State of Mind (DSOM) context governance and metacognitive management for AI systems.&quot;
+type: &quot;architecture&quot;
+id: &quot;docs/explanation/dsom-governance.md&quot;
+dsom_governance:
+  domain: &quot;AI&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;governance&quot;
+  - &quot;explanation&quot;
+related_links:
+  - &quot;docs/explanation/diataxis.md&quot;
+  - &quot;docs/explanation/system-architecture.md&quot;
 nav_order: 1
-layout: default
+layout: &quot;default&quot;
 ---
 
-# Tutorial: Getting Started with Omni-View Command Centre
+# Deep State of Mind (DSOM) Governance Framework
 
-Welcome to **Omni-View Business Command Centre**! This tutorial guides you step-by-step through setting up and navigating the platform.
-
----
-
-## 🎯 Learning Objectives
-
-By completing this tutorial, you will:
-- Launch the application interface locally.
-- Authenticate using administrator or staff credentials.
-- Navigate core operational modules: Dashboard, Products, Lives, and Payouts.
+The **Deep State of Mind (DSOM)** protocol establishes persistent context governance, metacognitive project management, and Progressive Disclosure to minimise token consumption while maintaining deep architectural intent across AI sessions.
 
 ---
 
-## 📋 Prerequisites
+## 🏛 Core Principles of DSOM
 
-- Modern web browser (Chrome, Edge, or Firefox).
-- Python 3.9+ with `uv` package manager installed.
-- Internet connectivity for Supabase REST API access.
+1. **Living Brain in Palace**: Documentation is treated as a version-controlled operational state. Every file serves both human operators and autonomous AI context traversal.
+2. **Progressive Disclosure**: Information is modularized into bite-sized, deterministic Markdown files so that AI context windows load only the exact quadrants required for execution.
+3. **Minimal Sufficient Context**: AI runtimes ingest strictly necessary repository artifacts to execute discrete tasks, reducing context drift and eliminating hallucination.
 
 ---
 
-## 🚀 Step 1: Initialize Local Workspace
+## 🔄 Metacognitive Context Flow
 
-Run the following shell commands to start the local application server:
-
-```bash
-uv sync
-python3 -m http.server 8000 --directory .
+```mermaid
+graph TD
+    A[Task Specification] --&gt; B[LLM Discovery via llms.txt]
+    B --&gt; C[Target Context Isolation]
+    C --&gt; D[Deterministic Execution]
+    D --&gt; E[Automated Test Verification]
+    E --&gt; F[Version Controlled Memory State]
 ```
 
-Open `http://localhost:8000` in your web browser. The entry point (`index.html`) automatically routes to `./Web Ui/login.html`.
-
 ---
 
-## 🔐 Step 2: Authenticate and Sign In
+## 🛡 Strategic Alignment
 
-1. Open the sign-in page at `http://localhost:8000/Web Ui/login.html`.
-2. Input target credentials:
-   - **Administrator Login**: Enter admin email and password.
-   - **Employee Login**: Enter staff email and password.
-3. Click **Login**.
-4. System redirects based on user role:
-   - **Administrators**: Navigated to `main.html` (Admin Command Dashboard).
-   - **Employees**: Navigated to `Employee_Main.html` (Staff Dashboard).
-
----
-
-## 📊 Step 3: Explore Operational Metrics
-
-1. Review key performance indicators at the top:
-   - **Daily GMV**: Real-time gross merchandise value.
-   - **Items Sold Today**: Total merchandise units processed.
-   - **Active Staff Count**: Active host staff on shift.
-2. Inspect the **Inventory Summary** table and live sales bar charts.
-3. Check **Top Employees This Month** and recent payout records.
-
----
-
-## 🎓 Next Steps
-
-Now that you have completed basic setup:
-- Learn procedural workflows in [Managing Inventory &amp; Payouts](../how-to/manage-inventory-and-payouts.md).
-- Learn LLM context generation in [LLMs.txt Setup Guide](llms-txt-setup.md).
+By coupling DSOM with Google Open Knowledge Format (OKF v0.2) frontmatter, document metadata is machine-parseable across multi-agent workflows (Jules, Google Antigravity, and CI sub-agents).
 </content>
       </document>
-      <document href="docs/tutorials/llms-txt-setup.md">
-        <title>LLMs.txt Setup Tutorial</title>
-        <description>Step-by-step tutorial on generating and consuming LLM context files.</description>
+      <document href="docs/explanation/diataxis.md">
+        <title>Diátaxis Framework</title>
+        <description>Quadrant layout and documentation structure.</description>
         <content>---
-title: &quot;Tutorial: Setting Up LLMs.txt and Context Pipelines&quot;
-description: &quot;Step-by-step tutorial on generating llms.txt, llms-full.txt, and XML context files for AI agents.&quot;
+title: &quot;Diátaxis Structuring Framework Implementation&quot;
+description: &quot;Architectural specification of the Diátaxis 4-quadrant documentation framework within Omni-View.&quot;
+type: &quot;architecture&quot;
+id: &quot;docs/explanation/diataxis.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;diataxis&quot;
+  - &quot;explanation&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/explanation/system-architecture.md&quot;
 nav_order: 2
-layout: default
+layout: &quot;default&quot;
 ---
 
-# Tutorial: Setting Up LLMs.txt and Context Pipelines
+# Diátaxis Documentation Framework Implementation
 
-This tutorial teaches you how to construct, generate, and consume `llms.txt` and XML context files for autonomous AI agents using `parse_llms_txt.py`.
-
----
-
-## 🎯 Learning Objectives
-
-By completing this tutorial, you will:
-- Understand the `llms.txt` format specification.
-- Generate `llms.txt`, `llms-full.txt`, and XML context files automatically.
-- Pass XML context payloads to AI agent runtimes (e.g., Jules, LLM prompts).
+Omni-View structures all technical documentation into four distinct functional quadrants based on user intent and mode, following the [Diátaxis Framework](https://diataxis.fr/).
 
 ---
 
-## 📋 Prerequisites
+## 🧭 Diátaxis Quadrant Matrix
 
-- Python 3.9+ installed.
-- Terminal / Command line access.
-- Repository cloned locally.
-
----
-
-## 🚀 Step 1: Generate Standard LLMs.txt and Sitemaps
-
-Execute `parse_llms_txt.py` with the `--generate-all` flag to produce site indexes:
-
-```bash
-python3 parse_llms_txt.py --generate-all
-```
-
-Expected output:
 ```text
-Generating documentation indexes and sitemaps...
-Index generation complete.
-XML context written to llm_context.xml
-```
-
-This creates `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml` in both the root directory and `docs/`.
-
----
-
-## 📄 Step 2: Inspect the Output XML Context File
-
-View `llm_context.xml` to examine the structured XML representation:
-
-```bash
-head -n 25 llm_context.xml
-```
-
-Sample output snippet:
-```xml
-&lt;?xml version=&quot;1.0&quot; ?&gt;
-&lt;llm_context title=&quot;Omni-View Business Command Centre&quot;&gt;
-  &lt;summary&gt;Integrated Operations Management System documentation system...&lt;/summary&gt;
-  &lt;sections&gt;
-    &lt;section name=&quot;Core Documentation Quadrants&quot;&gt;
-      &lt;document href=&quot;docs/tutorials/getting-started.md&quot;&gt;
-        &lt;title&gt;Getting Started Tutorial&lt;/title&gt;
-        &lt;description&gt;Guided onboarding tutorial for system usage.&lt;/description&gt;
-        &lt;content&gt;---
-title: &quot;Tutorial: Getting Started with Omni-View&quot;...
-        &lt;/content&gt;
-      &lt;/document&gt;
-    &lt;/section&gt;
-  &lt;/sections&gt;
-&lt;/llm_context&gt;
+                  USER INTENT
+           Learning         Practical
+        +----------------+----------------+
+ Acquisition|  TUTORIALS     | HOW-TO GUIDES  |
+ (Study)    | (Learning-     | (Problem-      |
+            |  oriented)     |  oriented)     |
+        +----------------+----------------+
+ Application|  EXPLANATION   |   REFERENCE    |
+ (Work)     | (Concept-      | (Information-  |
+            |  oriented)     |  oriented)     |
+        +----------------+----------------+
 ```
 
 ---
 
-## 🤖 Step 3: Provide XML Context to AI Agent Pipelines
+## 📂 Quadrant Directory Specifications
 
-Pass `llm_context.xml` or `llms-full.txt` directly to LLM context ingestion pipelines or system prompts:
-
-```python
-import parse_llms_txt
-
-# Programmatically load XML context payload
-with open(&quot;llm_context.xml&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
-    xml_payload = f.read()
-
-print(f&quot;Loaded XML Context payload ({len(xml_payload)} bytes) for AI agent runtime.&quot;)
-```
-
----
-
-## 🎓 Next Steps
-
-- Consult [How-To: Generate LLMs Context](../how-to/generate-llms-context.md) for custom parameter configurations.
-- Review technical API details in [CLI &amp; Tools Reference](../reference/cli-and-tools.md).
+1. **Tutorials (`docs/tutorials/`)**: Step-by-step onboarding walkthroughs for new developers and AI setup.
+2. **How-To Guides (`docs/how-to/`)**: Task-oriented operational recipes for routine day-2 operations.
+3. **Reference (`docs/reference/`)**: Technical specs, CLI flags, database schemas, and tool parameters.
+4. **Explanation (`docs/explanation/`)**: High-level architectural reasoning, DSOM governance models, and design trade-offs.
 </content>
       </document>
-      <document href="docs/how-to/manage-inventory-and-payouts.md">
-        <title>Manage Inventory and Payouts</title>
-        <description>How-to guide for stock management and employee payout procedures.</description>
+      <document href="docs/explanation/system-architecture.md">
+        <title>System Architecture</title>
+        <description>Subsystem topologies and integration points.</description>
         <content>---
-title: &quot;How-To: Manage Inventory, Live Sessions, and Payouts&quot;
-description: &quot;Practical operational guide for stock management, live streaming sales tracking, and staff payouts.&quot;
+title: &quot;Omni-View System Architecture &amp; Topology&quot;
+description: &quot;Detailed system architecture diagram, subsystem topologies, and integration points for Omni-View.&quot;
+type: &quot;architecture&quot;
+id: &quot;docs/explanation/system-architecture.md&quot;
+dsom_governance:
+  domain: &quot;Infrastructure&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;architecture&quot;
+  - &quot;explanation&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/reference/file-structure-and-api.md&quot;
+nav_order: 3
+layout: &quot;default&quot;
+---
+
+# System Architecture &amp; Component Topology
+
+Omni-View Business Command Centre is structured as a decoupled web application backed by Supabase PostgreSQL database service.
+
+---
+
+## 🏗 Subsystem Topologies
+
+```mermaid
+graph LR
+    SubGraph1[Frontend Web UI] --&gt;|REST / JS SDK| SubGraph2[Supabase Backend Engine]
+    SubGraph1 --&gt;|Chart.js| Analytics[Dashboard Analytics]
+    SubGraph2 --&gt; PostgreSQL[(PostgreSQL DB)]
+    SubGraph2 --&gt; RLS[Row Level Security]
+```
+
+### Components:
+- **Client Presentation Layer (`Web Ui/`, `js/`, `css/`)**: Static HTML5 interface enhanced with Bootstrap 5 and Chart.js. Client authentication guards enforce RBAC rules.
+- **Backend Infrastructure Layer (Supabase)**: Houses core tables (`profiles`, `products`, `lives`, `payouts`) secured via PostgreSQL Row Level Security (RLS).
+- **Automation &amp; LLM Context Layer (`parse_llms_txt.py`)**: Utility pipeline generating XML context maps and sitemaps for AI systems.
+</content>
+      </document>
+      <document href="docs/explanation/architecture-and-diataxis.md">
+        <title>Architecture and Diátaxis Explanation</title>
+        <description>Decoupled system architecture and framework adoption.</description>
+        <content>---
+title: &quot;Explanation: Architecture &amp; Diátaxis Framework Adoption&quot;
+description: &quot;Conceptual explanation of decoupled web architecture and adoption rationale of Diátaxis documentation framework.&quot;
+type: &quot;architecture&quot;
+id: &quot;docs/explanation/architecture-and-diataxis.md&quot;
+dsom_governance:
+  domain: &quot;Infrastructure&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;architecture&quot;
+  - &quot;diataxis&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/explanation/diataxis.md&quot;
 nav_order: 1
-layout: default
+layout: &quot;default&quot;
 ---
 
-# How-To Guide: Managing Inventory, Live Sessions, and Payouts
+# Architectural Explanation &amp; Diátaxis Framework Adoption
 
-This guide provides step-by-step procedural directions for routine operations in Omni-View.
-
----
-
-## 📦 How to Manage Product Inventory
-
-### Adding a New Product Item
-
-1. Navigate to **Product Management** (`http://localhost:8000/Web Ui/product.html`).
-2. Click **Add Product**.
-3. Fill in product details:
-   - **Title**: `Premium Wireless Headset`
-   - **Category**: `Electronics`
-   - **Stock**: `150`
-   - **Price**: `299.00`
-4. Click **Save Product**.
-
-### Updating Product Stock Quantity
-
-1. Locate item in product inventory table.
-2. Click **Edit** action button.
-3. Update stock field to target quantity (e.g., `200`).
-4. Click **Update Stock**.
+This document explains the system architecture, design decisions, and adoption of the **Diátaxis Documentation Framework** for Omni-View.
 
 ---
 
-## 🎥 How to Track Live Sales Sessions
+## 🏛 Architecture Overview
 
-1. Navigate to **Lives** (`/Web Ui/lives.html` for Admin, `/Web Ui/Employee_Lives.html` for Staff).
-2. Input live streaming operational parameters:
-   - **Host Staff**: Select host user from dropdown.
-   - **Duration**: Input start time (`10:00 AM`) and end time (`12:00 PM`).
-   - **GMV**: Input total session gross revenue (e.g., `4500.00`).
-   - **Units Sold**: Input units sold (e.g., `85`).
-3. Click **Submit Live Record**.
+Omni-View Business Command Centre is engineered using a decoupled web architecture:
 
----
+1. **Frontend Layer**:
+   - Built with HTML5, CSS3, JavaScript (ES6+), and Bootstrap 5.
+   - Dynamic charts powered by Chart.js.
 
-## 💰 How to Process Employee Payouts
+2. **Backend &amp; Database Layer**:
+   - Built on Supabase (PostgreSQL database engine).
+   - Real-time data queries managed directly through REST APIs via `supabase-js`.
 
-1. Navigate to **Payout** (`/Web Ui/payout.html`).
-2. Select target employee account from user list.
-3. Enter payout total amount (`1250.00`) and payout date (`2025-03-01`).
-4. Set payout status to `Completed`.
-5. Click **Record Payout**.
+3. **Role-Based Access Control (RBAC)**:
+   - Client-side navigation guards (`admin_authcheck.js`, `authcheck.js`) enforce role boundaries (`administrator`, `employee`, `owner`).
+   - Server-side security enforced via Supabase Row Level Security (RLS) policies.
 
 ---
 
-## 📄 How to Print Business Analytics Reports
+## 📖 Diátaxis Framework Adoption
 
-1. Navigate to **Report** (`/Web Ui/report.html`).
-2. Select reporting date range (`2025-01-01` to `2025-03-01`).
-3. Click **Generate Report**.
-4. Click **Print PDF Report** to export formatted PDF document.
+Documentation often mixes step-by-step tutorials, practical recipes, and technical API reference into monolithic pages. This increases cognitive load for human developers and causes hallucination in autonomous AI agents.
+
+Omni-View solves this by adopting the **Diátaxis Documentation Framework** (https://diataxis.fr/), structuring content into four distinct quadrants based on user intent and mode:
+
+```text
+                  USER INTENT
+           Learning         Practical
+        +----------------+----------------+
+ Acquisition|  TUTORIALS     | HOW-TO GUIDES  |
+ (Study)    | (Learning-     | (Problem-      |
+            |  oriented)     |  oriented)     |
+        +----------------+----------------+
+ Application|  EXPLANATION   |   REFERENCE    |
+ (Work)     | (Concept-      | (Information-  |
+            |  oriented)     |  oriented)     |
+        +----------------+----------------+
+```
+
+### Four Quadrants in Omni-View:
+
+1. **Tutorials (`docs/tutorials/`)**:
+   - **Goal**: Guided learning through execution.
+   - **Scope**: Step-by-step onboarding for new users and AI agent setup.
+
+2. **How-To Guides (`docs/how-to/`)**:
+   - **Goal**: Practical directions for specific tasks.
+   - **Scope**: Task-focused workflows (e.g. updating stock, processing payouts, parsing `llms.txt`).
+
+3. **Reference (`docs/reference/`)**:
+   - **Goal**: Factual descriptions and technical specifications.
+   - **Scope**: File paths, API signatures, database schema, CLI options.
+
+4. **Explanation (`docs/explanation/`)**:
+   - **Goal**: Conceptual context and architectural rationale.
+   - **Scope**: System design, security model, Diátaxis, and OKF 0.2 adoption.
 </content>
       </document>
-      <document href="docs/how-to/generate-llms-context.md">
-        <title>Generate LLMs Context Guide</title>
-        <description>How-to guide for utilizing parse_llms_txt.py script.</description>
+      <document href="docs/explanation/okf-02-and-diataxis.md">
+        <title>OKF 0.2 and DSOM Integration</title>
+        <description>Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.</description>
         <content>---
-title: &quot;How-To: Generate XML Context with parse_llms_txt.py&quot;
-description: &quot;Practical guide for parsing llms.txt and generating XML context payloads for LLMs.&quot;
+title: &quot;Explanation: Open Knowledge Format (OKF 0.2) &amp; DSOM Integration Rationale&quot;
+description: &quot;Conceptual explanation of Open Knowledge Format 0.2 and Domain-Specific Operational Model for AI agents.&quot;
+type: &quot;architecture&quot;
+id: &quot;docs/explanation/okf-02-and-diataxis.md&quot;
+dsom_governance:
+  domain: &quot;AI&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;okf-02&quot;
+  - &quot;explanation&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/explanation/diataxis.md&quot;
 nav_order: 2
-layout: default
+layout: &quot;default&quot;
 ---
 
-# How-To Guide: Generating XML Context with parse_llms_txt.py
+# Explanation: Open Knowledge Format (OKF 0.2) &amp; DSOM Integration Rationale
 
-This guide explains how to run `parse_llms_txt.py` to convert `llms.txt` files into XML context structures and maintain site sitemaps.
-
----
-
-## 🛠 How to Parse llms.txt into XML Context
-
-Run `parse_llms_txt.py` specifying input file and output XML destination:
-
-```bash
-python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
-```
-
-- `--input`: Path to input `llms.txt` file.
-- `--output`: Destination path for XML output file.
-- `--root`: Root path used to locate referenced documentation files.
+This document explains the integration of **Open Knowledge Format (OKF 0.2)** principles and **Domain-Specific Operational Model (DSOM)** within the Omni-View repository documentation system.
 
 ---
 
-## 🔄 How to Synchronize All LLM Indexes and Sitemaps
+## 💡 Conceptual Background
 
-Run the `--generate-all` command to update `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml`:
+As LLM-driven autonomous AI agents (such as Google Jules, Antigravity, and CI sub-agents) assume active roles in software engineering tasks, standard unstructured documentation causes context window overflow, redundant file reads, and degraded code generation accuracy.
 
-```bash
-python3 parse_llms_txt.py --generate-all
-```
-
-This updates files in both the repository root and `docs/` directory.
+To address this, Omni-View incorporates **Open Knowledge Format (OKF 0.2)** concepts and **DSOM** standards alongside the **Diátaxis Framework**.
 
 ---
 
-## 🐍 How to Use Python API in Custom Scripts
+## 🎯 Open Knowledge Format (OKF 0.2) Concepts
 
-Integrate `parse_llms_txt` into Python workflows:
+Open Knowledge Format (OKF 0.2) emphasizes machine-readable context discovery and clean knowledge framing:
 
-```python
-import parse_llms_txt
+1. **Explicit Entity Mapping**: Every file, utility, script, and database table has an unambiguous canonical path and type declaration in `docs/reference/file-structure-and-api.md` and `docs/reference/cli-and-tools.md`.
+2. **Standardized Context Discovery (`llms.txt`)**: Following [llmstxt.org](https://llmstxt.org/), `llms.txt` maps all published documentation nodes with concise summaries. AI agents can parse this file to construct an XML context graph (`llm_context.xml`) without reading unneeded binary assets.
+3. **Structured Jekyll Frontmatter Metadata**: Every Markdown file in `docs/` contains standard Jekyll YAML frontmatter (`title`, `description`, `nav_order`, `layout`), ensuring dual compatibility with both GitHub Pages (Jekyll) and GitBook parser engines while providing structured page metadata for `llms.txt` discovery.
 
-# 1. Parse llms.txt file into dictionary
-data = parse_llms_txt.parse_llms_txt(&quot;llms.txt&quot;)
-print(f&quot;Title: {data['title']}&quot;)
-print(f&quot;Sections count: {len(data['sections'])}&quot;)
+---
 
-# 2. Generate XML context string
-xml_output = parse_llms_txt.generate_xml_context(data, root_dir=&quot;.&quot;)
+## ⚡ Domain-Specific Operational Model (DSOM)
 
-# 3. Write XML context to disk
-with open(&quot;llm_context.xml&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
-    f.write(xml_output)
-```
+DSOM defines operational boundaries and execution constraints for autonomous agents operating in this repository:
+
+- **Minimal Sufficient Context**: AI agents must ingest only files directly pertinent to assigned tasks.
+- **Reference Anchoring**: `docs/reference/file-structure-and-api.md` serves as the single source of truth for file paths and backend schemas.
+- **Deterministic Verification Contract**: Every code change must be validated by running automated unit tests (`uv run pytest`) prior to PR submission.
+</content>
+      </document>
+    </section>
+    <section name="Tools &amp; Component References">
+      <document href="docs/reference/index.md">
+        <title>Tool Index</title>
+        <description>Exhaustive list of scripts, modules, and API signatures.</description>
+        <content>---
+title: &quot;Component &amp; Tool Technical Index&quot;
+description: &quot;Information-oriented catalog of all scripts, modules, APIs, and configuration schemas.&quot;
+type: &quot;reference&quot;
+id: &quot;docs/reference/index.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L3-TechnicalReference&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;reference&quot;
+  - &quot;components&quot;
+related_links:
+  - &quot;docs/reference/file-structure-and-api.md&quot;
+  - &quot;docs/reference/cli-and-tools.md&quot;
+  - &quot;docs/reference/openwiki-emulator.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# Component &amp; Tool Technical Index
+
+This index provides a complete technical catalog of all system components, database schemas, frontend JS modules, and CLI tools.
+
+---
+
+## 📖 Reference Specifications
+
+- [File Structure, Architecture &amp; Database Schema](file-structure-and-api.md): Complete mapping of HTML views, JS modules, CSS stylesheets, and Supabase tables.
+- [CLI Tools &amp; Utilities Specification](cli-and-tools.md): Parameters, options, and Python API docs for `parse_llms_txt.py`.
+- [OpenWiki &amp; Parsing Engine Specification](openwiki-emulator.md): Detailed specification for data extraction and document parsing utilities.
 </content>
       </document>
       <document href="docs/reference/file-structure-and-api.md">
@@ -320,8 +339,20 @@ with open(&quot;llm_context.xml&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;
         <content>---
 title: &quot;Technical Reference: File Structure, Architecture &amp; Schema&quot;
 description: &quot;Factual specification of files, HTML UI views, JavaScript modules, CSS stylesheets, and Supabase database schema.&quot;
+type: &quot;reference&quot;
+id: &quot;docs/reference/file-structure-and-api.md&quot;
+dsom_governance:
+  domain: &quot;Infrastructure&quot;
+  context_tier: &quot;L3-TechnicalReference&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;reference&quot;
+  - &quot;schema&quot;
+related_links:
+  - &quot;docs/reference/index.md&quot;
+  - &quot;docs/reference/cli-and-tools.md&quot;
 nav_order: 1
-layout: default
+layout: &quot;default&quot;
 ---
 
 # Technical Reference: File Structure, Architecture &amp; Database Schema
@@ -440,8 +471,20 @@ Client configuration initialized in `js/database.js`.
         <content>---
 title: &quot;Technical Reference: CLI, Tools &amp; Utilities Specifications&quot;
 description: &quot;Factual CLI and Python API parameter specifications for parse_llms_txt.py and CI automation tools.&quot;
+type: &quot;reference&quot;
+id: &quot;docs/reference/cli-and-tools.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L3-TechnicalReference&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;reference&quot;
+  - &quot;cli&quot;
+related_links:
+  - &quot;docs/reference/index.md&quot;
+  - &quot;docs/reference/file-structure-and-api.md&quot;
 nav_order: 2
-layout: default
+layout: &quot;default&quot;
 ---
 
 # Technical Reference: CLI Tools &amp; Utilities Specification
@@ -462,165 +505,470 @@ python3 parse_llms_txt.py [OPTIONS]
 
 #### CLI Parameters
 
-| Option | Type | Default | Description |
+| Flag | Short | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `--input`, `-i` | String | `llms.txt` | Path to input `llms.txt` file. |
-| `--output`, `-o` | String | `llm_context.xml` | Path for generated XML context file. |
-| `--root`, `-r` | String | `.` | Repository root path for relative file resolution. |
-| `--generate-all` | Flag | `False` | Regenerates `llms.txt`, `llms-full.txt`, `sitemap.txt`, `sitemap.xml`. |
-
-### Python API Interface
-
-#### `parse_llms_txt(content_or_path: str) -&gt; Dict[str, Any]`
-Parses an `llms.txt` file path or raw text string into a structured dictionary.
-
-- **Parameters**: `content_or_path` (`str`)
-- **Returns**: `Dict[str, Any]` with keys `&quot;title&quot;`, `&quot;summary&quot;`, `&quot;sections&quot;`.
-
-#### `generate_xml_context(llms_data: Dict[str, Any], root_dir: str = &quot;.&quot;) -&gt; str`
-Converts parsed dictionary into formatted XML string.
-
-- **Parameters**:
-  - `llms_data` (`Dict[str, Any]`): Output from `parse_llms_txt()`.
-  - `root_dir` (`str`): Base path for reading document files.
-- **Returns**: Pretty-printed XML string (`str`).
-
-#### `generate_llms_txt(docs_dir: str = &quot;docs&quot;) -&gt; str`
-Generates canonical `llms.txt` string adhering to llmstxt.org format.
-
-#### `generate_llms_full(docs_dir: str = &quot;docs&quot;, root_dir: str = &quot;.&quot;) -&gt; str`
-Generates consolidated `llms-full.txt` string containing all documentation.
-
-#### `generate_sitemaps(docs_dir: str = &quot;docs&quot;, base_url: str = &quot;https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre&quot;) -&gt; Tuple[str, str]`
-Generates `sitemap.txt` and `sitemap.xml` strings.
-
----
-
-## 🧪 Testing Utilities
-
-Executed via `uv run pytest`:
-
-- **`tests/test_docs_and_structure.py`**: Verifies Diátaxis folder tree, YAML frontmatter, `SUMMARY.md`, `llms.txt`, and sitemap files.
-- **`tests/test_llms_parser.py`**: Unit tests for `parse_llms_txt.py` CLI and API functions.
-- **`tests/test_html_files.py`**: DOM and layout assertions for HTML views in `Web Ui/`.
-- **`tests/test_js_files.py`**: JavaScript code syntax and logic assertions.
-- **`tests/test_css_files.py`**: CSS syntax and class assertions.
+| `--input` | `-i` | `llms.txt` | Path to source `llms.txt` document. |
+| `--output` | `-o` | `llm_context.xml` | Target output path for XML context payload. |
+| `--root` | `-r` | `.` | Root directory of repository to resolve relative paths. |
+| `--generate-all` | N/A | `False` | Trigger generation of `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml`. |
 </content>
       </document>
-      <document href="docs/explanation/architecture-and-diataxis.md">
-        <title>Architecture and Diátaxis Explanation</title>
-        <description>System architecture and Diátaxis framework implementation.</description>
+      <document href="docs/reference/openwiki-emulator.md">
+        <title>OpenWiki Engine Specification</title>
+        <description>Specifications for OpenWiki Python tools and batch operations.</description>
         <content>---
-title: &quot;Explanation: Architecture &amp; Diátaxis Framework Adoption&quot;
-description: &quot;Conceptual explanation of decoupled web architecture and adoption rationale of Diátaxis documentation framework.&quot;
-nav_order: 1
-layout: default
+title: &quot;OpenWiki Engine &amp; Data Parsing Specification&quot;
+description: &quot;Technical reference and API specification for OpenWiki parsing utilities and batch operations.&quot;
+type: &quot;reference&quot;
+id: &quot;docs/reference/openwiki-emulator.md&quot;
+dsom_governance:
+  domain: &quot;DataEngineering&quot;
+  context_tier: &quot;L3-TechnicalReference&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;reference&quot;
+  - &quot;openwiki&quot;
+related_links:
+  - &quot;docs/reference/cli-and-tools.md&quot;
+  - &quot;docs/reference/file-structure-and-api.md&quot;
+nav_order: 3
+layout: &quot;default&quot;
 ---
 
-# Architectural Explanation &amp; Diátaxis Framework Adoption
+# OpenWiki Engine Specification
 
-This document explains the system architecture, design decisions, and adoption of the **Diátaxis Documentation Framework** for Omni-View.
-
----
-
-## 🏛 Architecture Overview
-
-Omni-View Business Command Centre is engineered using a decoupled web architecture:
-
-1. **Frontend Layer**:
-   - Built with HTML5, CSS3, JavaScript (ES6+), and Bootstrap 5.
-   - Dynamic charts powered by Chart.js.
-
-2. **Backend &amp; Database Layer**:
-   - Built on Supabase (PostgreSQL database engine).
-   - Real-time data queries managed directly through REST APIs via `supabase-js`.
-
-3. **Role-Based Access Control (RBAC)**:
-   - Client-side navigation guards (`admin_authcheck.js`, `authcheck.js`) enforce role boundaries (`administrator`, `employee`, `owner`).
-   - Server-side security enforced via Supabase Row Level Security (RLS) policies.
+This specification documents data extraction, Markdown parsing, and batch document processing engines within the repository's tooling environment.
 
 ---
 
-## 📖 Diátaxis Framework Adoption
+## 🛠 `parse_llms_txt` Integration Engine
 
-Documentation often mixes step-by-step tutorials, practical recipes, and technical API reference into monolithic pages. This increases cognitive load for human developers and causes hallucination in autonomous AI agents.
+`parse_llms_txt.py` acts as the primary parser and context builder for DSOM/OKF knowledge graphs.
 
-Omni-View solves this by adopting the **Diátaxis Documentation Framework** (https://diataxis.fr/), structuring content into four distinct quadrants based on user intent and mode:
+### Function Signatures
 
-```text
-                  USER INTENT
-           Learning         Practical
-        +----------------+----------------+
- Acquisition|  TUTORIALS     | HOW-TO GUIDES  |
- (Study)    | (Learning-     | (Problem-      |
-            |  oriented)     |  oriented)     |
-        +----------------+----------------+
- Application|  EXPLANATION   |   REFERENCE    |
- (Work)     | (Concept-      | (Information-  |
-            |  oriented)     |  oriented)     |
-        +----------------+----------------+
+```python
+def parse_llms_txt(content_or_path: str) -&gt; Dict[str, Any]:
+    &quot;&quot;&quot;Parse llms.txt content or file path into structured metadata dictionary.&quot;&quot;&quot;
+
+def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = &quot;.&quot;) -&gt; str:
+    &quot;&quot;&quot;Generate XML context tree containing document metadata and embedded content.&quot;&quot;&quot;
+
+def generate_llms_txt(docs_dir: str = &quot;docs&quot;, relative_to_docs: bool = False) -&gt; str:
+    &quot;&quot;&quot;Generate Markdown llms.txt index content.&quot;&quot;&quot;
+
+def generate_llms_full(docs_dir: str = &quot;docs&quot;, root_dir: str = &quot;.&quot;) -&gt; str:
+    &quot;&quot;&quot;Build consolidated documentation text for all indexed Markdown files.&quot;&quot;&quot;
+
+def generate_sitemaps(docs_dir: str = &quot;docs&quot;, base_url: str = &quot;...&quot;) -&gt; Tuple[str, str]:
+    &quot;&quot;&quot;Generate text and XML sitemap strings.&quot;&quot;&quot;
 ```
 
-### Four Quadrants in Omni-View:
-
-1. **Tutorials (`docs/tutorials/`)**:
-   - **Goal**: Guided learning through execution.
-   - **Scope**: Step-by-step onboarding for new users and AI agent setup.
-
-2. **How-To Guides (`docs/how-to/`)**:
-   - **Goal**: Practical directions for specific tasks.
-   - **Scope**: Task-focused workflows (e.g. updating stock, processing payouts, parsing `llms.txt`).
-
-3. **Reference (`docs/reference/`)**:
-   - **Goal**: Factual descriptions and technical specifications.
-   - **Scope**: File paths, API signatures, database schema, CLI options.
-
-4. **Explanation (`docs/explanation/`)**:
-   - **Goal**: Conceptual context and architectural rationale.
-   - **Scope**: System design, security model, Diátaxis, and OKF 0.2 adoption.
+### Exit Codes &amp; Exception Behavior
+- Exit `0`: Successful execution and output generation.
+- Exception `RuntimeError`: Raised when an indexed file path in `llms.txt` cannot be read during XML generation.
 </content>
       </document>
-      <document href="docs/explanation/okf-02-and-diataxis.md">
-        <title>OKF 0.2 and DSOM Integration</title>
-        <description>Conceptual overview of Open Knowledge Format 0.2 and Domain-Specific Operational Model.</description>
+    </section>
+    <section name="Practical Operational Guides">
+      <document href="docs/how-to/index.md">
+        <title>Operational Recipes Index</title>
+        <description>Operational recipes index.</description>
         <content>---
-title: &quot;Explanation: Open Knowledge Format (OKF 0.2) &amp; DSOM Integration Rationale&quot;
-description: &quot;Conceptual explanation of Open Knowledge Format 0.2 and Domain-Specific Operational Model for AI agents.&quot;
+title: &quot;Operational Recipes Index&quot;
+description: &quot;Index of task-oriented operational procedures and day-2 recipes for Omni-View.&quot;
+type: &quot;guide&quot;
+id: &quot;docs/how-to/index.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L2-Operational&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;how-to&quot;
+  - &quot;operations&quot;
+related_links:
+  - &quot;docs/how-to/manage-inventory-and-payouts.md&quot;
+  - &quot;docs/how-to/generate-llms-context.md&quot;
+  - &quot;docs/how-to/run-tool.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# Operational Recipes Index
+
+This index categorizes all task-oriented procedural guides for operational management and automated tooling in Omni-View.
+
+---
+
+## 🛠 Available How-To Recipes
+
+- [Manage Inventory, Live Sessions, and Payouts](manage-inventory-and-payouts.md): Procedural steps for inventory updates, tracking streams, and processing employee payouts.
+- [Generate LLM XML Context and Sitemaps](generate-llms-context.md): How-to guide for executing `parse_llms_txt.py` to build machine-parseable context artifacts.
+- [Execute Tool Workflows](run-tool.md): How-to guide for running utility scripts and CLI automation pipelines.
+</content>
+      </document>
+      <document href="docs/how-to/manage-inventory-and-payouts.md">
+        <title>Manage Inventory and Payouts</title>
+        <description>How-to guide for stock management and employee payout procedures.</description>
+        <content>---
+title: &quot;How-To: Manage Inventory, Live Sessions, and Payouts&quot;
+description: &quot;Practical operational guide for stock management, live streaming sales tracking, and staff payouts.&quot;
+type: &quot;guide&quot;
+id: &quot;docs/how-to/manage-inventory-and-payouts.md&quot;
+dsom_governance:
+  domain: &quot;Infrastructure&quot;
+  context_tier: &quot;L2-Operational&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;how-to&quot;
+  - &quot;operations&quot;
+related_links:
+  - &quot;docs/how-to/index.md&quot;
+  - &quot;docs/reference/file-structure-and-api.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# How-To Guide: Managing Inventory, Live Sessions, and Payouts
+
+This guide provides step-by-step procedural directions for routine operations in Omni-View.
+
+---
+
+## 📦 How to Manage Product Inventory
+
+### Adding a New Product Item
+
+1. Navigate to **Product Management** (`http://localhost:8000/Web Ui/product.html`).
+2. Click **Add Product**.
+3. Fill in product details:
+   - **Title**: `Premium Wireless Headset`
+   - **Category**: `Electronics`
+   - **Stock**: `150`
+   - **Price**: `299.00`
+4. Click **Save Product**.
+
+---
+
+## 🎥 How to Track Live Stream Performance
+
+1. Navigate to **Live Sessions** (`http://localhost:8000/Web Ui/lives.html`).
+2. Record session details upon stream completion:
+   - **Host User**: Select employee ID/name.
+   - **GMV Generated**: Enter total sales revenue.
+   - **Units Sold**: Enter total quantity.
+3. Save record to update the live stream leaderboard.
+
+---
+
+## 💰 How to Process Employee Payouts
+
+1. Navigate to **Payout Management** (`http://localhost:8000/Web Ui/payout.html`).
+2. Click **Create Payout**.
+3. Select Employee, enter payout amount and payout date.
+4. Set status to `Pending` or `Completed` and save.
+</content>
+      </document>
+      <document href="docs/how-to/generate-llms-context.md">
+        <title>Generate LLMs Context Guide</title>
+        <description>How-to guide for utilizing parse_llms_txt.py script.</description>
+        <content>---
+title: &quot;How-To: Generate LLM Context XML &amp; Sitemaps&quot;
+description: &quot;Practical guide for executing parse_llms_txt.py script to build XML context and sitemap files.&quot;
+type: &quot;guide&quot;
+id: &quot;docs/how-to/generate-llms-context.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L2-Operational&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;how-to&quot;
+  - &quot;llm-context&quot;
+related_links:
+  - &quot;docs/how-to/run-tool.md&quot;
+  - &quot;docs/reference/cli-and-tools.md&quot;
 nav_order: 2
-layout: default
+layout: &quot;default&quot;
 ---
 
-# Explanation: Open Knowledge Format (OKF 0.2) &amp; DSOM Integration Rationale
+# How-To Guide: Generating LLM Context XML &amp; Sitemaps
 
-This document explains the integration of **Open Knowledge Format (OKF 0.2)** principles and **Domain-Specific Operational Model (DSOM)** within the Omni-View repository documentation system.
-
----
-
-## 💡 Conceptual Background
-
-As LLM-driven autonomous AI agents (such as Google Jules, Antigravity, and CI sub-agents) assume active roles in software engineering tasks, standard unstructured documentation causes context window overflow, redundant file reads, and degraded code generation accuracy.
-
-To address this, Omni-View incorporates **Open Knowledge Format (OKF 0.2)** concepts and **DSOM** standards alongside the **Diátaxis Framework**.
+This guide details how to execute `parse_llms_txt.py` to maintain updated context files and sitemaps.
 
 ---
 
-## 🎯 Open Knowledge Format (OKF 0.2) Concepts
+## ⚡ Step-by-Step Procedure
 
-Open Knowledge Format (OKF 0.2) emphasizes machine-readable context discovery and clean knowledge framing:
+### 1. Rebuilding All Documentation Artefacts
 
-1. **Explicit Entity Mapping**: Every file, utility, script, and database table has an unambiguous canonical path and type declaration in `docs/reference/file-structure-and-api.md` and `docs/reference/cli-and-tools.md`.
-2. **Standardized Context Discovery (`llms.txt`)**: Following [llmstxt.org](https://llmstxt.org/), `llms.txt` maps all published documentation nodes with concise summaries. AI agents can parse this file to construct an XML context graph (`llm_context.xml`) without reading unneeded binary assets.
-3. **Structured Jekyll Frontmatter Metadata**: Every Markdown file in `docs/` contains standard Jekyll YAML frontmatter (`title`, `description`, `nav_order`, `layout`), ensuring dual compatibility with both GitHub Pages (Jekyll) and GitBook parser engines while providing structured page metadata for `llms.txt` discovery.
+Execute the script with `--generate-all`:
+
+```bash
+python3 parse_llms_txt.py --generate-all
+```
+
+### 2. Generating Custom XML Context Payload
+
+To convert a specific `llms.txt` file into `llm_context.xml`:
+
+```bash
+python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
+```
+
+### 3. Validating Results
+
+Verify the output payload syntax:
+
+```bash
+head -n 20 llm_context.xml
+```
+</content>
+      </document>
+      <document href="docs/how-to/run-tool.md">
+        <title>Execute Tool Workflows</title>
+        <description>Task-oriented execution recipes for tools and pipelines.</description>
+        <content>---
+title: &quot;How-To: Execute Tool Workflows&quot;
+description: &quot;Step-by-step instructions for running repository utility tools and context generation scripts.&quot;
+type: &quot;guide&quot;
+id: &quot;docs/how-to/run-tool.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L2-Operational&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;how-to&quot;
+  - &quot;cli&quot;
+related_links:
+  - &quot;docs/reference/cli-and-tools.md&quot;
+  - &quot;docs/how-to/generate-llms-context.md&quot;
+nav_order: 2
+layout: &quot;default&quot;
+---
+
+# How-To Guide: Execute Tool Workflows
+
+This guide provides explicit execution steps for running repository utility scripts and automation pipelines.
 
 ---
 
-## ⚡ Domain-Specific Operational Model (DSOM)
+## ⚡ Generating All LLM Context Files &amp; Sitemaps
 
-DSOM defines operational boundaries and execution constraints for autonomous agents operating in this repository:
+To update `llms.txt`, `llms-full.txt`, `sitemap.txt`, `sitemap.xml`, and `llm_context.xml` across both root and `docs/` directories:
 
-- **Minimal Sufficient Context**: AI agents must ingest only files directly pertinent to assigned tasks.
-- **Reference Anchoring**: `docs/reference/file-structure-and-api.md` serves as the single source of truth for file paths and backend schemas.
-- **Deterministic Verification Contract**: Every code change must be validated by running automated unit tests (`uv run pytest`) prior to PR submission.
+```bash
+python3 parse_llms_txt.py --generate-all
+```
+
+### Expected Terminal Output:
+```text
+Generating documentation indexes and sitemaps...
+Index generation complete.
+XML context written to llm_context.xml
+```
+
+---
+
+## 🧪 Running the Pytest Validation Suite
+
+To execute structural, HTML, JS, CSS, and documentation integrity tests:
+
+```bash
+uv run pytest
+```
+</content>
+      </document>
+    </section>
+    <section name="Tutorials &amp; Onboarding">
+      <document href="docs/tutorials/01-getting-started.md">
+        <title>Quickstart Onboarding Guide</title>
+        <description>Beginner step-by-step onboarding walkthrough.</description>
+        <content>---
+title: &quot;Quickstart Onboarding Guide&quot;
+description: &quot;Step-by-step developer and operator onboarding walkthrough for launching and verifying Omni-View.&quot;
+type: &quot;tutorial&quot;
+id: &quot;docs/tutorials/01-getting-started.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;tutorial&quot;
+  - &quot;onboarding&quot;
+related_links:
+  - &quot;docs/tutorials/getting-started.md&quot;
+  - &quot;docs/how-to/manage-inventory-and-payouts.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# Quickstart: Onboarding Guide
+
+Welcome to the **Omni-View Business Command Centre** onboarding tutorial. This hands-on guide gets you operational in under 5 minutes.
+
+---
+
+## 🎯 Step-by-Step Walkthrough
+
+### 1. Environment Initialization
+Initialize your Python virtual environment using `uv`:
+```bash
+uv sync
+```
+
+### 2. Verify Repository Integrity
+Execute the automated test suite to ensure all frontend, schema, and documentation tests pass:
+```bash
+uv run pytest
+```
+
+### 3. Launch Local Application Server
+Serve the application locally using Python's HTTP server:
+```bash
+python3 -m http.server 8000 --directory .
+```
+Access the application at `http://localhost:8000/Web Ui/login.html`.
+</content>
+      </document>
+      <document href="docs/tutorials/getting-started.md">
+        <title>Getting Started Tutorial</title>
+        <description>Guided onboarding tutorial for system usage.</description>
+        <content>---
+title: &quot;Tutorial: Getting Started with Omni-View&quot;
+description: &quot;Step-by-step onboarding tutorial for navigating and using Omni-View Business Command Centre.&quot;
+type: &quot;tutorial&quot;
+id: &quot;docs/tutorials/getting-started.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;tutorial&quot;
+  - &quot;onboarding&quot;
+related_links:
+  - &quot;docs/tutorials/01-getting-started.md&quot;
+  - &quot;docs/tutorials/llms-txt-setup.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# Tutorial: Getting Started with Omni-View Command Centre
+
+Welcome to **Omni-View Business Command Centre**! This tutorial guides you step-by-step through setting up and navigating the platform.
+
+---
+
+## 🎯 Learning Objectives
+
+By completing this tutorial, you will:
+- Launch the application interface locally.
+- Authenticate using administrator or staff credentials.
+- Navigate core operational modules: Dashboard, Products, Lives, and Payouts.
+
+---
+
+## 📋 Prerequisites
+
+- Modern web browser (Chrome, Edge, or Firefox).
+- Local Python runtime for serving application files (`python3 -m http.server 8000`).
+
+---
+
+## 🚀 Step 1: Launch the Application
+
+1. Open your terminal in the project root directory.
+2. Start the local server:
+   ```bash
+   python3 -m http.server 8000 --directory .
+   ```
+3. Open `http://localhost:8000/Web Ui/login.html` in your web browser.
+
+---
+
+## 🔐 Step 2: User Authentication
+
+- **Administrator Access**: Enter admin credentials to access `main.html` (Administrator Command Dashboard).
+- **Staff Access**: Enter employee credentials to access `Employee_Main.html` (Staff Member Dashboard).
+
+---
+
+## 📊 Step 3: Explore Core Quadrants
+
+- **Products (`product.html`)**: Manage product inventory items, stock levels, and prices.
+- **Live Streams (`lives.html` / `Employee_Lives.html`)**: Monitor live streaming session performance, GMV, and units sold.
+- **Payouts (`payout.html` / `Employee_Payout.html`)**: Process and review employee payout allocations.
+- **Reports (`report.html`)**: Export analytics and generate PDF performance reports.
+</content>
+      </document>
+      <document href="docs/tutorials/llms-txt-setup.md">
+        <title>LLMs.txt Setup Tutorial</title>
+        <description>Step-by-step tutorial on generating and consuming LLM context files.</description>
+        <content>---
+title: &quot;Tutorial: LLMs.txt &amp; XML Context Setup Pipeline&quot;
+description: &quot;Step-by-step tutorial on generating, validating, and consuming llms.txt and XML context payloads.&quot;
+type: &quot;tutorial&quot;
+id: &quot;docs/tutorials/llms-txt-setup.md&quot;
+dsom_governance:
+  domain: &quot;AI&quot;
+  context_tier: &quot;L2-Operational&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;llms-txt&quot;
+  - &quot;context-pipeline&quot;
+related_links:
+  - &quot;docs/how-to/generate-llms-context.md&quot;
+  - &quot;docs/reference/cli-and-tools.md&quot;
+nav_order: 2
+layout: &quot;default&quot;
+---
+
+# Tutorial: LLMs.txt &amp; XML Context Setup Pipeline
+
+This tutorial guides software engineers and autonomous AI agents through initializing, generating, and validating machine-parseable context files.
+
+---
+
+## 🎯 Learning Objectives
+
+By completing this tutorial, you will:
+- Understand the role of `llms.txt` and `llm_context.xml` in DSOM context management.
+- Run `parse_llms_txt.py` to regenerate all index and sitemap files.
+- Validate generated XML context for consumption by Large Language Models.
+
+---
+
+## 📋 Step 1: Execute Context Generator
+
+Run the generator utility from the repository root:
+
+```bash
+python3 parse_llms_txt.py --generate-all
+```
+
+---
+
+## 📋 Step 2: Verify Created Artifacts
+
+Confirm that the following files have been created or updated:
+- `llms.txt` and `docs/llms.txt`
+- `llms-full.txt` and `docs/llms-full.txt`
+- `sitemap.txt` and `docs/sitemap.txt`
+- `sitemap.xml` and `docs/sitemap.xml`
+- `llm_context.xml`
+
+---
+
+## 📋 Step 3: Parse Context in AI Pipelines
+
+To ingest documentation programmatically in Python:
+
+```python
+from parse_llms_txt import parse_llms_txt, generate_xml_context
+
+parsed = parse_llms_txt(&quot;llms.txt&quot;)
+xml_context = generate_xml_context(parsed, root_dir=&quot;.&quot;)
+print(f&quot;Generated {len(xml_context)} bytes of XML context.&quot;)
+```
 </content>
       </document>
     </section>
@@ -629,37 +977,42 @@ DSOM defines operational boundaries and execution constraints for autonomous age
         <title>Documentation Index</title>
         <description>Primary documentation home page.</description>
         <content>---
-title: &quot;Omni-View Documentation Hub&quot;
-description: &quot;Production-ready documentation system for Omni-View Business Command Centre adhering to Diátaxis and Open Knowledge Format (OKF 0.2).&quot;
+title: &quot;Omni-View Business Command Centre Documentation Hub&quot;
+description: &quot;Central entry hub for Omni-View documentation structured according to Diátaxis and DSOM OKF 0.2 guidelines.&quot;
+type: &quot;concept&quot;
+id: &quot;docs/README.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;documentation&quot;
+  - &quot;hub&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/tutorials/getting-started.md&quot;
 nav_order: 1
-layout: default
+layout: &quot;default&quot;
 ---
 
-# 📚 Omni-View Documentation Hub
+# Omni-View Business Command Centre Documentation Hub
 
-Welcome to the official documentation hub for **Omni-View Business Command Centre**. This documentation system adheres strictly to the **Diátaxis Documentation Framework** and **Open Knowledge Format (OKF 0.2)** standards to support both human developers and autonomous AI agents (e.g., Jules, LLM context pipelines).
+Welcome to the documentation hub for **Omni-View Business Command Centre**.
 
----
-
-## 🧭 Navigation Matrix (Diátaxis Quadrants)
-
-Choose your path based on your operational goal:
-
-| Quadrant | Purpose | Key Entry Point |
-| :--- | :--- | :--- |
-| 🎓 **Tutorials** | Learning-oriented step-by-step lessons for beginners | [Getting Started](tutorials/getting-started.md) \| [LLMs.txt Setup](tutorials/llms-txt-setup.md) |
-| 🛠 **How-To Guides** | Problem-oriented procedural steps for specific operations | [Inventory &amp; Payouts](how-to/manage-inventory-and-payouts.md) \| [Generate LLMs Context](how-to/generate-llms-context.md) |
-| 📖 **Reference** | Information-oriented factual specifications and schemas | [File Structure &amp; API](reference/file-structure-and-api.md) \| [CLI &amp; Tools Reference](reference/cli-and-tools.md) |
-| 💡 **Explanation** | Concept-oriented architectural discussions and rationale | [Architecture &amp; Diátaxis](explanation/architecture-and-diataxis.md) \| [OKF 0.2 &amp; DSOM Integration](explanation/okf-02-and-diataxis.md) |
+This documentation system is governed by the **Deep State of Mind (DSOM) Protocol**, adopting the **Diátaxis Structuring Framework** and **Google Open Knowledge Format (OKF v0.2)** metadata standards.
 
 ---
 
-## 🤖 LLM Discovery &amp; Indexing Files
+## 🧭 Navigation Summary
 
-For autonomous AI agents and automated discovery tools:
-- **[llms.txt](llms.txt)**: Structured index listing all documentation files per [llmstxt.org](https://llmstxt.org/).
-- **[llms-full.txt](llms-full.txt)**: Single consolidated file containing full documentation content.
-- **[sitemap.xml](sitemap.xml)** / **[sitemap.txt](sitemap.txt)**: XML and plain-text sitemaps for search engines and crawlers.
+Explore the four Diátaxis documentation quadrants:
+
+- **[Tutorials](tutorials/getting-started.md)**: Hands-on onboarding guides for users and developers.
+- **[How-To Guides](how-to/manage-inventory-and-payouts.md)**: Operational recipes and practical procedural instructions.
+- **[Reference](reference/file-structure-and-api.md)**: Factual technical specifications, file paths, CLI flags, and database schemas.
+- **[Explanation](explanation/architecture-and-diataxis.md)**: High-level architectural background, design trade-offs, and DSOM governance rationale.
+
+For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](../llms.txt).
 </content>
       </document>
       <document href="docs/SUMMARY.md">
@@ -667,23 +1020,31 @@ For autonomous AI agents and automated discovery tools:
         <description>GitBook-compatible navigation summary.</description>
         <content># Summary
 
-* [Overview](README.md)
+* [System Overview](README.md)
 
-## 🎓 Tutorials
+## Explanation &amp; Architecture
+* [DSOM Governance Framework](explanation/dsom-governance.md)
+* [Diátaxis Architecture](explanation/diataxis.md)
+* [System Architecture](explanation/system-architecture.md)
+* [Architectural Explanation &amp; Diátaxis Adoption](explanation/architecture-and-diataxis.md)
+* [Google OKF 0.2 &amp; DSOM Integration Rationale](explanation/okf-02-and-diataxis.md)
+
+## Tutorials
+* [Quickstart: Onboarding Guide](tutorials/01-getting-started.md)
 * [Getting Started with Omni-View](tutorials/getting-started.md)
 * [LLMs.txt Setup &amp; Context Pipeline](tutorials/llms-txt-setup.md)
 
-## 🛠 How-To Guides
+## How-To Guides
+* [Operational Recipes Index](how-to/index.md)
 * [Managing Inventory, Live Sessions, and Payouts](how-to/manage-inventory-and-payouts.md)
 * [Generating XML Context with parse_llms_txt.py](how-to/generate-llms-context.md)
+* [Execute Tool Workflows](how-to/run-tool.md)
 
-## 📖 Reference
+## Reference Material
+* [Component &amp; Tool Index](reference/index.md)
 * [File Structure, Architecture &amp; Database Schema](reference/file-structure-and-api.md)
 * [CLI Tools, Python Utilities &amp; Specification](reference/cli-and-tools.md)
-
-## 💡 Explanation
-* [Architectural Explanation &amp; Diátaxis Framework Adoption](explanation/architecture-and-diataxis.md)
-* [Google OKF 0.2 &amp; DSOM Integration Rationale](explanation/okf-02-and-diataxis.md)
+* [OpenWiki Engine Specification](reference/openwiki-emulator.md)
 </content>
       </document>
       <document href="START-HERE.md">

@@ -1,8 +1,20 @@
 ---
 title: "Explanation: Architecture & Diátaxis Framework Adoption"
 description: "Conceptual explanation of decoupled web architecture and adoption rationale of Diátaxis documentation framework."
+type: "architecture"
+id: "docs/explanation/architecture-and-diataxis.md"
+dsom_governance:
+  domain: "Infrastructure"
+  context_tier: "L1-Overview"
+tags:
+  - "dsom-protocol"
+  - "architecture"
+  - "diataxis"
+related_links:
+  - "docs/explanation/dsom-governance.md"
+  - "docs/explanation/diataxis.md"
 nav_order: 1
-layout: default
+layout: "default"
 ---
 
 # Architectural Explanation & Diátaxis Framework Adoption

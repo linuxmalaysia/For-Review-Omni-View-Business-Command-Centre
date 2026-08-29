@@ -1,58 +1,50 @@
 ---
-title: "How-To: Generate XML Context with parse_llms_txt.py"
-description: "Practical guide for parsing llms.txt and generating XML context payloads for LLMs."
+title: "How-To: Generate LLM Context XML & Sitemaps"
+description: "Practical guide for executing parse_llms_txt.py script to build XML context and sitemap files."
+type: "guide"
+id: "docs/how-to/generate-llms-context.md"
+dsom_governance:
+  domain: "Automation"
+  context_tier: "L2-Operational"
+tags:
+  - "dsom-protocol"
+  - "how-to"
+  - "llm-context"
+related_links:
+  - "docs/how-to/run-tool.md"
+  - "docs/reference/cli-and-tools.md"
 nav_order: 2
-layout: default
+layout: "default"
 ---
 
-# How-To Guide: Generating XML Context with parse_llms_txt.py
+# How-To Guide: Generating LLM Context XML & Sitemaps
 
-This guide explains how to run `parse_llms_txt.py` to convert `llms.txt` files into XML context structures and maintain site sitemaps.
-
----
-
-## 🛠 How to Parse llms.txt into XML Context
-
-Run `parse_llms_txt.py` specifying input file and output XML destination:
-
-```bash
-python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
-```
-
-- `--input`: Path to input `llms.txt` file.
-- `--output`: Destination path for XML output file.
-- `--root`: Root path used to locate referenced documentation files.
+This guide details how to execute `parse_llms_txt.py` to maintain updated context files and sitemaps.
 
 ---
 
-## 🔄 How to Synchronize All LLM Indexes and Sitemaps
+## ⚡ Step-by-Step Procedure
 
-Run the `--generate-all` command to update `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml`:
+### 1. Rebuilding All Documentation Artefacts
+
+Execute the script with `--generate-all`:
 
 ```bash
 python3 parse_llms_txt.py --generate-all
 ```
 
-This updates files in both the repository root and `docs/` directory.
+### 2. Generating Custom XML Context Payload
 
----
+To convert a specific `llms.txt` file into `llm_context.xml`:
 
-## 🐍 How to Use Python API in Custom Scripts
+```bash
+python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
+```
 
-Integrate `parse_llms_txt` into Python workflows:
+### 3. Validating Results
 
-```python
-import parse_llms_txt
+Verify the output payload syntax:
 
-# 1. Parse llms.txt file into dictionary
-data = parse_llms_txt.parse_llms_txt("llms.txt")
-print(f"Title: {data['title']}")
-print(f"Sections count: {len(data['sections'])}")
-
-# 2. Generate XML context string
-xml_output = parse_llms_txt.generate_xml_context(data, root_dir=".")
-
-# 3. Write XML context to disk
-with open("llm_context.xml", "w", encoding="utf-8") as f:
-    f.write(xml_output)
+```bash
+head -n 20 llm_context.xml
 ```
