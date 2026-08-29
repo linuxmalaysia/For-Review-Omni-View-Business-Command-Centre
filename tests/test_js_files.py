@@ -10,6 +10,162 @@ def get_js_files():
     assert os.path.exists(js_dir), "js directory missing"
     return glob.glob(os.path.join(js_dir, '*.js'))
 
+def sanitize_js_for_bracket_scan(content):
+    """
+    Context-aware stateful tokenizer/scanner for JavaScript:
+    - Distinguishes division operators from regular-expression literals
+    - Preserves bracket content inside ${...} template interpolations
+    - Handles character classes such as /[/]/ in regexes
+    - Strips comments, string literals, and regex contents
+    """
+    i = 0
+    n = len(content)
+    result = []
+
+    state = 'NORMAL'  # NORMAL, SL_COMMENT, ML_COMMENT, S_STRING, D_STRING, TEMPLATE, REGEX
+    template_stack = []
+    in_char_class = False
+    escaped = False
+
+    REGEX_PREV_TOKENS = {
+        '(', ',', '=', ':', '?', '[', '{', ';', '!', '&', '|', '+', '-', '*', '/', '%',
+        '^', '~', '<', '>', 'return', 'case', 'typeof', 'void', 'delete', 'await', 'yield', 'in', 'instanceof'
+    }
+
+    def get_last_non_space_token():
+        s = ''.join(result).rstrip()
+        if not s:
+            return ''
+        m = re.search(r'([a-zA-Z0-9_$]+|[^a-zA-Z0-9_\s$])$', s)
+        return m.group(1) if m else ''
+
+    while i < n:
+        ch = content[i]
+        nxt = content[i + 1] if i + 1 < n else ''
+
+        if state == 'SL_COMMENT':
+            if ch == '\n':
+                state = 'NORMAL'
+                result.append('\n')
+            i += 1
+            continue
+
+        if state == 'ML_COMMENT':
+            if ch == '*' and nxt == '/':
+                state = 'NORMAL'
+                i += 2
+            else:
+                i += 1
+            continue
+
+        if state == 'S_STRING':
+            if escaped:
+                escaped = False
+            elif ch == '\\':
+                escaped = True
+            elif ch == "'":
+                state = 'NORMAL'
+            i += 1
+            continue
+
+        if state == 'D_STRING':
+            if escaped:
+                escaped = False
+            elif ch == '\\':
+                escaped = True
+            elif ch == '"':
+                state = 'NORMAL'
+            i += 1
+            continue
+
+        if state == 'TEMPLATE':
+            if escaped:
+                escaped = False
+            elif ch == '\\':
+                escaped = True
+            elif ch == '$' and nxt == '{':
+                template_stack.append(1)
+                result.append('${')
+                state = 'NORMAL'
+                i += 2
+                continue
+            elif ch == '`':
+                state = 'NORMAL'
+            i += 1
+            continue
+
+        if state == 'REGEX':
+            if escaped:
+                escaped = False
+            elif ch == '\\':
+                escaped = True
+            elif in_char_class:
+                if ch == ']':
+                    in_char_class = False
+            else:
+                if ch == '[':
+                    in_char_class = True
+                elif ch == '/':
+                    state = 'NORMAL'
+            i += 1
+            continue
+
+        # NORMAL state
+        if ch == '/' and nxt == '/':
+            state = 'SL_COMMENT'
+            i += 2
+            continue
+
+        if ch == '/' and nxt == '*':
+            state = 'ML_COMMENT'
+            i += 2
+            continue
+
+        if ch == "'":
+            state = 'S_STRING'
+            escaped = False
+            i += 1
+            continue
+
+        if ch == '"':
+            state = 'D_STRING'
+            escaped = False
+            i += 1
+            continue
+
+        if ch == '`':
+            state = 'TEMPLATE'
+            escaped = False
+            i += 1
+            continue
+
+        if ch == '/':
+            prev = get_last_non_space_token()
+            if prev in REGEX_PREV_TOKENS or not prev:
+                state = 'REGEX'
+                escaped = False
+                in_char_class = False
+                i += 1
+                continue
+
+        if template_stack:
+            if ch == '{':
+                template_stack[-1] += 1
+            elif ch == '}':
+                template_stack[-1] -= 1
+                if template_stack[-1] == 0:
+                    template_stack.pop()
+                    state = 'TEMPLATE'
+                    escaped = False
+                    result.append('}')
+                    i += 1
+                    continue
+
+        result.append(ch)
+        i += 1
+
+    return ''.join(result)
+
 @pytest.mark.parametrize("filepath", get_js_files())
 def test_js_file_syntax_and_structure(filepath):
     assert os.path.isfile(filepath)
@@ -22,16 +178,7 @@ def test_js_file_syntax_and_structure(filepath):
     stack = []
     pairs = {')': '(', '}': '{', ']': '['}
 
-    # Token-aware cleaning of comments, string literals, template strings, and regex literals
-    token_pattern = r'/\*[\s\S]*?\*/|//.*|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`|/(?![/*])(?:\\/|[^/\n])+/[gimsuy]*'
-
-    def strip_token(match):
-        tok = match.group(0)
-        if tok.startswith('//') or tok.startswith('/*'):
-            return ''
-        return '""'
-
-    clean_content = re.sub(token_pattern, strip_token, content)
+    clean_content = sanitize_js_for_bracket_scan(content)
 
     for char in clean_content:
         if char in pairs.values():
