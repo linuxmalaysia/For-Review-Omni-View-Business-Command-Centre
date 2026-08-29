@@ -1,11 +1,23 @@
 # Omni-View Business Command Centre
 
-A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform. 
+A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform.
+
+---
+
+## 📚 Documentation (Diátaxis Framework)
+
+This project adopts the [Diátaxis Documentation Framework](https://diataxis.fr/) to organize technical documentation into four distinct quadrants:
+
+- 🎓 **[Tutorials](docs/tutorials/getting-started.md)**: Guided step-by-step lesson to help new users get started with Omni-View.
+- 🛠 **[How-To Guides](docs/how-to/manage-inventory-and-payouts.md)**: Goal-oriented practical guides for inventory management, live sales tracking, payouts, and reports.
+- 📖 **[Reference Material](docs/reference/file-structure-and-api.md)**: Factual technical description of file structure, JavaScript modules, CSS stylesheets, and Supabase integration.
+- 💡 **[Explanation](docs/explanation/architecture-and-diataxis.md)**: Conceptual insights into system architecture, design decisions, and Diátaxis adoption rationale.
+
 ---
 
 ## 📖 Project Overview
 
-Capt Empire currently relies on manual processes and separate records to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions. 
+Capt Empire relies on Omni-View to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions.
 
 ---
 
@@ -38,92 +50,23 @@ Capt Empire currently relies on manual processes and separate records to manage 
 - HTML5
 - CSS3
 - JavaScript
-- Bootstrap
+- Bootstrap 5
 
-### Backend
-- Supabase
+### Backend & Database
+- Supabase (PostgreSQL)
 
-### Database
-- PostgreSQL (Supabase)
-
-### Development Tools
-- Visual Studio Code
-- Git
-- GitHub
+### Package & Environment Management
+- Python `uv`
 
 ---
 
-## 📊 Modules
+## 🧪 Testing
 
-- Dashboard
-- Product Management
-- Inventory Management
-- Sales Management
-- Employee Management
-- KPI Monitoring
-- Reports
-- Authentication
-- AI Chatbot
+Unit tests for all files across the project (HTML, JS, CSS, and docs structure) are built using Python and executed with `uv`:
 
----
-
-## 🔒 User Roles
-
-### Administrator
-
-- Manage products
-- Manage inventory
-- Record and monitor sales
-- Manage employee information
-- Monitor KPIs
-- Generate reports
-- Access AI chatbot
-- Manage user accounts
-
-### Staff
-
-- Update inventory
-- Record sales
-- View assigned dashboard
-- Access AI chatbot
-
----
-
-## 🤖 AI Assistant
-
-The integrated AI chatbot assists staff and administrators by answering sales-related questions and providing quick access to business information.
-
----
-
-## 📈 Future Enhancements
-
-- Advanced analytics dashboard
-- Sales forecasting using AI
-- Barcode or QR code inventory management
-- Export reports to PDF and Excel
-- Email notifications
-- Multi-branch management
-- Mobile-friendly interface
-
----
-
-## 🏗 Development Methodology
-
-This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
-
-1. Planning
-2. System Design
-3. Development
-4. Testing
-5. Documentation
-
----
-
-## 👥 Team Members
-
-- Chin Zi Huai
-- Adam Bin Mohd Syazwan
-- Amir Arif Bin Harisfazillah 
+```bash
+uv run pytest
+```
 
 ---
 
