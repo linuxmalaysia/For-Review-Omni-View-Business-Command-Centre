@@ -32,6 +32,7 @@ def test_diataxis_documents_exist():
         assert "title:" in content, f"Documentation file {filepath} missing title in frontmatter"
 
 def test_summary_and_navigation_files():
+    """Verify that the documentation summary file exists and links to all Diátaxis sections."""
     summary_path = os.path.join(ROOT_DIR, 'docs', 'SUMMARY.md')
     assert os.path.isfile(summary_path), "docs/SUMMARY.md missing"
     with open(summary_path, 'r', encoding='utf-8') as f:
@@ -43,6 +44,9 @@ def test_summary_and_navigation_files():
     assert "explanation/" in content
 
 def test_llm_index_files_exist():
+    """
+    Verify that required LLM index and sitemap files exist at the repository root and in the documentation directory.
+    """
     required_index_files = [
         'llms.txt', 'llms-full.txt', 'sitemap.txt', 'sitemap.xml',
         os.path.join('docs', 'llms.txt'),
