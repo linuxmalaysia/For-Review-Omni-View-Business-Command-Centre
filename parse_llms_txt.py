@@ -17,13 +17,14 @@ from typing import Dict, List, Any, Tuple, Optional
 
 def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
     """
-    Parses an llms.txt file or string content into a structured dictionary representation.
-
-    Args:
-        content_or_path: File path to llms.txt or raw text content of llms.txt.
-
+    Parse llms.txt content or a file into structured metadata and document sections.
+    
+    Parameters:
+        content_or_path (str): Path to an llms.txt file or raw llms.txt content.
+    
     Returns:
-        Dict containing project title, description, and categorized sections.
+        Dict[str, Any]: Parsed title, summary, and sections containing document titles,
+            URLs, and optional descriptions.
     """
     if os.path.exists(content_or_path):
         with open(content_or_path, "r", encoding="utf-8") as f:
@@ -71,14 +72,14 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
 
 def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
     """
-    Generates an XML context payload from parsed llms.txt data and local document contents.
-
-    Args:
-        llms_data: Structured output from parse_llms_txt.
-        root_dir: Root directory of repository to resolve relative doc paths.
-
+    Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
+    
+    Parameters:
+    	llms_data (Dict[str, Any]): Parsed `llms.txt` data containing the title, summary, sections, and documents.
+    	root_dir (str): Root directory used to resolve relative document paths.
+    
     Returns:
-        Formatted XML string containing documentation context.
+    	str: Formatted XML context document.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
@@ -119,7 +120,13 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
 
 def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) -> str:
     """
-    Generates the standard llms.txt index content from docs directory tree.
+    Generate the standard Markdown index for the project's documentation.
+    
+    Parameters:
+    	docs_dir (str): Documentation directory name retained for API compatibility.
+    
+    Returns:
+    	str: Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
     root_p = "../" if relative_to_docs else ""
@@ -151,7 +158,14 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
 
 def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     """
-    Generates full documentation text (llms-full.txt) incorporating all files.
+    Build a complete documentation index from available repository and documentation files.
+    
+    Parameters:
+    	docs_dir (str): Directory containing the documentation files.
+    	root_dir (str): Repository root used to resolve file paths.
+    
+    Returns:
+    	str: Formatted documentation text containing the contents of each available file.
     """
     doc_paths = [
         "README.md",
@@ -184,7 +198,13 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
 
 def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/openwiki") -> Tuple[str, str]:
     """
-    Generates sitemap.txt and sitemap.xml for documentation site.
+    Generate text and XML sitemaps for the documentation site.
+    
+    Parameters:
+        base_url (str): Base URL used to construct sitemap entries.
+    
+    Returns:
+        Tuple[str, str]: Text sitemap content and XML sitemap content.
     """
     urls = [
         f"{base_url}/",
@@ -218,6 +238,7 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
 
 
 def main():
+    """Run the command-line interface for parsing llms.txt and generating documentation metadata."""
     parser = argparse.ArgumentParser(description="Parse llms.txt and generate XML context and site metadata.")
     parser.add_argument("--input", "-i", default="llms.txt", help="Path to input llms.txt file")
     parser.add_argument("--output", "-o", default="llm_context.xml", help="Path to output XML context file")
