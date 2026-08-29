@@ -25,6 +25,17 @@ def test_diataxis_documents_exist():
             content = f.read()
         assert len(content.strip()) > 100, f"Documentation file {filepath} content is too short"
 
+def test_start_here_document_exists():
+    start_here_path = os.path.join(ROOT_DIR, 'START-HERE.md')
+    assert os.path.isfile(start_here_path), "START-HERE.md missing at root"
+    with open(start_here_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    assert len(content.strip()) > 500, "START-HERE.md content is too short"
+    assert "Epigraph & Onboarding Philosophy" in content
+    assert "Dual-Audience Entry Matrix" in content
+    assert "Immediate Action" in content
+    assert "Agent Context Governance" in content
+
 def test_readme_references_diataxis():
     readme_path = os.path.join(ROOT_DIR, 'README.md')
     assert os.path.isfile(readme_path)
