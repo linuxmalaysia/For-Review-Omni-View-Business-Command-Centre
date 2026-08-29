@@ -1,6 +1,6 @@
 # Omni-View Business Command Centre - DSOM AI Knowledge Base
 
-> DSOM-governed, OKF v0.2 compliant documentation index for AI Agents and LLMs.
+> DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.
 
 ## Core Governance & Architecture
 

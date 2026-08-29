@@ -42,10 +42,11 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
 def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     """Build consolidated documentation text for all indexed Markdown files."""
 
-def generate_sitemaps(docs_dir: str = "docs", base_url: str = "...") -> Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
     """Generate text and XML sitemap strings."""
 ```
 
 ### Exit Codes & Exception Behavior
+
 - Exit `0`: Successful execution and output generation.
 - Exception `RuntimeError`: Raised when an indexed file path in `llms.txt` cannot be read during XML generation.

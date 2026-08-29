@@ -43,8 +43,12 @@ python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
 
 ### 3. Validating Results
 
-Verify the output payload syntax:
+Parse and validate the complete `llm_context.xml` structure using Python:
 
-```bash
-head -n 20 llm_context.xml
+```python
+import xml.etree.ElementTree as ET
+
+tree = ET.parse("llm_context.xml")
+root = tree.getroot()
+print(f"Validated root tag: <{root.tag}>")
 ```

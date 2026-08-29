@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <llm_context title="Omni-View Business Command Centre - DSOM AI Knowledge Base">
-  <summary>DSOM-governed, OKF v0.2 compliant documentation index for AI Agents and LLMs.</summary>
+  <summary>DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.</summary>
   <sections>
     <section name="Core Governance &amp; Architecture">
       <document href="docs/explanation/dsom-governance.md">
@@ -150,6 +150,7 @@ graph LR
 ```
 
 ### Components:
+
 - **Client Presentation Layer (`Web Ui/`, `js/`, `css/`)**: Static HTML5 interface enhanced with Bootstrap 5 and Chart.js. Client authentication guards enforce RBAC rules.
 - **Backend Infrastructure Layer (Supabase)**: Houses core tables (`profiles`, `products`, `lives`, `payouts`) secured via PostgreSQL Row Level Security (RLS).
 - **Automation &amp; LLM Context Layer (`parse_llms_txt.py`)**: Utility pipeline generating XML context maps and sitemaps for AI systems.
@@ -329,8 +330,8 @@ This index provides a complete technical catalog of all system components, datab
 ## 📖 Reference Specifications
 
 - [File Structure, Architecture &amp; Database Schema](file-structure-and-api.md): Complete mapping of HTML views, JS modules, CSS stylesheets, and Supabase tables.
-- [CLI Tools &amp; Utilities Specification](cli-and-tools.md): Parameters, options, and Python API docs for `parse_llms_txt.py`.
-- [OpenWiki &amp; Parsing Engine Specification](openwiki-emulator.md): Detailed specification for data extraction and document parsing utilities.
+- [CLI Tools Specification](cli-and-tools.md): Command line parameters and flags for `parse_llms_txt.py`.
+- [OpenWiki Engine Specification](openwiki-emulator.md): Detailed Python API function signatures for data extraction and document parsing utilities.
 </content>
       </document>
       <document href="docs/reference/file-structure-and-api.md">
@@ -470,7 +471,7 @@ Client configuration initialized in `js/database.js`.
         <description>Command line parameters, environment specs, and Python utility documentation.</description>
         <content>---
 title: &quot;Technical Reference: CLI, Tools &amp; Utilities Specifications&quot;
-description: &quot;Factual CLI and Python API parameter specifications for parse_llms_txt.py and CI automation tools.&quot;
+description: &quot;Factual CLI parameters for parse_llms_txt.py and CI automation tools.&quot;
 type: &quot;reference&quot;
 id: &quot;docs/reference/cli-and-tools.md&quot;
 dsom_governance:
@@ -482,20 +483,20 @@ tags:
   - &quot;cli&quot;
 related_links:
   - &quot;docs/reference/index.md&quot;
-  - &quot;docs/reference/file-structure-and-api.md&quot;
+  - &quot;docs/reference/openwiki-emulator.md&quot;
 nav_order: 2
 layout: &quot;default&quot;
 ---
 
 # Technical Reference: CLI Tools &amp; Utilities Specification
 
-This document provides factual specifications for command-line tools, Python APIs, and automation utilities in Omni-View.
+This document provides factual specifications for command-line options and parameters for utilities in Omni-View. For Python API function signatures, see [OpenWiki Engine Specification](openwiki-emulator.md).
 
 ---
 
 ## 🛠 `parse_llms_txt.py` Specification
 
-Command line utility and Python library for parsing `llms.txt` files, generating XML context payloads, and maintaining site map files.
+Command line utility for parsing `llms.txt` files, generating XML context payloads, and maintaining site map files.
 
 ### Command Line Interface
 
@@ -560,11 +561,12 @@ def generate_llms_txt(docs_dir: str = &quot;docs&quot;, relative_to_docs: bool =
 def generate_llms_full(docs_dir: str = &quot;docs&quot;, root_dir: str = &quot;.&quot;) -&gt; str:
     &quot;&quot;&quot;Build consolidated documentation text for all indexed Markdown files.&quot;&quot;&quot;
 
-def generate_sitemaps(docs_dir: str = &quot;docs&quot;, base_url: str = &quot;...&quot;) -&gt; Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = &quot;docs&quot;, base_url: str = &quot;https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre&quot;) -&gt; Tuple[str, str]:
     &quot;&quot;&quot;Generate text and XML sitemap strings.&quot;&quot;&quot;
 ```
 
 ### Exit Codes &amp; Exception Behavior
+
 - Exit `0`: Successful execution and output generation.
 - Exception `RuntimeError`: Raised when an indexed file path in `llms.txt` cannot be read during XML generation.
 </content>
@@ -654,7 +656,7 @@ This guide provides step-by-step procedural directions for routine operations in
 
 1. Navigate to **Live Sessions** (`http://localhost:8000/Web Ui/lives.html`).
 2. Record session details upon stream completion:
-   - **Host User**: Select employee ID/name.
+   - **Employee ID**: Select employee ID/name.
    - **GMV Generated**: Enter total sales revenue.
    - **Units Sold**: Enter total quantity.
 3. Save record to update the live stream leaderboard.
@@ -717,10 +719,14 @@ python3 parse_llms_txt.py --input llms.txt --output llm_context.xml --root .
 
 ### 3. Validating Results
 
-Verify the output payload syntax:
+Parse and validate the complete `llm_context.xml` structure using Python:
 
-```bash
-head -n 20 llm_context.xml
+```python
+import xml.etree.ElementTree as ET
+
+tree = ET.parse(&quot;llm_context.xml&quot;)
+root = tree.getroot()
+print(f&quot;Validated root tag: &lt;{root.tag}&gt;&quot;)
 ```
 </content>
       </document>
@@ -754,13 +760,16 @@ This guide provides explicit execution steps for running repository utility scri
 
 ## ⚡ Generating All LLM Context Files &amp; Sitemaps
 
-To update `llms.txt`, `llms-full.txt`, `sitemap.txt`, `sitemap.xml`, and `llm_context.xml` across both root and `docs/` directories:
+To update `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml` in both root and `docs/` directories:
 
 ```bash
 python3 parse_llms_txt.py --generate-all
 ```
 
+Note: The output XML context payload (`llm_context.xml`) is written only to the specified output file path (`--output`, defaulting to `llm_context.xml`), while `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml` are generated in both root and `docs/` directories.
+
 ### Expected Terminal Output:
+
 ```text
 Generating documentation indexes and sitemaps...
 Index generation complete.
@@ -811,23 +820,30 @@ Welcome to the **Omni-View Business Command Centre** onboarding tutorial. This h
 ## 🎯 Step-by-Step Walkthrough
 
 ### 1. Environment Initialization
+
 Initialize your Python virtual environment using `uv`:
+
 ```bash
 uv sync
 ```
 
 ### 2. Verify Repository Integrity
+
 Execute the automated test suite to ensure all frontend, schema, and documentation tests pass:
+
 ```bash
 uv run pytest
 ```
 
 ### 3. Launch Local Application Server
-Serve the application locally using Python's HTTP server:
+
+Serve the application locally using Python's HTTP server bound to loopback:
+
 ```bash
-python3 -m http.server 8000 --directory .
+python3 -m http.server 8000 --bind 127.0.0.1 --directory .
 ```
-Access the application at `http://localhost:8000/Web Ui/login.html`.
+
+Access the application at `http://127.0.0.1:8000/Web Ui/login.html`.
 </content>
       </document>
       <document href="docs/tutorials/getting-started.md">
@@ -870,7 +886,7 @@ By completing this tutorial, you will:
 ## 📋 Prerequisites
 
 - Modern web browser (Chrome, Edge, or Firefox).
-- Local Python runtime for serving application files (`python3 -m http.server 8000`).
+- Local Python runtime for serving application files (`python3 -m http.server 8000 --bind 127.0.0.1`).
 
 ---
 
@@ -878,10 +894,12 @@ By completing this tutorial, you will:
 
 1. Open your terminal in the project root directory.
 2. Start the local server:
+
    ```bash
-   python3 -m http.server 8000 --directory .
+   python3 -m http.server 8000 --bind 127.0.0.1 --directory .
    ```
-3. Open `http://localhost:8000/Web Ui/login.html` in your web browser.
+
+3. Open `http://127.0.0.1:8000/Web Ui/login.html` in your web browser.
 
 ---
 
@@ -960,14 +978,17 @@ Confirm that the following files have been created or updated:
 
 ## 📋 Step 3: Parse Context in AI Pipelines
 
-To ingest documentation programmatically in Python:
+To ingest and validate documentation programmatically in Python:
 
 ```python
+import xml.etree.ElementTree as ET
 from parse_llms_txt import parse_llms_txt, generate_xml_context
 
 parsed = parse_llms_txt(&quot;llms.txt&quot;)
 xml_context = generate_xml_context(parsed, root_dir=&quot;.&quot;)
-print(f&quot;Generated {len(xml_context)} bytes of XML context.&quot;)
+root = ET.fromstring(xml_context)
+byte_count = len(xml_context.encode(&quot;utf-8&quot;))
+print(f&quot;Validated XML context element &lt;{root.tag}&gt; containing {byte_count} bytes.&quot;)
 ```
 </content>
       </document>
@@ -1023,6 +1044,7 @@ For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery,
 * [System Overview](README.md)
 
 ## Explanation &amp; Architecture
+
 * [DSOM Governance Framework](explanation/dsom-governance.md)
 * [Diátaxis Architecture](explanation/diataxis.md)
 * [System Architecture](explanation/system-architecture.md)
@@ -1030,17 +1052,20 @@ For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery,
 * [Google OKF 0.2 &amp; DSOM Integration Rationale](explanation/okf-02-and-diataxis.md)
 
 ## Tutorials
+
 * [Quickstart: Onboarding Guide](tutorials/01-getting-started.md)
 * [Getting Started with Omni-View](tutorials/getting-started.md)
 * [LLMs.txt Setup &amp; Context Pipeline](tutorials/llms-txt-setup.md)
 
 ## How-To Guides
+
 * [Operational Recipes Index](how-to/index.md)
 * [Managing Inventory, Live Sessions, and Payouts](how-to/manage-inventory-and-payouts.md)
 * [Generating XML Context with parse_llms_txt.py](how-to/generate-llms-context.md)
 * [Execute Tool Workflows](how-to/run-tool.md)
 
 ## Reference Material
+
 * [Component &amp; Tool Index](reference/index.md)
 * [File Structure, Architecture &amp; Database Schema](reference/file-structure-and-api.md)
 * [CLI Tools, Python Utilities &amp; Specification](reference/cli-and-tools.md)

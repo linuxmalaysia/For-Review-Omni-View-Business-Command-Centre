@@ -34,6 +34,7 @@ graph LR
 ```
 
 ### Components:
+
 - **Client Presentation Layer (`Web Ui/`, `js/`, `css/`)**: Static HTML5 interface enhanced with Bootstrap 5 and Chart.js. Client authentication guards enforce RBAC rules.
 - **Backend Infrastructure Layer (Supabase)**: Houses core tables (`profiles`, `products`, `lives`, `payouts`) secured via PostgreSQL Row Level Security (RLS).
 - **Automation & LLM Context Layer (`parse_llms_txt.py`)**: Utility pipeline generating XML context maps and sitemaps for AI systems.

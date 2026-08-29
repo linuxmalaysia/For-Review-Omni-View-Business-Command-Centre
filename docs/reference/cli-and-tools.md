@@ -1,6 +1,6 @@
 ---
 title: "Technical Reference: CLI, Tools & Utilities Specifications"
-description: "Factual CLI and Python API parameter specifications for parse_llms_txt.py and CI automation tools."
+description: "Factual CLI parameters for parse_llms_txt.py and CI automation tools."
 type: "reference"
 id: "docs/reference/cli-and-tools.md"
 dsom_governance:
@@ -12,20 +12,20 @@ tags:
   - "cli"
 related_links:
   - "docs/reference/index.md"
-  - "docs/reference/file-structure-and-api.md"
+  - "docs/reference/openwiki-emulator.md"
 nav_order: 2
 layout: "default"
 ---
 
 # Technical Reference: CLI Tools & Utilities Specification
 
-This document provides factual specifications for command-line tools, Python APIs, and automation utilities in Omni-View.
+This document provides factual specifications for command-line options and parameters for utilities in Omni-View. For Python API function signatures, see [OpenWiki Engine Specification](openwiki-emulator.md).
 
 ---
 
 ## 🛠 `parse_llms_txt.py` Specification
 
-Command line utility and Python library for parsing `llms.txt` files, generating XML context payloads, and maintaining site map files.
+Command line utility for parsing `llms.txt` files, generating XML context payloads, and maintaining site map files.
 
 ### Command Line Interface
 

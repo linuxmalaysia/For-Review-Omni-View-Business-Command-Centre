@@ -134,7 +134,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
     content = [
         "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
         "",
-        "> DSOM-governed, OKF v0.2 compliant documentation index for AI Agents and LLMs.",
+        "> DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.",
         "",
         "## Core Governance & Architecture",
         "",

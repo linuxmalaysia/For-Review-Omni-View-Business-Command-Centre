@@ -55,12 +55,15 @@ Confirm that the following files have been created or updated:
 
 ## 📋 Step 3: Parse Context in AI Pipelines
 
-To ingest documentation programmatically in Python:
+To ingest and validate documentation programmatically in Python:
 
 ```python
+import xml.etree.ElementTree as ET
 from parse_llms_txt import parse_llms_txt, generate_xml_context
 
 parsed = parse_llms_txt("llms.txt")
 xml_context = generate_xml_context(parsed, root_dir=".")
-print(f"Generated {len(xml_context)} bytes of XML context.")
+root = ET.fromstring(xml_context)
+byte_count = len(xml_context.encode("utf-8"))
+print(f"Validated XML context element <{root.tag}> containing {byte_count} bytes.")
 ```

@@ -27,5 +27,5 @@ This index provides a complete technical catalog of all system components, datab
 ## 📖 Reference Specifications
 
 - [File Structure, Architecture & Database Schema](file-structure-and-api.md): Complete mapping of HTML views, JS modules, CSS stylesheets, and Supabase tables.
-- [CLI Tools & Utilities Specification](cli-and-tools.md): Parameters, options, and Python API docs for `parse_llms_txt.py`.
-- [OpenWiki & Parsing Engine Specification](openwiki-emulator.md): Detailed specification for data extraction and document parsing utilities.
+- [CLI Tools Specification](cli-and-tools.md): Command line parameters and flags for `parse_llms_txt.py`.
+- [OpenWiki Engine Specification](openwiki-emulator.md): Detailed Python API function signatures for data extraction and document parsing utilities.

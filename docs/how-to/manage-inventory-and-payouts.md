@@ -42,7 +42,7 @@ This guide provides step-by-step procedural directions for routine operations in
 
 1. Navigate to **Live Sessions** (`http://localhost:8000/Web Ui/lives.html`).
 2. Record session details upon stream completion:
-   - **Host User**: Select employee ID/name.
+   - **Employee ID**: Select employee ID/name.
    - **GMV Generated**: Enter total sales revenue.
    - **Units Sold**: Enter total quantity.
 3. Save record to update the live stream leaderboard.

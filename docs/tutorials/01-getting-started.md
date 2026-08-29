@@ -26,20 +26,27 @@ Welcome to the **Omni-View Business Command Centre** onboarding tutorial. This h
 ## 🎯 Step-by-Step Walkthrough
 
 ### 1. Environment Initialization
+
 Initialize your Python virtual environment using `uv`:
+
 ```bash
 uv sync
 ```
 
 ### 2. Verify Repository Integrity
+
 Execute the automated test suite to ensure all frontend, schema, and documentation tests pass:
+
 ```bash
 uv run pytest
 ```
 
 ### 3. Launch Local Application Server
-Serve the application locally using Python's HTTP server:
+
+Serve the application locally using Python's HTTP server bound to loopback:
+
 ```bash
-python3 -m http.server 8000 --directory .
+python3 -m http.server 8000 --bind 127.0.0.1 --directory .
 ```
-Access the application at `http://localhost:8000/Web Ui/login.html`.
+
+Access the application at `http://127.0.0.1:8000/Web Ui/login.html`.

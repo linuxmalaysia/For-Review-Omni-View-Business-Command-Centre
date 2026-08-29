@@ -35,7 +35,7 @@ By completing this tutorial, you will:
 ## 📋 Prerequisites
 
 - Modern web browser (Chrome, Edge, or Firefox).
-- Local Python runtime for serving application files (`python3 -m http.server 8000`).
+- Local Python runtime for serving application files (`python3 -m http.server 8000 --bind 127.0.0.1`).
 
 ---
 
@@ -43,10 +43,12 @@ By completing this tutorial, you will:
 
 1. Open your terminal in the project root directory.
 2. Start the local server:
+
    ```bash
-   python3 -m http.server 8000 --directory .
+   python3 -m http.server 8000 --bind 127.0.0.1 --directory .
    ```
-3. Open `http://localhost:8000/Web Ui/login.html` in your web browser.
+
+3. Open `http://127.0.0.1:8000/Web Ui/login.html` in your web browser.
 
 ---
 
