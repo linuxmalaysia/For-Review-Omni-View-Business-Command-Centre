@@ -1,0 +1,20 @@
+[project]
+name = "omni-view"
+version = "0.1.0"
+description = "Omni-View Business Command Centre - Integrated Operations Management System"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[tool.hatch.build.targets.wheel]
+bypass-selection = true
+packages = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
