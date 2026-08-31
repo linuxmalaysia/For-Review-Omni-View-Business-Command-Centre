@@ -1,6 +1,10 @@
 async function logout(event) {
     if (event) event.preventDefault();
 
+    if (window.SessionCache) {
+        window.SessionCache.clearAll();
+    }
+
     // 1. Sign out of Supabase session
     const { error } = await supabaseClient.auth.signOut();
 

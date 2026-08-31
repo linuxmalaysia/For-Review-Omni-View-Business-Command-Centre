@@ -208,7 +208,22 @@ def test_dashboard_js_functions():
     with open(dashboard_js_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Assert concrete consumer-contract identifiers
     assert 'loaddailyGMV' in content, "Missing function loaddailyGMV in dashboard.js"
     assert 'daily-gmv' in content, "Missing DOM element binding 'daily-gmv' in dashboard.js"
     assert 'supabaseClient' in content, "Missing supabaseClient invocation in dashboard.js"
+
+def test_router_and_cache_js_files():
+    router_path = os.path.join(ROOT_DIR, 'js', 'router.js')
+    cache_path = os.path.join(ROOT_DIR, 'js', 'cache.js')
+    assert os.path.exists(router_path), "js/router.js missing"
+    assert os.path.exists(cache_path), "js/cache.js missing"
+
+    with open(router_path, 'r', encoding='utf-8') as f:
+        router_content = f.read()
+    assert 'AppRouter' in router_content
+    assert 'navigateTo' in router_content
+
+    with open(cache_path, 'r', encoding='utf-8') as f:
+        cache_content = f.read()
+    assert 'SessionCache' in cache_content
+    assert 'sessionStorage' in cache_content

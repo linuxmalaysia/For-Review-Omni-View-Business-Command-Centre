@@ -71,6 +71,10 @@ async function updateProfile(event) {
 
 
     // Success
+    if (window.SessionCache) {
+        window.SessionCache.remove(`user_profile_${user.email}`);
+    }
+
     const message =
         document.getElementById("updateMessage");
 

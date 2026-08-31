@@ -21,6 +21,7 @@
 * [Operational Recipes Index](how-to/index.md)
 * [Managing Inventory, Live Sessions, and Payouts](how-to/manage-inventory-and-payouts.md)
 * [Generating XML Context with parse_llms_txt.py](how-to/generate-llms-context.md)
+* [Client-Side Routing and Session Caching](how-to/client-side-routing-and-caching.md)
 * [Execute Tool Workflows](how-to/run-tool.md)
 
 ## Reference Material
