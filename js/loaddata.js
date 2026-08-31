@@ -1,3 +1,9 @@
+/**
+ * Loads the authenticated user's profile and updates available profile elements.
+ *
+ * Redirects unauthenticated users to `login.html` and stops when authentication
+ * or profile retrieval fails. Uses a cached profile when available.
+ */
 async function loadUserData() {
 
     const {

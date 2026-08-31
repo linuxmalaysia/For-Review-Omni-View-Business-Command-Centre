@@ -34,8 +34,8 @@
     });
 
     /**
-     * Navigate to a target URL seamlessly.
-     * @param {string} url
+     * Navigate to a target URL within the application.
+     * @param {string} url - The destination URL or path.
      */
     function navigateTo(url) {
         if (window.location.pathname.endsWith(url)) return;
@@ -43,9 +43,10 @@
     }
 
     /**
-     * Load page via AJAX/Fetch, cache in sessionStorage, and replace container.
-     * @param {string} url
-     * @param {boolean} pushState
+     * Loads a page into the current application shell.
+     *
+     * @param {string} url - The destination URL.
+     * @param {boolean} pushState - Whether to add the destination to browser history.
      */
     async function loadPage(url, pushState = true) {
         const targetUrl = url;
@@ -100,8 +101,8 @@
     }
 
     /**
-     * Load new external scripts present in the target HTML document that are not yet loaded.
-     * @param {Document} newDoc
+     * Loads external scripts from a target document and executes its inline scripts.
+     * @param {Document} newDoc - The document containing scripts to load or execute.
      */
     async function loadNewScripts(newDoc) {
         const existingScriptSrcs = new Set(
