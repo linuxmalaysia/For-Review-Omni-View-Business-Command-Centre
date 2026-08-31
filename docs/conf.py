@@ -2,8 +2,8 @@
 import os
 import sys
 
-project = 'Omni View Business Command Centre'
-copyright = '2026, Harisfazillah Jamel'
+project = 'Omni View Business Command Centre (Review Fork)'
+copyright = '2026, Harisfazillah Jamel (linuxmalaysia)'
 author = 'Harisfazillah Jamel'
 release = '1.0.0'
 

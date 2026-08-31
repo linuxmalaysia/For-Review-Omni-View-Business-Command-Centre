@@ -8,6 +8,8 @@ description: "Executive Business Dashboard & Operational Analytics Engine"
 
 Welcome to **Omni View Business Command Centre**, an executive dashboard and operational analytics engine designed for real-time monitoring of business performance, inventory metrics, and financial payouts.
 
+> **Fork Notice:** This repository is a fork designated specifically for reviewing, evaluating, and providing opinions on the Omni View Business Command Centre codebase and documentation structure. The original project ownership and attribution remain maintained under the original owner (**Harisfazillah Jamel** / `linuxmalaysia`).
+
 ---
 
 ## 📌 Executive Summary
@@ -52,7 +54,8 @@ For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-
 
 ---
 
-## 🤝 License & Author
+## 🤝 License, Author & Fork Notice
 
-Developed and maintained by **Harisfazillah Jamel**.
-Distributed under open repository terms. All rights reserved by author. See project repository for license details.
+- **Original Author & Maintainer**: Harisfazillah Jamel ([linuxmalaysia](https://github.com/linuxmalaysia)).
+- **Fork Notice**: This repository is maintained as a review fork for evaluating, testing, and sharing opinions.
+- **License**: Distributed under open repository terms. All original rights reserved by author.
