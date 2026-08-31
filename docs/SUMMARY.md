@@ -12,6 +12,7 @@ description: "Table of Contents and Navigation Index"
 * [History](../HISTORY.md)
 
 ## Explanation
+
 * [DSOM Governance Framework & Metacognitive Protocol](explanation/dsom-governance.md)
 * [Diátaxis Structuring Framework Implementation](explanation/diataxis.md)
 * [Explanation: Architecture & Diátaxis Framework Adoption](explanation/architecture-and-diataxis.md)
@@ -19,6 +20,7 @@ description: "Table of Contents and Navigation Index"
 * [Omni-View System Architecture & Topology](explanation/system-architecture.md)
 
 ## How To
+
 * [How-To: Client-Side Routing and Session Caching](how-to/client-side-routing-and-caching.md)
 * [How-To: Execute Tool Workflows](how-to/run-tool.md)
 * [How-To: Generate LLM Context XML & Sitemaps](how-to/generate-llms-context.md)
@@ -26,17 +28,20 @@ description: "Table of Contents and Navigation Index"
 * [Operational Recipes Index](how-to/index.md)
 
 ## Reference
+
 * [Component & Tool Technical Index](reference/index.md)
 * [OpenWiki Engine & Data Parsing Specification](reference/openwiki-emulator.md)
 * [Technical Reference: CLI, Tools & Utilities Specifications](reference/cli-and-tools.md)
 * [Technical Reference: File Structure, Architecture & Schema](reference/file-structure-and-api.md)
 
 ## Tutorials
+
 * [Quickstart Onboarding Guide](tutorials/01-getting-started.md)
 * [Tutorial: Getting Started with Omni-View](tutorials/getting-started.md)
 * [Tutorial: LLMs.txt & XML Context Setup Pipeline](tutorials/llms-txt-setup.md)
 
 ## Additional Documentation
+
 * [GitHub Pages Setup Guide](github-pages-setup.md)
 * [Multi-Platform Hosting Guide](multi-platform-hosting.md)
 * [Omni-View Business Command Centre Documentation Hub](README.md)

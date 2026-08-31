@@ -40,9 +40,6 @@ def test_diataxis_directories_exist():
 
 
 def test_diataxis_documents_exist():
-    """
-    Verify that all required Diátaxis documentation files exist, contain sufficient content, and define a non-empty frontmatter title.
-    """
     expected_files = [
         os.path.join(ROOT_DIR, 'docs', 'tutorials', 'getting-started.md'),
         os.path.join(ROOT_DIR, 'docs', 'tutorials', 'llms-txt-setup.md'),
