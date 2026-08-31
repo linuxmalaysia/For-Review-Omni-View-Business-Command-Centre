@@ -1,0 +1,40 @@
+title: Omni View Business Command Centre
+description: Executive Business Dashboard & Operational Analytics Engine
+baseurl: "/For-Review-Omni-View-Business-Command-Centre"
+url: "https://linuxmalaysia.github.io"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+highlighter: rouge
+theme: null
+
+permalink: pretty
+
+include:
+  - README.md
+  - CHANGELOG.md
+  - HISTORY.md
+  - SUMMARY.md
+  - START-HERE.md
+  - docs
+  - assets
+  - _includes
+  - _layouts
+
+exclude:
+  - .venv
+  - .pytest_cache
+  - .git
+  - .github
+  - node_modules
+  - pyproject.toml
+  - uv.lock
+  - parse_llms_txt.py
+  - tools
+  - tests
+  - proposal
+  - __pycache__

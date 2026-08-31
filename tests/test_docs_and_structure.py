@@ -49,6 +49,8 @@ def test_diataxis_documents_exist():
         os.path.join(ROOT_DIR, 'docs', 'reference', 'cli-and-tools.md'),
         os.path.join(ROOT_DIR, 'docs', 'explanation', 'architecture-and-diataxis.md'),
         os.path.join(ROOT_DIR, 'docs', 'explanation', 'okf-02-and-diataxis.md'),
+        os.path.join(ROOT_DIR, 'docs', 'github-pages-setup.md'),
+        os.path.join(ROOT_DIR, 'docs', 'multi-platform-hosting.md'),
     ]
     for filepath in expected_files:
         assert os.path.isfile(filepath), f"Expected documentation file missing: {filepath}"
@@ -81,6 +83,52 @@ def test_summary_and_navigation_files():
 
         target_path = os.path.normpath(os.path.join(docs_root, target))
         assert os.path.isfile(target_path), f"SUMMARY.md link [{label}]({target}) resolves to missing file: {target_path}"
+
+
+def test_root_markdown_files_exist():
+    """Verify that required root markdown files exist and have valid content."""
+    root_md_files = ['README.md', 'CHANGELOG.md', 'HISTORY.md', 'SUMMARY.md', 'START-HERE.md']
+    for filename in root_md_files:
+        filepath = os.path.join(ROOT_DIR, filename)
+        assert os.path.isfile(filepath), f"Root Markdown file {filename} missing"
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        assert len(content.strip()) > 50, f"Root Markdown file {filename} content is too short"
+
+
+def test_jekyll_config_and_layouts():
+    """Verify Jekyll configuration and layout files exist."""
+    config_path = os.path.join(ROOT_DIR, '_config.yml')
+    assert os.path.isfile(config_path), "_config.yml missing at root"
+    with open(config_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    assert 'title:' in content
+    assert 'markdown:' in content
+
+    layout_path = os.path.join(ROOT_DIR, '_layouts', 'default.html')
+    assert os.path.isfile(layout_path), "_layouts/default.html missing"
+
+    for partial in ['header.html', 'sidebar.html', 'footer.html']:
+        partial_path = os.path.join(ROOT_DIR, '_includes', partial)
+        assert os.path.isfile(partial_path), f"_includes/{partial} missing"
+
+
+def test_multi_platform_descriptors():
+    """Verify multi-platform configuration files exist."""
+    platform_files = ['.gitlab-ci.yml', '.gitbook.yaml', '.readthedocs.yaml', 'render.yaml']
+    for filename in platform_files:
+        filepath = os.path.join(ROOT_DIR, filename)
+        assert os.path.isfile(filepath), f"Multi-platform file {filename} missing"
+
+
+def test_tools_scripts_exist():
+    """Verify generator and guardrails tools exist."""
+    tools = [
+        os.path.join(ROOT_DIR, 'tools', 'generate_summary.py'),
+        os.path.join(ROOT_DIR, 'tools', 'install_git_guardrails.py')
+    ]
+    for script_path in tools:
+        assert os.path.isfile(script_path), f"Tool script {script_path} missing"
 
 
 def test_llm_index_files_exist():

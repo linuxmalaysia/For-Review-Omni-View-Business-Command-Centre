@@ -1,0 +1,48 @@
+<aside class="lab-sidebar">
+    <nav class="sidebar-nav">
+        <div class="nav-section">
+            <h3 class="nav-section-title">CORE NAVIGATION</h3>
+            <ul class="nav-list">
+                <li><a href="{{ '/' | relative_url }}" class="nav-link">Home (README)</a></li>
+                <li><a href="{{ '/START-HERE.html' | relative_url }}" class="nav-link">Getting Started</a></li>
+                <li><a href="{{ '/CHANGELOG.html' | relative_url }}" class="nav-link">Changelog</a></li>
+                <li><a href="{{ '/HISTORY.html' | relative_url }}" class="nav-link">History</a></li>
+                <li><a href="{{ '/SUMMARY.html' | relative_url }}" class="nav-link">Summary / TOC</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3 class="nav-section-title">DOCUMENTATION (DIÁTAXIS)</h3>
+            <ul class="nav-list">
+                <li class="nav-category">TUTORIALS</li>
+                <li><a href="{{ '/docs/tutorials/getting-started.html' | relative_url }}" class="nav-link">Getting Started Guide</a></li>
+                <li><a href="{{ '/docs/tutorials/llms-txt-setup.html' | relative_url }}" class="nav-link">LLMs.txt & AI Context Setup</a></li>
+
+                <li class="nav-category">HOW-TO GUIDES</li>
+                <li><a href="{{ '/docs/how-to/manage-inventory-and-payouts.html' | relative_url }}" class="nav-link">Manage Inventory & Payouts</a></li>
+                <li><a href="{{ '/docs/how-to/generate-llms-context.html' | relative_url }}" class="nav-link">Generate LLMs Context</a></li>
+
+                <li class="nav-category">REFERENCE</li>
+                <li><a href="{{ '/docs/reference/file-structure-and-api.html' | relative_url }}" class="nav-link">File Structure & API Reference</a></li>
+                <li><a href="{{ '/docs/reference/cli-and-tools.html' | relative_url }}" class="nav-link">CLI & Utility Tools</a></li>
+                <li><a href="{{ '/docs/github-pages-setup.html' | relative_url }}" class="nav-link">GitHub Pages Setup</a></li>
+                <li><a href="{{ '/docs/multi-platform-hosting.html' | relative_url }}" class="nav-link">Multi-Platform Hosting</a></li>
+
+                <li class="nav-category">EXPLANATION</li>
+                <li><a href="{{ '/docs/explanation/architecture-and-diataxis.html' | relative_url }}" class="nav-link">Architecture & Diátaxis</a></li>
+                <li><a href="{{ '/docs/explanation/okf-02-and-diataxis.html' | relative_url }}" class="nav-link">OKF 0.2 & Governance</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3 class="nav-section-title">ALL PAGES INDEX</h3>
+            <ul class="nav-list">
+                {% for std_file in site.html_pages %}
+                {% if std_file.path != "index.html" and std_file.path != "404.html" %}
+                <li><a href="{{ std_file.url | relative_url }}" class="nav-link">{{ std_file.title | default: std_file.path }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+</aside>
