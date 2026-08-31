@@ -3,8 +3,8 @@ import os
 import sys
 
 project = 'Omni View Business Command Centre (Review Fork)'
-copyright = '2026, Harisfazillah Jamel (linuxmalaysia)'
-author = 'Harisfazillah Jamel'
+copyright = '2026, chinzihuai (original author: https://github.com/chinzihuai/Omni-View-Business-Command-Centre)'
+author = 'chinzihuai'
 release = '1.0.0'
 
 extensions = [
