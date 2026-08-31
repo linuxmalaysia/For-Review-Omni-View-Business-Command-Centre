@@ -1,15 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./Web%20Ui/login.html">
-    <title>Redirecting...</title>
-    <script>
-        window.location.replace("./Web%20Ui/login.html");
-    </script>
-</head>
-<body>
-    <p>Redirecting to login page... If you are not redirected automatically, <a href="./Web%20Ui/login.html">click here</a>.</p>
-</body>
-</html>
- 
+---
+layout: default
+title: "Omni View Business Command Centre"
+description: "Executive Business Dashboard & Operational Analytics Engine"
+---
+
+{% capture content_md %}
+# Omni View Business Command Centre
+
+Welcome to **Omni View Business Command Centre**, an executive dashboard and operational analytics engine designed for real-time monitoring of business performance, inventory metrics, and financial payouts.
+
+> **Fork Notice:** This repository is a fork of the original project [https://github.com/chinzihuai/Omni-View-Business-Command-Centre](https://github.com/chinzihuai/Omni-View-Business-Command-Centre) by **chinzihuai**. It is designated specifically for reviewing, evaluating, and providing opinions on the Omni View Business Command Centre codebase and documentation structure. The original project ownership and attribution remain under **chinzihuai**.
+
+---
+
+## 📌 Executive Summary
+
+Omni View provides a comprehensive view of operational health through a modular, client-side web interface. It combines interactive visual charts, automated metric summaries, and structured data handling.
+
+---
+
+## 🚀 Quick Links & Navigation
+
+* **[Getting Started Guide]({{ '/START-HERE.html' | relative_url }})** – Step-by-step onboarding for human developers and autonomous AI agents.
+* **[Changelog]({{ '/CHANGELOG.html' | relative_url }})** – Version history and latest updates.
+* **[Project History]({{ '/HISTORY.html' | relative_url }})** – Lineage and design evolution.
+* **[Table of Contents / SUMMARY]({{ '/SUMMARY.html' | relative_url }})** – Complete site index.
+
+---
+
+## 📚 Documentation Matrix (Diátaxis Framework)
+
+Documentation is structured into four distinct modes according to the **Diátaxis** framework:
+
+| Category | Description | Primary Documents |
+| :--- | :--- | :--- |
+| **Tutorials** | Learning-oriented step-by-step guides | [Getting Started]({{ '/docs/tutorials/getting-started.html' | relative_url }})<br>[LLMs.txt Setup]({{ '/docs/tutorials/llms-txt-setup.html' | relative_url }}) |
+| **How-To Guides** | Problem-oriented practical procedures | [Manage Inventory & Payouts]({{ '/docs/how-to/manage-inventory-and-payouts.html' | relative_url }})<br>[Generate LLMs Context]({{ '/docs/how-to/generate-llms-context.html' | relative_url }}) |
+| **Reference** | Information-oriented technical descriptions | [File Structure & API Reference]({{ '/docs/reference/file-structure-and-api.html' | relative_url }})<br>[CLI & Utility Tools]({{ '/docs/reference/cli-and-tools.html' | relative_url }})<br>[GitHub Pages Setup]({{ '/docs/github-pages-setup.html' | relative_url }})<br>[Multi-Platform Hosting]({{ '/docs/multi-platform-hosting.html' | relative_url }}) |
+| **Explanation** | Understanding-oriented conceptual discussions | [Architecture & Diátaxis]({{ '/docs/explanation/architecture-and-diataxis.html' | relative_url }})<br>[OKF 0.2 & Governance]({{ '/docs/explanation/okf-02-and-diataxis.html' | relative_url }}) |
+
+---
+
+## 🛠️ Multi-Platform Deployment & Hosting
+
+Omni View documentation and static site can be published across multiple hosting platforms:
+
+- **GitHub Pages**: Automated workflow via `.github/workflows/jekyll-gh-pages.yml`
+- **GitLab Pages**: Configured via `.gitlab-ci.yml`
+- **GitBook**: Configured via `.gitbook.yaml`
+- **ReadTheDocs**: Configured via `.readthedocs.yaml`
+- **Render.com**: Web service configuration via `render.yaml`
+
+For detailed setup instructions, see the [GitHub Pages Setup Guide]({{ '/docs/github-pages-setup.html' | relative_url }}) and [Multi-Platform Hosting Guide]({{ '/docs/multi-platform-hosting.html' | relative_url }}).
+
+---
+
+## 🤝 License, Author & Fork Attribution
+
+- **Original Author & Project Owner**: [chinzihuai](https://github.com/chinzihuai/Omni-View-Business-Command-Centre).
+- **Reviewer / Fork Notice**: This repository is maintained as a review fork for evaluating, testing, and sharing opinions by linuxmalaysia.
+- **License**: Distributed under open repository terms. All original rights reserved by chinzihuai.
+{% endcapture %}
+{{ content_md | markdownify }}

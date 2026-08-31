@@ -28,8 +28,8 @@ class SimpleHTMLValidator(HTMLParser):
             self.meta_refresh = attr_dict.get('content', '')
 
 def get_html_files():
-    html_files = [os.path.join(ROOT_DIR, 'index.html')]
     web_ui_dir = os.path.join(ROOT_DIR, 'Web Ui')
+    html_files = []
     if os.path.exists(web_ui_dir):
         html_files.extend(glob.glob(os.path.join(web_ui_dir, '*.html')))
     return html_files
@@ -49,7 +49,7 @@ def test_html_file_validity(filepath):
     assert 'html' in parser.tags, f"Missing <html> tag in {filepath}"
     assert 'head' in parser.tags or 'body' in parser.tags, f"Missing head/body tag in {filepath}"
 
-def test_index_html_redirect():
+def test_index_html_portal_content():
     index_path = os.path.join(ROOT_DIR, 'index.html')
     assert os.path.isfile(index_path), "index.html missing"
     with open(index_path, 'r', encoding='utf-8') as f:
@@ -58,14 +58,11 @@ def test_index_html_redirect():
     parser = SimpleHTMLValidator()
     parser.feed(content)
 
-    # Validate exact meta refresh redirect target or window.location.replace expression
-    assert parser.meta_refresh is not None, "Missing meta refresh header in index.html"
-    assert re.search(r'url=\.?/?[Ww]eb%20[Uu]i/login\.html', parser.meta_refresh), (
-        f"meta refresh content '{parser.meta_refresh}' does not target Web Ui/login.html"
-    )
-    assert re.search(r'window\.location\.replace\(["\']\.?/?Web%20Ui/login\.html["\']\)', content), (
-        "window.location.replace script does not target Web Ui/login.html"
-    )
+    # Validate that index.html is a documentation portal and does NOT redirect to login page
+    assert parser.meta_refresh is None, "index.html should not contain meta refresh redirect header"
+    assert "login.html" not in content, "index.html should not redirect or link to login.html"
+    assert "layout: default" in content, "index.html missing Jekyll layout frontmatter"
+    assert "Omni View Business Command Centre" in content, "index.html missing project title content"
 
 def test_web_ui_critical_elements():
     main_html_path = os.path.join(ROOT_DIR, 'Web Ui', 'main.html')
