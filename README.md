@@ -55,4 +55,4 @@ For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-
 ## 🤝 License & Author
 
 Developed and maintained by **Harisfazillah Jamel**.
-Licensed under open repository terms.
+Distributed under open repository terms. All rights reserved by author. See project repository for license details.

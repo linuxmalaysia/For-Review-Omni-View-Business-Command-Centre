@@ -2,7 +2,7 @@
 """
 tools/generate_summary.py
 
-Auto-discovers all Markdown (.md) files in root and docs/ directory,
+Auto-discovers all Markdown (.md) files across root and docs/ directory recursively,
 parsing their YAML frontmatter title (or H1 title if no frontmatter),
 and writes an updated SUMMARY.md at the repository root and docs/SUMMARY.md.
 """
@@ -14,10 +14,10 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def get_title_from_md(filepath: str) -> str:
     """Extracts title from YAML frontmatter or first H1 header in a Markdown file."""
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
 
+    try:
         # Check YAML frontmatter
         if content.startswith('---'):
             parts = content.split('---', 2)
@@ -32,8 +32,8 @@ def get_title_from_md(filepath: str) -> str:
             line = line.strip()
             if line.startswith('# '):
                 return line[2:].strip()
-    except Exception:
-        pass
+    except (IndexError, ValueError, KeyError) as e:
+        print(f"Warning: Parse issue in {filepath}: {e}")
 
     filename = os.path.basename(filepath)
     return filename.replace('.md', '').replace('-', ' ').title()
@@ -59,42 +59,46 @@ def generate_summary_lines(is_docs_folder: bool = False):
         ""
     ]
 
-    categories = {
-        "tutorials": "Tutorials",
-        "how-to": "How-To Guides",
-        "reference": "Reference",
-        "explanation": "Explanation"
-    }
-
     docs_dir = os.path.join(ROOT_DIR, 'docs')
-
-    for cat_slug, cat_title in categories.items():
-        cat_dir = os.path.join(docs_dir, cat_slug)
-        lines.append(f"## {cat_title}")
-
-        if os.path.isdir(cat_dir):
-            for filename in sorted(os.listdir(cat_dir)):
-                if filename.endswith('.md'):
-                    rel_path = f"{doc_prefix}{cat_slug}/{filename}"
-                    full_path = os.path.join(cat_dir, filename)
-                    title = get_title_from_md(full_path)
-                    lines.append(f"* [{title}]({rel_path})")
-
-        lines.append("")
-
-    other_docs = []
     if os.path.isdir(docs_dir):
-        for item in sorted(os.listdir(docs_dir)):
-            full_path = os.path.join(docs_dir, item)
-            if os.path.isfile(full_path) and item.endswith('.md') and item != 'SUMMARY.md':
-                rel_path = f"{doc_prefix}{item}"
-                title = get_title_from_md(full_path)
-                other_docs.append(f"* [{title}]({rel_path})")
+        # Recursively find all .md files under docs/ excluding SUMMARY.md
+        discovered_files = []
+        for root, _, files in os.walk(docs_dir):
+            for file in files:
+                if file.endswith('.md') and file != 'SUMMARY.md':
+                    full_path = os.path.join(root, file)
+                    rel_from_docs = os.path.relpath(full_path, docs_dir)
+                    discovered_files.append((rel_from_docs, full_path))
 
-    if other_docs:
-        lines.append("## Additional Documentation")
-        lines.extend(other_docs)
-        lines.append("")
+        # Group by category (first subdirectory component)
+        categories = {}
+        uncategorized = []
+
+        for rel_path, full_path in sorted(discovered_files):
+            parts = rel_path.split(os.sep)
+            title = get_title_from_md(full_path)
+            link_target = f"{doc_prefix}{rel_path.replace(os.sep, '/')}"
+
+            if len(parts) > 1:
+                cat_slug = parts[0]
+                if cat_slug not in categories:
+                    categories[cat_slug] = []
+                categories[cat_slug].append((title, link_target))
+            else:
+                uncategorized.append((title, link_target))
+
+        for cat_slug in sorted(categories.keys()):
+            cat_title = cat_slug.replace('-', ' ').title()
+            lines.append(f"## {cat_title}")
+            for title, link_target in sorted(categories[cat_slug]):
+                lines.append(f"* [{title}]({link_target})")
+            lines.append("")
+
+        if uncategorized:
+            lines.append("## Additional Documentation")
+            for title, link_target in sorted(uncategorized):
+                lines.append(f"* [{title}]({link_target})")
+            lines.append("")
 
     return "\n".join(lines).strip() + "\n"
 

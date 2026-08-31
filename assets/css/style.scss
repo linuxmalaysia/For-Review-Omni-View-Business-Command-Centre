@@ -301,3 +301,21 @@ body.lab-theme {
   margin-top: 0.25rem;
   opacity: 0.8;
 }
+
+/* Narrow-screen responsive layout */
+@media (max-width: 768px) {
+  .lab-container {
+    flex-direction: column;
+  }
+
+  .lab-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+  }
+
+  .lab-main-content {
+    padding: 1rem;
+  }
+}

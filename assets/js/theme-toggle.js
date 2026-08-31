@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.theme-btn');
   const html = document.documentElement;
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
   function setTheme(theme) {
     if (theme === 'auto') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      html.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');
     } else {
       html.setAttribute('data-theme', theme);
     }
@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     localStorage.setItem('lab-theme', theme);
   }
+
+  // Register listener for system color scheme preference changes
+  mediaQuery.addEventListener('change', (e) => {
+    if (localStorage.getItem('lab-theme') === 'auto') {
+      html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    }
+  });
 
   const savedTheme = localStorage.getItem('lab-theme') || 'dark';
   setTheme(savedTheme);
