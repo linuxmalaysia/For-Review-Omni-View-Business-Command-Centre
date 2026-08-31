@@ -26,6 +26,12 @@ git add SUMMARY.md docs/SUMMARY.md llms.txt llms-full.txt sitemap.txt sitemap.xm
 
 
 def install_guardrails():
+    """Install the repository pre-commit hook that regenerates documentation files.
+    
+    If the Git hooks directory is unavailable, installation is skipped. An existing
+    hook is backed up before being replaced when it does not already contain the
+    documentation summary generator.
+    """
     if not os.path.isdir(GIT_HOOKS_DIR):
         print(f"Git hooks directory {GIT_HOOKS_DIR} not found. Skipping hook installation.")
         return

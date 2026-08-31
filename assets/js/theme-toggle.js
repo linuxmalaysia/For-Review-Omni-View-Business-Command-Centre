@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const html = document.documentElement;
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
+  /**
+   * Applies a theme preference, updates the active theme control, and persists the selection.
+   * @param {string} theme - The theme preference to apply: `light`, `dark`, or `auto`.
+   */
   function setTheme(theme) {
     if (theme === 'auto') {
       html.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');

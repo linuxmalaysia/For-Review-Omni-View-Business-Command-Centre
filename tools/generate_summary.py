@@ -13,7 +13,15 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def get_title_from_md(filepath: str) -> str:
-    """Extracts title from YAML frontmatter or first H1 header in a Markdown file."""
+    """
+    Extract a Markdown document title from YAML frontmatter or its first level-one heading.
+    
+    Parameters:
+        filepath (str): Path to the Markdown file.
+    
+    Returns:
+        str: The extracted title, or a title derived from the filename when no title is found.
+    """
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -40,6 +48,15 @@ def get_title_from_md(filepath: str) -> str:
 
 
 def generate_summary_lines(is_docs_folder: bool = False):
+    """
+    Generate the Markdown navigation index for repository or documentation-folder links.
+    
+    Parameters:
+    	is_docs_folder (bool): Whether to generate links relative to the `docs/` directory.
+    
+    Returns:
+    	str: The generated navigation index with frontmatter and a trailing newline.
+    """
     prefix = "" if not is_docs_folder else "../"
     doc_prefix = "docs/" if not is_docs_folder else ""
 
@@ -104,7 +121,7 @@ def generate_summary_lines(is_docs_folder: bool = False):
 
 
 def build_summary():
-    """Scans repository and builds structured SUMMARY.md."""
+    """Generate and write navigation indexes for the repository root and docs directory."""
     # Write root SUMMARY.md
     root_summary_content = generate_summary_lines(is_docs_folder=False)
     root_summary_path = os.path.join(ROOT_DIR, 'SUMMARY.md')
