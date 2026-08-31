@@ -13,25 +13,30 @@ async function loadUserData() {
 
     console.log("Logged in email:", user.email);
 
-
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("username, phone, email")
-        .eq("email", user.email)
-        .maybeSingle();
-
-
-    if (error) {
-        console.error("Profile loading error:", error);
-        return;
-    }
-
+    let data = window.SessionCache ? window.SessionCache.get(`user_profile_${user.email}`) : null;
 
     if (!data) {
-        console.error("Profile not found.");
-        return;
-    }
+        const { data: profileData, error } = await supabaseClient
+            .from("profiles")
+            .select("username, phone, email")
+            .eq("email", user.email)
+            .maybeSingle();
 
+        if (error) {
+            console.error("Profile loading error:", error);
+            return;
+        }
+
+        if (!profileData) {
+            console.error("Profile not found.");
+            return;
+        }
+
+        data = profileData;
+        if (window.SessionCache) {
+            window.SessionCache.set(`user_profile_${user.email}`, data);
+        }
+    }
 
     console.log("Profile:", data);
 
