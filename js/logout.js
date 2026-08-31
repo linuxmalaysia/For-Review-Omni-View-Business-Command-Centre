@@ -1,3 +1,7 @@
+/**
+ * Logs out the current user and redirects to the login page.
+ * @param {Event} [event] - Optional event whose default action is prevented.
+ */
 async function logout(event) {
     if (event) event.preventDefault();
 
