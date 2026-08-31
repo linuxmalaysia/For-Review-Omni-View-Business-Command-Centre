@@ -12,9 +12,6 @@ window.loadDashboardData = async function() {
     if (document.getElementById('recent-activity')) await loadRecentActivity();
 };
 
-/**
- * Calculates and displays the current day's total gross merchandise value.
- */
 async function loaddailyGMV() {
     const now = new Date();
     const today = now.toISOString().split('T')[0];
@@ -40,9 +37,6 @@ async function loaddailyGMV() {
     if (el) el.textContent = `RM${totalGMV.toFixed(2)}`;
 }
 
-/**
- * Calculates and displays the total number of items sold today.
- */
 async function loaddailyItemsSold() {
     const now = new Date();
     const today = now.toISOString().split('T')[0];
@@ -68,10 +62,6 @@ async function loaddailyItemsSold() {
     if (el) el.textContent = `${totalItemsSold}`;
 }
 
-/**
- * Updates the dashboard with the number of employee profiles.
- * @return {void}
- */
 async function loadActiveStaff() {
     const cacheKey = 'dashboard_active_staff';
     let data = window.SessionCache ? window.SessionCache.get(cacheKey) : null;
@@ -95,10 +85,6 @@ async function loadActiveStaff() {
     if (el) el.textContent = `${activeStaffCount}`;
 }
 
-/**
- * Display the total views recorded for the current day.
- * @return {void} No value is returned.
- */
 async function loadViews() {
     const now = new Date();
     const today = now.toISOString().split('T')[0];
@@ -124,9 +110,6 @@ async function loadViews() {
     if (el) el.textContent = `${totalViews}`;
 }
 
-/**
- * Loads stock data and updates the dashboard's stock summary metrics.
- */
 async function loadstock(){
     const cacheKey = 'dashboard_stock_summary';
     let data = window.SessionCache ? window.SessionCache.get(cacheKey) : null;
@@ -157,9 +140,6 @@ async function loadstock(){
     if (totalEl) totalEl.textContent = `${totalStock}`;
 }
 
-/**
- * Displays the five employees with the highest GMV for the current month.
- */
 async function loadTopEmployees() {
     const date = new Date();
     const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -232,9 +212,6 @@ async function loadTopEmployees() {
     if (document.getElementById('fifth-employee')) document.getElementById('fifth-employee').textContent = topEmployees[4] || 'N/A';
 }
 
-/**
- * Displays the five most recent employee payouts in the dashboard.
- */
 async function loadRecentPayouts() {
     const cacheKey = 'dashboard_recent_payouts';
     let data = window.SessionCache ? window.SessionCache.get(cacheKey) : null;
@@ -290,10 +267,6 @@ const formatActivityDate = (dateString) => {
   return date.toLocaleDateString();
 };
 
-/**
- * Displays the five most recent live sessions and payouts in the activity container.
- * Shows a loading state while data is fetched and a no-activity message when no records are available.
- */
 async function loadRecentActivity() {
     const container = document.getElementById("recent-activity");
     if (!container) return;
@@ -373,9 +346,6 @@ async function loadRecentActivity() {
     }).join("");
 }
 
-/**
- * Displays a horizontal bar chart of the products with the lowest stock levels.
- */
 async function loadStockChart() {
     const canvas = document.getElementById('stockChart');
     if (!canvas) return;

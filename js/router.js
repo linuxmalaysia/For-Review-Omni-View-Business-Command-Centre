@@ -9,6 +9,11 @@
         const anchor = event.target.closest('a');
         if (!anchor) return;
 
+        // Bypass router interception for modifier keys or download links
+        if (event.ctrlKey || event.metaKey || event.shiftKey || anchor.hasAttribute('download')) {
+            return;
+        }
+
         const href = anchor.getAttribute('href');
         if (!href || href === '#' || href.startsWith('javascript:') || href.startsWith('http://') || href.startsWith('https://') || anchor.getAttribute('target') === '_blank') {
             return;
@@ -34,8 +39,8 @@
     });
 
     /**
-     * Navigate to a target URL within the application.
-     * @param {string} url - The destination URL or path.
+     * Navigate to a target URL seamlessly.
+     * @param {string} url
      */
     function navigateTo(url) {
         if (window.location.pathname.endsWith(url)) return;
@@ -43,10 +48,9 @@
     }
 
     /**
-     * Loads a page into the current application shell.
-     *
-     * @param {string} url - The destination URL.
-     * @param {boolean} pushState - Whether to add the destination to browser history.
+     * Load page via AJAX/Fetch, cache in sessionStorage, and replace container.
+     * @param {string} url
+     * @param {boolean} pushState
      */
     async function loadPage(url, pushState = true) {
         const targetUrl = url;
@@ -101,8 +105,8 @@
     }
 
     /**
-     * Loads external scripts from a target document and executes its inline scripts.
-     * @param {Document} newDoc - The document containing scripts to load or execute.
+     * Load new external scripts present in the target HTML document that are not yet loaded.
+     * @param {Document} newDoc
      */
     async function loadNewScripts(newDoc) {
         const existingScriptSrcs = new Set(
@@ -135,7 +139,7 @@
                     };
                     document.body.appendChild(newScript);
                 });
-            } else if (oldScript.textContent.strip && oldScript.textContent.strip() !== '') {
+            } else if (oldScript.textContent && oldScript.textContent.trim() !== '') {
                 // Execute inline scripts via Function constructor safely to prevent top-level redeclaration
                 try {
                     new Function(oldScript.textContent)();
@@ -155,28 +159,6 @@
             cancelable: true
         });
         document.dispatchEvent(domContentLoadedEvent);
-
-        if (typeof window.loadUserData === 'function') {
-            window.loadUserData();
-        }
-        if (typeof window.loadDashboardData === 'function') {
-            window.loadDashboardData();
-        }
-        if (typeof window.loadProducts === 'function') {
-            window.loadProducts();
-        }
-        if (typeof window.loadLivesData === 'function') {
-            window.loadLivesData();
-        }
-        if (typeof window.loadPayoutsData === 'function') {
-            window.loadPayoutsData();
-        }
-        if (typeof window.loadReportData === 'function') {
-            window.loadReportData();
-        }
-        if (typeof window.loadUsersData === 'function') {
-            window.loadUsersData();
-        }
     }
 
     window.AppRouter = {

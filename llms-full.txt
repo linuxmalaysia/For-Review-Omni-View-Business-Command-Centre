@@ -745,6 +745,7 @@ tags:
 related_links:
   - "docs/how-to/manage-inventory-and-payouts.md"
   - "docs/how-to/generate-llms-context.md"
+  - "docs/how-to/client-side-routing-and-caching.md"
   - "docs/how-to/run-tool.md"
 nav_order: 1
 layout: "default"
@@ -760,6 +761,7 @@ This index categorizes all task-oriented procedural guides for operational manag
 
 - [Manage Inventory, Live Sessions, and Payouts](manage-inventory-and-payouts.md): Procedural steps for inventory updates, tracking streams, and processing employee payouts.
 - [Generate LLM XML Context and Sitemaps](generate-llms-context.md): How-to guide for executing `parse_llms_txt.py` to build machine-parseable context artifacts.
+- [Client-Side Routing and Session Caching](client-side-routing-and-caching.md): Practical guide on navigating Omni-View without full page reloads and persisting session data.
 - [Execute Tool Workflows](run-tool.md): How-to guide for running utility scripts and CLI automation pipelines.
 
 --- FILE: docs/how-to/manage-inventory-and-payouts.md ---
