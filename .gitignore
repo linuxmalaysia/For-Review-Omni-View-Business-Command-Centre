@@ -1,4 +1,6 @@
-.env
+_site/
+.jekyll-cache/
+.jekyll-metadata
 .venv/
 __pycache__/
 *.pyc

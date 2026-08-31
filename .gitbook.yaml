@@ -1,0 +1,5 @@
+# GitBook configuration descriptor
+root: ./docs
+structure:
+  summary: SUMMARY.md
+  readme: README.md

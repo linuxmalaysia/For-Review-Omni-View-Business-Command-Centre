@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }} - {{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="lab-theme">
+    {% include header.html %}
+
+    <div class="lab-container">
+        {% include sidebar.html %}
+
+        <main class="lab-main-content">
+            <div class="lab-card hero-card">
+                <div class="hero-header">
+                    <span class="pill-badge pill-cyan">LABORATORY UI v2.0</span>
+                    <span class="pill-badge pill-purple">DIÁTAXIS DOCS</span>
+                    <span class="pill-badge pill-green">OKF 0.2 COMPLIANT</span>
+                </div>
+                <h1 class="page-title">{{ page.title | default: site.title }}</h1>
+                {% if page.description %}
+                <p class="page-subtitle">{{ page.description }}</p>
+                {% endif %}
+            </div>
+
+            <article class="lab-card markdown-body">
+                {{ content }}
+            </article>
+        </main>
+    </div>
+
+    {% include footer.html %}
+
+    <script src="{{ '/assets/js/theme-toggle.js' | relative_url }}"></script>
+</body>
+</html>

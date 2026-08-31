@@ -1,0 +1,11 @@
+# Render.com static site / web service specification
+services:
+  - type: web
+    name: omni-view-command-centre
+    env: static
+    buildCommand: python3 parse_llms_txt.py --generate-all
+    staticPublishPath: ./
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: max-age=3600

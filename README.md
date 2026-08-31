@@ -1,81 +1,58 @@
-# Omni-View Business Command Centre
+---
+layout: default
+title: "Omni View Business Command Centre"
+description: "Executive Business Dashboard & Operational Analytics Engine"
+---
 
-A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform.
+# Omni View Business Command Centre
+
+Welcome to **Omni View Business Command Centre**, an executive dashboard and operational analytics engine designed for real-time monitoring of business performance, inventory metrics, and financial payouts.
 
 ---
 
-## 🚀 Quick Start & Onboarding Standard
+## 📌 Executive Summary
 
-For rapid onboarding of human developers and autonomous AI agents, start at **[START-HERE.md](START-HERE.md)**.
-
----
-
-## 📚 Documentation (Diátaxis Framework)
-
-This project adopts the [Diátaxis Documentation Framework](https://diataxis.fr/) to organize technical documentation into four distinct quadrants:
-
-- 🎓 **[Tutorials](docs/tutorials/getting-started.md)**: Guided step-by-step lesson to help new users get started with Omni-View.
-- 🛠 **[How-To Guides](docs/how-to/manage-inventory-and-payouts.md)**: Goal-oriented practical guides for inventory management, live sales tracking, payouts, and reports.
-- 📖 **[Reference Material](docs/reference/file-structure-and-api.md)**: Factual technical description of file structure, JavaScript modules, CSS stylesheets, and Supabase integration.
-- 💡 **[Explanation](docs/explanation/architecture-and-diataxis.md)**: Conceptual insights into system architecture, design decisions, and Diátaxis adoption rationale.
+Omni View provides a comprehensive view of operational health through a modular, client-side web interface. It combines interactive visual charts, automated metric summaries, and structured data handling.
 
 ---
 
-## 📖 Project Overview
+## 🚀 Quick Links & Navigation
 
-Capt Empire relies on Omni-View to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions.
-
----
-
-## 🎯 Objectives
-
-- Develop a web-based Integrated Operations Management System.
-- Centralize sales, inventory, employee, and KPI management.
-- Monitor employee performance through KPI tracking.
-- Provide dashboards and reports for business analysis and decision-making.
+* **[Getting Started Guide](START-HERE.md)** – Step-by-step onboarding for human developers and autonomous AI agents.
+* **[Changelog](CHANGELOG.md)** – Version history and latest updates.
+* **[Project History](HISTORY.md)** – Lineage and design evolution.
+* **[Table of Contents / SUMMARY](SUMMARY.md)** – Complete site index.
 
 ---
 
-## ✨ Features
+## 📚 Documentation Matrix (Diátaxis Framework)
 
-- 📦 Product Management (CRUD)
-- 📊 Sales Management
-- 📁 Inventory Management
-- 👨‍💼 Employee Management
-- 📈 KPI Monitoring
-- 📉 Analytics Dashboard
-- 🤖 AI-powered Sales Assistant Chatbot
-- 🔐 Secure Authentication
-- 📄 Business Reports
+Documentation is structured into four distinct modes according to the **Diátaxis** framework:
 
----
-
-## 🛠 Technology Stack
-
-### Frontend
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap 5
-
-### Backend & Database
-- Supabase (PostgreSQL)
-
-### Package & Environment Management
-- Python `uv`
+| Category | Description | Primary Documents |
+| :--- | :--- | :--- |
+| **Tutorials** | Learning-oriented step-by-step guides | [Getting Started](docs/tutorials/getting-started.md)<br>[LLMs.txt Setup](docs/tutorials/llms-txt-setup.md) |
+| **How-To Guides** | Problem-oriented practical procedures | [Manage Inventory & Payouts](docs/how-to/manage-inventory-and-payouts.md)<br>[Generate LLMs Context](docs/how-to/generate-llms-context.md) |
+| **Reference** | Information-oriented technical descriptions | [File Structure & API Reference](docs/reference/file-structure-and-api.md)<br>[CLI & Utility Tools](docs/reference/cli-and-tools.md)<br>[GitHub Pages Setup](docs/github-pages-setup.md)<br>[Multi-Platform Hosting](docs/multi-platform-hosting.md) |
+| **Explanation** | Understanding-oriented conceptual discussions | [Architecture & Diátaxis](docs/explanation/architecture-and-diataxis.md)<br>[OKF 0.2 & Governance](docs/explanation/okf-02-and-diataxis.md) |
 
 ---
 
-## 🧪 Testing
+## 🛠️ Multi-Platform Deployment & Hosting
 
-Unit tests for all files across the project (HTML, JS, CSS, and docs structure) are built using Python and executed with `uv`:
+Omni View documentation and static site can be published across multiple hosting platforms:
 
-```bash
-uv run pytest
-```
+- **GitHub Pages**: Automated workflow via `.github/workflows/jekyll-gh-pages.yml`
+- **GitLab Pages**: Configured via `.gitlab-ci.yml`
+- **GitBook**: Configured via `.gitbook.yaml`
+- **ReadTheDocs**: Configured via `.readthedocs.yaml`
+- **Render.com**: Web service configuration via `render.yaml`
+
+For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-pages-setup.md) and [Multi-Platform Hosting Guide](docs/multi-platform-hosting.md).
 
 ---
 
-## 📄 License
+## 🤝 License & Author
 
-This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology).
+Developed and maintained by **Harisfazillah Jamel**.
+Licensed under open repository terms.

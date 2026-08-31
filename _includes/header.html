@@ -1,0 +1,21 @@
+<header class="lab-header">
+    <div class="header-brand">
+        <a href="{{ '/' | relative_url }}" class="brand-logo">
+            <span class="logo-icon">⚡</span>
+            <span class="brand-title">Omni View Command Centre</span>
+        </a>
+    </div>
+
+    <div class="header-actions">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="doc-search" placeholder="Search documentation..." aria-label="Search documentation">
+        </div>
+
+        <div class="theme-switcher-group" role="group" aria-label="Theme mode switcher">
+            <button class="theme-btn" data-theme-val="light" title="Light mode">LIGHT</button>
+            <button class="theme-btn active" data-theme-val="dark" title="Dark mode">DARK</button>
+            <button class="theme-btn" data-theme-val="auto" title="System mode">AUTO</button>
+        </div>
+    </div>
+</header>
