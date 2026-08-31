@@ -1,7 +1,20 @@
 ---
-layout: default
 title: "Omni View Business Command Centre Documentation Hub"
 description: "Central entry hub for Omni-View documentation structured according to Diátaxis and DSOM OKF 0.2 guidelines."
+type: "concept"
+id: "docs/index.md"
+dsom_governance:
+  domain: "Automation"
+  context_tier: "L1-Overview"
+tags:
+  - "dsom-protocol"
+  - "documentation"
+  - "hub"
+related_links:
+  - "docs/explanation/dsom-governance.md"
+  - "docs/tutorials/getting-started.md"
+nav_order: 1
+layout: "default"
 ---
 
 # Omni View Business Command Centre Documentation Hub
