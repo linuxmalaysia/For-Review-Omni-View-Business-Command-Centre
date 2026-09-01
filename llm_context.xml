@@ -996,6 +996,48 @@ print(f&quot;Validated XML context element &lt;{root.tag}&gt; containing {byte_c
       </document>
     </section>
     <section name="Optional &amp; System Documents">
+      <document href="docs/index.md">
+        <title>Documentation Hub</title>
+        <description>Central entry hub for documentation.</description>
+        <content>---
+title: &quot;Omni View Business Command Centre Documentation Hub&quot;
+description: &quot;Central entry hub for Omni-View documentation structured according to Diátaxis and DSOM OKF 0.2 guidelines.&quot;
+type: &quot;concept&quot;
+id: &quot;docs/index.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;dsom-protocol&quot;
+  - &quot;documentation&quot;
+  - &quot;hub&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/tutorials/getting-started.md&quot;
+nav_order: 1
+layout: &quot;default&quot;
+---
+
+# Omni View Business Command Centre Documentation Hub
+
+Welcome to the documentation hub for **Omni View Business Command Centre**.
+
+This documentation system is governed by the **Deep State of Mind (DSOM) Protocol**, adopting the **Diátaxis Structuring Framework** and **Google Open Knowledge Format (OKF v0.2)** metadata standards.
+
+---
+
+## 🧭 Navigation Summary
+
+Explore the four Diátaxis documentation quadrants:
+
+- **[Tutorials](tutorials/getting-started.md)**: Hands-on onboarding guides for users and developers.
+- **[How-To Guides](how-to/manage-inventory-and-payouts.md)**: Operational recipes and practical procedural instructions.
+- **[Reference](reference/file-structure-and-api.md)**: Factual technical specifications, file paths, CLI flags, and database schemas.
+- **[Explanation](explanation/architecture-and-diataxis.md)**: High-level architectural background, design trade-offs, and DSOM governance rationale.
+
+For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](../llms.txt).
+</content>
+      </document>
       <document href="docs/README.md">
         <title>Documentation Index</title>
         <description>Primary documentation home page.</description>
@@ -1087,6 +1129,7 @@ description: &quot;Table of Contents and Navigation Index&quot;
 
 * [GitHub Pages Setup Guide](github-pages-setup.md)
 * [Multi-Platform Hosting Guide](multi-platform-hosting.md)
+* [Omni View Business Command Centre Documentation Hub](index.md)
 * [Omni-View Business Command Centre Documentation Hub](README.md)
 </content>
       </document>

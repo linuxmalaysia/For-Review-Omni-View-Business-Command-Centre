@@ -166,6 +166,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "",
         "## Optional & System Documents",
         "",
+        f"- [Documentation Hub]({p}index.md): Central entry hub for documentation.",
         f"- [Documentation Index]({p}README.md): Primary documentation home page.",
         f"- [SUMMARY Table of Contents]({p}SUMMARY.md): GitBook-compatible navigation summary.",
         f"- [START-HERE Onboarding Index]({root_p}START-HERE.md): Dual-audience developer and AI agent onboarding entry point."
@@ -188,6 +189,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         "README.md",
         "START-HERE.md",
         os.path.join(docs_dir, "README.md"),
+        os.path.join(docs_dir, "index.md"),
         os.path.join(docs_dir, "SUMMARY.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),

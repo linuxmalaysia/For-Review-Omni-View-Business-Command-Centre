@@ -44,4 +44,5 @@ description: "Table of Contents and Navigation Index"
 
 * [GitHub Pages Setup Guide](github-pages-setup.md)
 * [Multi-Platform Hosting Guide](multi-platform-hosting.md)
+* [Omni View Business Command Centre Documentation Hub](index.md)
 * [Omni-View Business Command Centre Documentation Hub](README.md)
