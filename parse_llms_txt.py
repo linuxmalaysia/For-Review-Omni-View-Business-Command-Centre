@@ -169,7 +169,9 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         f"- [Documentation Hub]({p}index.md): Central entry hub for documentation.",
         f"- [Documentation Index]({p}README.md): Primary documentation home page.",
         f"- [SUMMARY Table of Contents]({p}SUMMARY.md): GitBook-compatible navigation summary.",
-        f"- [START-HERE Onboarding Index]({root_p}START-HERE.md): Dual-audience developer and AI agent onboarding entry point."
+        f"- [START-HERE Onboarding Index]({root_p}START-HERE.md): Dual-audience developer and AI agent onboarding entry point.",
+        f"- [Project Changelog]({root_p}CHANGELOG.md): Version release history and updates log.",
+        f"- [Project History]({root_p}HISTORY.md): Historical milestone background."
     ]
     return "\n".join(content) + "\n"
 
@@ -188,9 +190,14 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     doc_paths = [
         "README.md",
         "START-HERE.md",
+        "CHANGELOG.md",
+        "HISTORY.md",
         os.path.join(docs_dir, "README.md"),
         os.path.join(docs_dir, "index.md"),
         os.path.join(docs_dir, "SUMMARY.md"),
+        os.path.join(docs_dir, "START-HERE.md"),
+        os.path.join(docs_dir, "CHANGELOG.md"),
+        os.path.join(docs_dir, "HISTORY.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),
         os.path.join(docs_dir, "explanation", "system-architecture.md"),
@@ -285,11 +292,39 @@ def main():
     if getattr(args, "generate_all", False):
         print("Generating documentation indexes and sitemaps...")
 
-        # Sync root docs to docs/
+        # Sync root docs to docs/ relative to root_dir
         import shutil
-        for root_doc in ["START-HERE.md", "CHANGELOG.md", "HISTORY.md"]:
-            if os.path.exists(root_doc):
-                shutil.copy(root_doc, os.path.join("docs", root_doc))
+        root_dir = getattr(args, "root", ".")
+        target_docs_dir = os.path.join(root_dir, "docs")
+        os.makedirs(target_docs_dir, exist_ok=True)
+
+        for root_doc in ["CHANGELOG.md", "HISTORY.md"]:
+            src = os.path.join(root_dir, root_doc)
+            if os.path.exists(src):
+                shutil.copy(src, os.path.join(target_docs_dir, root_doc))
+
+        start_here_src = os.path.join(root_dir, "START-HERE.md")
+        if os.path.exists(start_here_src):
+            with open(start_here_src, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            if not content.startswith("---"):
+                frontmatter = (
+                    "---\n"
+                    "layout: default\n"
+                    'title: "Onboarding Standard & Operational Index"\n'
+                    'description: "Dual-audience onboarding standard and operational entry point for developers and AI agents."\n'
+                    "---\n\n"
+                )
+                content = frontmatter + content
+
+            content = content.replace("docs/tutorials/", "tutorials/")
+            content = content.replace("docs/how-to/", "how-to/")
+            content = content.replace("docs/reference/", "reference/")
+            content = content.replace("docs/explanation/", "explanation/")
+
+            with open(os.path.join(target_docs_dir, "START-HERE.md"), "w", encoding="utf-8") as f:
+                f.write(content)
 
         # llms.txt
         root_llms = generate_llms_txt(relative_to_docs=False)

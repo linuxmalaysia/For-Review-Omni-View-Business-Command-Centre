@@ -6,10 +6,10 @@ description: "Table of Contents and Navigation Index"
 
 # Summary
 
-* [Home](../README.md)
-* [Getting Started](../START-HERE.md)
-* [Changelog](../CHANGELOG.md)
-* [History](../HISTORY.md)
+* [Home](README.md)
+* [Getting Started](START-HERE.md)
+* [Changelog](CHANGELOG.md)
+* [History](HISTORY.md)
 
 ## Explanation
 

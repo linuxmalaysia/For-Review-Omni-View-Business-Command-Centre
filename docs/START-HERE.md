@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Onboarding Standard & Operational Index"
+description: "Dual-audience onboarding standard and operational entry point for developers and AI agents."
+---
+
 # Onboarding Standard & Operational Index
 
 > "Engineers and autonomous AI agents do not need to ingest this entire repository to begin contributing effectively. In fact, doing so degrades performance and focus. The optimal path to mastery is immediate execution of small, deterministic, high-impact tasks."
@@ -22,10 +28,10 @@ The repository documentation is structured according to the Diátaxis framework 
 
 | Quadrant | Purpose | Human Pathway | Autonomous Agent Pathway |
 | :--- | :--- | :--- | :--- |
-| **Tutorials** | Learning-oriented onboarding & initial platform setup | Read [`docs/tutorials/getting-started.md`](docs/tutorials/getting-started.md) for step-by-step UI login and dashboard navigation. | Parse `docs/tutorials/getting-started.md` for user roles (`administrator`, `employee`), login entry points, and baseline user flows. |
-| **How-To Guides** | Problem-oriented practical procedures for target workflows | Consult [`docs/how-to/manage-inventory-and-payouts.md`](docs/how-to/manage-inventory-and-payouts.md) for operational inventory and payout tasks. | Extract discrete procedural steps and DOM manipulation dependencies for automated integration tests. |
-| **Reference** | Information-oriented factual specifications and schemas | Inspect [`docs/reference/file-structure-and-api.md`](docs/reference/file-structure-and-api.md) for file maps, database schemas, and JS modules. | Query file location indexes, API schemas, Supabase table definitions, and CSS module bindings. |
-| **Explanation** | Concept-oriented architectural background and rationale | Review [`docs/explanation/architecture-and-diataxis.md`](docs/explanation/architecture-and-diataxis.md) for design decisions and security models. | Anchor operational boundaries against Role-Based Access Control (RBAC) rules and decoupled architecture constraints. |
+| **Tutorials** | Learning-oriented onboarding & initial platform setup | Read [`tutorials/getting-started.md`](tutorials/getting-started.md) for step-by-step UI login and dashboard navigation. | Parse `tutorials/getting-started.md` for user roles (`administrator`, `employee`), login entry points, and baseline user flows. |
+| **How-To Guides** | Problem-oriented practical procedures for target workflows | Consult [`how-to/manage-inventory-and-payouts.md`](how-to/manage-inventory-and-payouts.md) for operational inventory and payout tasks. | Extract discrete procedural steps and DOM manipulation dependencies for automated integration tests. |
+| **Reference** | Information-oriented factual specifications and schemas | Inspect [`reference/file-structure-and-api.md`](reference/file-structure-and-api.md) for file maps, database schemas, and JS modules. | Query file location indexes, API schemas, Supabase table definitions, and CSS module bindings. |
+| **Explanation** | Concept-oriented architectural background and rationale | Review [`explanation/architecture-and-diataxis.md`](explanation/architecture-and-diataxis.md) for design decisions and security models. | Anchor operational boundaries against Role-Based Access Control (RBAC) rules and decoupled architecture constraints. |
 
 ---
 
@@ -71,7 +77,7 @@ Autonomous agents MUST execute the following four-phase ingestion protocol prior
    - Read `pyproject.toml` and `README.md` to establish project metadata and dependency constraints.
 
 2. **Context Isolation:**
-   - Locate relevant specifications in `docs/reference/file-structure-and-api.md`.
+   - Locate relevant specifications in `reference/file-structure-and-api.md`.
    - Read ONLY the target source files and matching tests associated with the assigned task. Avoid reading unreferenced binary or large asset files.
 
 3. **Deterministic Verification:**
@@ -90,7 +96,7 @@ To optimize context window usage and prevent hallucination, agent runtimes must 
 
 ### 4.1. Context Window Boundaries
 - **Strict Scope Isolation:** Agents must read only files directly pertinent to the task ticket. Do NOT load full repository snapshots into memory.
-- **Reference Anchoring:** Use `docs/reference/file-structure-and-api.md` as the canonical source of truth for file paths and backend integration schemas.
+- **Reference Anchoring:** Use `reference/file-structure-and-api.md` as the canonical source of truth for file paths and backend integration schemas.
 - **No Direct Artifact Editing:** Never modify generated build outputs or external vendor scripts directly. Always modify source code in `js/`, `css/`, or `Web Ui/`.
 
 ### 4.2. Multi-Agent Interoperability (Jules, Google Antigravity, & CI/CD Pipelines)
