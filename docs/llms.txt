@@ -35,4 +35,4 @@
 - [Documentation Hub](index.md): Central entry hub for documentation.
 - [Documentation Index](README.md): Primary documentation home page.
 - [SUMMARY Table of Contents](SUMMARY.md): GitBook-compatible navigation summary.
-- [START-HERE Onboarding Index](../START-HERE.md): Dual-audience developer and AI agent onboarding entry point.
+- [START-HERE Onboarding Index](START-HERE.md): Dual-audience developer and AI agent onboarding entry point.

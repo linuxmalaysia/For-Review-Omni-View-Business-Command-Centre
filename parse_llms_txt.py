@@ -129,7 +129,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
     	str: Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
-    root_p = "../" if relative_to_docs else ""
+    root_p = "" if relative_to_docs else ""
 
     content = [
         "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
@@ -284,6 +284,12 @@ def main():
 
     if getattr(args, "generate_all", False):
         print("Generating documentation indexes and sitemaps...")
+
+        # Sync root docs to docs/
+        import shutil
+        for root_doc in ["START-HERE.md", "CHANGELOG.md", "HISTORY.md"]:
+            if os.path.exists(root_doc):
+                shutil.copy(root_doc, os.path.join("docs", root_doc))
 
         # llms.txt
         root_llms = generate_llms_txt(relative_to_docs=False)

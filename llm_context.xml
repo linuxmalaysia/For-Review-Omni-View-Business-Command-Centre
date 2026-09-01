@@ -1035,7 +1035,7 @@ Explore the four Diátaxis documentation quadrants:
 - **[Reference](reference/file-structure-and-api.md)**: Factual technical specifications, file paths, CLI flags, and database schemas.
 - **[Explanation](explanation/architecture-and-diataxis.md)**: High-level architectural background, design trade-offs, and DSOM governance rationale.
 
-For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](../llms.txt).
+For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](llms.txt).
 </content>
       </document>
       <document href="docs/README.md">
@@ -1077,7 +1077,7 @@ Explore the four Diátaxis documentation quadrants:
 - **[Reference](reference/file-structure-and-api.md)**: Factual technical specifications, file paths, CLI flags, and database schemas.
 - **[Explanation](explanation/architecture-and-diataxis.md)**: High-level architectural background, design trade-offs, and DSOM governance rationale.
 
-For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](../llms.txt).
+For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](llms.txt).
 </content>
       </document>
       <document href="docs/SUMMARY.md">
@@ -1127,10 +1127,13 @@ description: &quot;Table of Contents and Navigation Index&quot;
 
 ## Additional Documentation
 
+* [CHANGELOG](CHANGELOG.md)
 * [GitHub Pages Setup Guide](github-pages-setup.md)
+* [HISTORY](HISTORY.md)
 * [Multi-Platform Hosting Guide](multi-platform-hosting.md)
 * [Omni View Business Command Centre Documentation Hub](index.md)
 * [Omni-View Business Command Centre Documentation Hub](README.md)
+* [Onboarding Standard &amp; Operational Index](START-HERE.md)
 </content>
       </document>
       <document href="START-HERE.md">

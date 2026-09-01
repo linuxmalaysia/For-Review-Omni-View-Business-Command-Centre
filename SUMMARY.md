@@ -42,7 +42,10 @@ description: "Table of Contents and Navigation Index"
 
 ## Additional Documentation
 
+* [CHANGELOG](docs/CHANGELOG.md)
 * [GitHub Pages Setup Guide](docs/github-pages-setup.md)
+* [HISTORY](docs/HISTORY.md)
 * [Multi-Platform Hosting Guide](docs/multi-platform-hosting.md)
 * [Omni View Business Command Centre Documentation Hub](docs/index.md)
 * [Omni-View Business Command Centre Documentation Hub](docs/README.md)
+* [Onboarding Standard & Operational Index](docs/START-HERE.md)
