@@ -147,6 +147,30 @@ def test_llm_index_files_exist():
         assert os.path.isfile(filepath), f"Required index file {filename} missing"
 
 
+def test_agents_and_brain_governance():
+    """Verify that AGENTS.md, .agents/AGENTS.md, and .agents/brain/ structure exist with required rules."""
+    root_agents = os.path.join(ROOT_DIR, 'AGENTS.md')
+    agents_constitution = os.path.join(ROOT_DIR, '.agents', 'AGENTS.md')
+    palace_registry = os.path.join(ROOT_DIR, '.agents', 'brain', 'palace_registry.md')
+    sop_discovery = os.path.join(ROOT_DIR, 'docs', 'SOP-KNOWLEDGE-FIRST-DISCOVERY.md')
+
+    assert os.path.isfile(root_agents), "Root AGENTS.md missing"
+    assert os.path.isfile(agents_constitution), ".agents/AGENTS.md missing"
+    assert os.path.isfile(palace_registry), ".agents/brain/palace_registry.md missing"
+    assert os.path.isfile(sop_discovery), "docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md missing"
+
+    with open(agents_constitution, 'r', encoding='utf-8') as f:
+        content = f.read()
+    assert "Local Knowledge-First & Metadata Discovery Mandate" in content
+    assert "Sovereign Markdown Palace" in content
+
+    with open(sop_discovery, 'r', encoding='utf-8') as f:
+        sop_content = f.read()
+    metadata = parse_yaml_frontmatter(sop_content)
+    assert "title" in metadata, "SOP-KNOWLEDGE-FIRST-DISCOVERY.md missing frontmatter title"
+    assert "SOP: Knowledge-First Discovery" in metadata["title"]
+
+
 def test_start_here_document_exists():
     start_here_path = os.path.join(ROOT_DIR, 'START-HERE.md')
     assert os.path.isfile(start_here_path), "START-HERE.md missing at root"

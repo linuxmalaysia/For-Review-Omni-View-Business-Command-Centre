@@ -3,6 +3,92 @@
   <summary>DSOM-governed, OKF v0.2-compliant documentation index for AI Agents and LLMs.</summary>
   <sections>
     <section name="Core Governance &amp; Architecture">
+      <document href="docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md">
+        <title>Knowledge-First Discovery SOP</title>
+        <description>Protocol detailing local metadata search prior to remote probes.</description>
+        <content>---
+title: &quot;SOP: Knowledge-First Discovery &amp; Context Preservation Protocol&quot;
+description: &quot;SOP detailing how AI agents and human operators leverage OKF YAML frontmatter (topics, description) in .agents/brain/ and docs/ before external search or remote execution.&quot;
+type: &quot;standard_operating_procedure&quot;
+id: &quot;docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md&quot;
+dsom_governance:
+  domain: &quot;AI&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;okf&quot;
+  - &quot;discovery&quot;
+  - &quot;context-management&quot;
+  - &quot;brain&quot;
+  - &quot;dsom&quot;
+  - &quot;sop&quot;
+topics:
+  - &quot;okf&quot;
+  - &quot;discovery&quot;
+  - &quot;context-management&quot;
+  - &quot;brain&quot;
+  - &quot;dsom&quot;
+  - &quot;sop&quot;
+related_links:
+  - &quot;docs/explanation/dsom-governance.md&quot;
+  - &quot;docs/explanation/okf-02-and-diataxis.md&quot;
+  - &quot;.agents/AGENTS.md&quot;
+  - &quot;.agents/brain/palace_registry.md&quot;
+nav_order: 3
+layout: &quot;default&quot;
+---
+
+# 📚 SOP: Local Knowledge-First Discovery &amp; OKF Context Protocol
+
+## 1. Executive Intent
+
+To prevent unnecessary SSH probes, remote server executions, token context window exhaustion, and context loss during agentic sessions, AI agents and human operators must adhere strictly to the **Local Knowledge-First Protocol**.
+
+All project facts, architectural specifications, UI components, data structures, and operational rules are indexed via **Google OKF v0.2 YAML Frontmatter** in `.agents/brain/`, `.agents/skills/`, and `docs/`.
+
+---
+
+## 2. Standard Operating Procedure (Step-by-Step Discovery Flow)
+
+```text
+[ Step 1: User Request / Task Assignment ]
+         │
+         ▼
+[ Step 2: Local OKF Frontmatter &amp; Metadata Search ] ──▶ grep / inspect .agents/brain/ &amp; docs/ (topics: / description:)
+         │
+         ▼
+[ Step 3: Targeted File Reading &amp; Line Inspection ] ──▶ read closet.md or targeted line ranges on matched .md files
+         │
+         ▼
+[ Step 4: Local Code / Unit Test Execution ] ──▶ verify behavior using local scripts &amp; uv run pytest
+         │
+         ▼
+[ Step 5: Remote Execution / External Search ] ──▶ ONLY if information is absent locally and required for task completion
+```
+
+---
+
+### Step 1: Local Frontmatter &amp; Metadata Search
+Before issuing any remote SSH/Ansible probe or performing external search (e.g. Google):
+1. **Query OKF Frontmatter**: Search local `.md` files in `docs/` and `.agents/brain/` for relevant `topics:`, `description:`, or `title:` fields.
+2. **Consult Spatial Registry**: Inspect `.agents/brain/palace_registry.md` to identify the designated Wing, Hall, and Room for the domain.
+
+### Step 2: Targeted File Inspection
+Once the relevant document or spatial anchor is located:
+- Read specific closet files (`closet.md`) or targeted line ranges to preserve token efficiency.
+- Avoid ingesting unreferenced binary files or entire full-repository dumps.
+
+### Step 3: Verified Execution
+- Run localized unit tests (`uv run pytest`) and validation scripts (`parse_llms_txt.py`) to confirm workspace integrity.
+
+---
+
+## 3. Mandatory Rules Reference
+
+- **Rule (OKF Frontmatter)**: All documentation and governance `.md` files must open on line 1 with `---` and contain valid OKF v0.2 YAML metadata.
+- **Rule (Metadata-First Discovery)**: Always search `topics:` and `description:` metadata before reading full file bodies.
+- **Rule (Local Knowledge-First Mandate)**: Search `.agents/brain/` and `docs/` locally before searching Google or reaching out to remote servers/nodes.
+</content>
+      </document>
       <document href="docs/explanation/dsom-governance.md">
         <title>DSOM Governance</title>
         <description>Metacognitive context management and protocol standards.</description>
