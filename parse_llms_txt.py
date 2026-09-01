@@ -243,23 +243,24 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
     urls = [
         f"{base_url}/",
         f"{base_url}/START-HERE",
-        f"{base_url}/docs/",
-        f"{base_url}/docs/explanation/dsom-governance",
-        f"{base_url}/docs/explanation/diataxis",
-        f"{base_url}/docs/explanation/system-architecture",
-        f"{base_url}/docs/explanation/architecture-and-diataxis",
-        f"{base_url}/docs/explanation/okf-02-and-diataxis",
-        f"{base_url}/docs/tutorials/01-getting-started",
-        f"{base_url}/docs/tutorials/getting-started",
-        f"{base_url}/docs/tutorials/llms-txt-setup",
-        f"{base_url}/docs/how-to/index",
-        f"{base_url}/docs/how-to/manage-inventory-and-payouts",
-        f"{base_url}/docs/how-to/generate-llms-context",
-        f"{base_url}/docs/how-to/run-tool",
-        f"{base_url}/docs/reference/index",
-        f"{base_url}/docs/reference/file-structure-and-api",
-        f"{base_url}/docs/reference/cli-and-tools",
-        f"{base_url}/docs/reference/openwiki-emulator"
+        f"{base_url}/CHANGELOG",
+        f"{base_url}/HISTORY",
+        f"{base_url}/explanation/dsom-governance",
+        f"{base_url}/explanation/diataxis",
+        f"{base_url}/explanation/system-architecture",
+        f"{base_url}/explanation/architecture-and-diataxis",
+        f"{base_url}/explanation/okf-02-and-diataxis",
+        f"{base_url}/tutorials/01-getting-started",
+        f"{base_url}/tutorials/getting-started",
+        f"{base_url}/tutorials/llms-txt-setup",
+        f"{base_url}/how-to/index",
+        f"{base_url}/how-to/manage-inventory-and-payouts",
+        f"{base_url}/how-to/generate-llms-context",
+        f"{base_url}/how-to/run-tool",
+        f"{base_url}/reference/index",
+        f"{base_url}/reference/file-structure-and-api",
+        f"{base_url}/reference/cli-and-tools",
+        f"{base_url}/reference/openwiki-emulator"
     ]
 
     sitemap_txt = "\n".join(urls) + "\n"
@@ -289,13 +290,14 @@ def main():
 
     args = parser.parse_args()
 
+    root_dir = getattr(args, "root", ".")
+    target_docs_dir = os.path.join(root_dir, "docs")
+
     if getattr(args, "generate_all", False):
         print("Generating documentation indexes and sitemaps...")
 
         # Sync root docs to docs/ relative to root_dir
         import shutil
-        root_dir = getattr(args, "root", ".")
-        target_docs_dir = os.path.join(root_dir, "docs")
         os.makedirs(target_docs_dir, exist_ok=True)
 
         for root_doc in ["CHANGELOG.md", "HISTORY.md"]:
@@ -330,37 +332,40 @@ def main():
         root_llms = generate_llms_txt(relative_to_docs=False)
         docs_llms = generate_llms_txt(relative_to_docs=True)
 
-        with open("llms.txt", "w", encoding="utf-8") as f:
+        with open(os.path.join(root_dir, "llms.txt"), "w", encoding="utf-8") as f:
             f.write(root_llms)
-        with open("docs/llms.txt", "w", encoding="utf-8") as f:
+        with open(os.path.join(target_docs_dir, "llms.txt"), "w", encoding="utf-8") as f:
             f.write(docs_llms)
 
         # llms-full.txt
-        llms_full_content = generate_llms_full(root_dir=args.root)
-        with open("llms-full.txt", "w", encoding="utf-8") as f:
+        llms_full_content = generate_llms_full(root_dir=root_dir)
+        with open(os.path.join(root_dir, "llms-full.txt"), "w", encoding="utf-8") as f:
             f.write(llms_full_content)
-        with open("docs/llms-full.txt", "w", encoding="utf-8") as f:
+        with open(os.path.join(target_docs_dir, "llms-full.txt"), "w", encoding="utf-8") as f:
             f.write(llms_full_content)
 
         # Sitemaps
         stxt, sxml = generate_sitemaps()
-        with open("sitemap.txt", "w", encoding="utf-8") as f:
+        with open(os.path.join(root_dir, "sitemap.txt"), "w", encoding="utf-8") as f:
             f.write(stxt)
-        with open("docs/sitemap.txt", "w", encoding="utf-8") as f:
+        with open(os.path.join(target_docs_dir, "sitemap.txt"), "w", encoding="utf-8") as f:
             f.write(stxt)
-        with open("sitemap.xml", "w", encoding="utf-8") as f:
+        with open(os.path.join(root_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
             f.write(sxml)
-        with open("docs/sitemap.xml", "w", encoding="utf-8") as f:
+        with open(os.path.join(target_docs_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
             f.write(sxml)
 
         print("Index generation complete.")
 
-    if os.path.exists(args.input):
-        parsed = parse_llms_txt(args.input)
-        xml_output = generate_xml_context(parsed, root_dir=args.root)
-        with open(args.output, "w", encoding="utf-8") as f:
+    input_path = os.path.join(root_dir, args.input) if not os.path.isabs(args.input) else args.input
+    output_path = os.path.join(root_dir, args.output) if not os.path.isabs(args.output) else args.output
+
+    if os.path.exists(input_path):
+        parsed = parse_llms_txt(input_path)
+        xml_output = generate_xml_context(parsed, root_dir=root_dir)
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(xml_output)
-        print(f"XML context written to {args.output}")
+        print(f"XML context written to {output_path}")
     else:
         if not args.generate_all:
             print(f"Input file '{args.input}' not found. Use --generate-all to initialize index files.")
