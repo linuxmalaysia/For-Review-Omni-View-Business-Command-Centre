@@ -1,8 +1,33 @@
 ---
-type: governance_constitution
 title: "Omni View Sovereign AI Constitution & Agent Rulebook"
 description: "Core constitutional AI rules, Local Knowledge-First discovery mandate, and Palace onboarding laws for Omni View Business Command Centre."
-topics: [agents, dsom, okf, governance, rules, palace, discovery]
+type: "governance_constitution"
+id: ".agents/AGENTS.md"
+dsom_governance:
+  domain: "AI"
+  context_tier: "L1-Overview"
+tags:
+  - "agents"
+  - "dsom"
+  - "okf"
+  - "governance"
+  - "rules"
+  - "palace"
+  - "discovery"
+topics:
+  - "agents"
+  - "dsom"
+  - "okf"
+  - "governance"
+  - "rules"
+  - "palace"
+  - "discovery"
+related_links:
+  - "AGENTS.md"
+  - "docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md"
+  - ".agents/brain/palace_registry.md"
+nav_order: 1
+layout: "default"
 ---
 
 # 🤖 Sovereign AI Constitution & Agent Rulebook
@@ -14,11 +39,13 @@ Welcome to **Omni View Business Command Centre**. This repository operates under
 ## 📜 Core Operational Mandates
 
 ### 1. Local Knowledge-First & Metadata Discovery Mandate
-- **Rule**: Before attempting any external network access, searching Google, or executing probes on remote servers/nodes (e.g. Ansible hosts, cloud targets), the AI agent **MUST FIRST** search local project knowledge in `.agents/brain/` and `docs/`.
+
+- **Rule**: Before attempting any external network access, searching Google, or executing probes on remote servers/nodes (e.g. Ansible hosts, cloud targets), the AI agent **MUST FIRST** search local project knowledge in `.agents/brain/`, `.agents/skills/`, and `docs/`.
 - **Metadata Search**: Use frontmatter metadata search (`topics:`, `description:`, `title:`) in OKF YAML headers or targeted directory inspection (`list_files`, `read_file`).
 - **Scope**: External tools or remote execution are strictly reserved for applying approved changes or retrieving live runtime state that cannot be determined locally.
 
 ### 2. Spatial Memory & Palace Onboarding Law
+
 - **Rule**: The repository uses the **Sovereign Markdown Palace** spatial memory system (`.agents/brain/`).
 - **Start of Session / SOD Protocol**:
   1. Inspect `.agents/brain/palace_registry.md` to load the spatial map of Wings, Halls, and Rooms.
@@ -26,14 +53,17 @@ Welcome to **Omni View Business Command Centre**. This repository operates under
   3. Update active session state in `.agents/brain/task.md` and `.agents/brain/implementation_plan.md`.
 
 ### 3. Open Knowledge Format (OKF v0.2) Standard
+
 - **Rule**: Every documentation Markdown file under `docs/` and governance files under `.agents/` MUST open on line 1 with `---` containing OKF v0.2 YAML frontmatter.
 - **Required Metadata**: `title`, `description`, `type`, `id`, `dsom_governance` (domain and context_tier), `tags` / `topics`, `related_links`, `nav_order`, and `layout`.
 
 ### 4. Minimal Context Window & Token Efficiency
+
 - **Rule**: Bypassing unnecessary context window loading saves tokens and prevents context degradation.
 - Read targeted line ranges or closet summaries rather than full repository snapshots.
 
 ### 5. Deterministic Verification & Testing
+
 - **Rule**: Every state modification (file creation, edit, rename, deletion) MUST be verified using read-only tools.
 - All code and documentation changes must pass the test suite (`uv run pytest`) and maintain documentation indexes (`python3 parse_llms_txt.py --generate-all`).
 

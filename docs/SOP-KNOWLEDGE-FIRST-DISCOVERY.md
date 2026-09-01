@@ -1,6 +1,6 @@
 ---
 title: "SOP: Knowledge-First Discovery & Context Preservation Protocol"
-description: "SOP detailing how AI agents and human operators leverage OKF YAML frontmatter (topics, description) in .agents/brain/ and docs/ before external search or remote execution."
+description: "SOP detailing how AI agents and human operators leverage OKF YAML frontmatter (topics, description) in .agents/brain/, .agents/skills/, and docs/ before external search or remote execution."
 type: "standard_operating_procedure"
 id: "docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md"
 dsom_governance:
@@ -45,7 +45,7 @@ All project facts, architectural specifications, UI components, data structures,
 [ Step 1: User Request / Task Assignment ]
          │
          ▼
-[ Step 2: Local OKF Frontmatter & Metadata Search ] ──▶ grep / inspect .agents/brain/ & docs/ (topics: / description:)
+[ Step 2: Local OKF Frontmatter & Metadata Search ] ──▶ grep / inspect .agents/brain/, .agents/skills/, & docs/ (topics: / description:)
          │
          ▼
 [ Step 3: Targeted File Reading & Line Inspection ] ──▶ read closet.md or targeted line ranges on matched .md files
@@ -60,16 +60,19 @@ All project facts, architectural specifications, UI components, data structures,
 ---
 
 ### Step 1: Local Frontmatter & Metadata Search
+
 Before issuing any remote SSH/Ansible probe or performing external search (e.g. Google):
-1. **Query OKF Frontmatter**: Search local `.md` files in `docs/` and `.agents/brain/` for relevant `topics:`, `description:`, or `title:` fields.
+1. **Query OKF Frontmatter**: Search local `.md` files in `docs/`, `.agents/brain/`, and `.agents/skills/` for relevant `topics:`, `description:`, or `title:` fields.
 2. **Consult Spatial Registry**: Inspect `.agents/brain/palace_registry.md` to identify the designated Wing, Hall, and Room for the domain.
 
 ### Step 2: Targeted File Inspection
+
 Once the relevant document or spatial anchor is located:
 - Read specific closet files (`closet.md`) or targeted line ranges to preserve token efficiency.
 - Avoid ingesting unreferenced binary files or entire full-repository dumps.
 
 ### Step 3: Verified Execution
+
 - Run localized unit tests (`uv run pytest`) and validation scripts (`parse_llms_txt.py`) to confirm workspace integrity.
 
 ---
@@ -78,4 +81,4 @@ Once the relevant document or spatial anchor is located:
 
 - **Rule (OKF Frontmatter)**: All documentation and governance `.md` files must open on line 1 with `---` and contain valid OKF v0.2 YAML metadata.
 - **Rule (Metadata-First Discovery)**: Always search `topics:` and `description:` metadata before reading full file bodies.
-- **Rule (Local Knowledge-First Mandate)**: Search `.agents/brain/` and `docs/` locally before searching Google or reaching out to remote servers/nodes.
+- **Rule (Local Knowledge-First Mandate)**: Search `.agents/brain/`, `.agents/skills/`, and `docs/` locally before searching Google or reaching out to remote servers/nodes.

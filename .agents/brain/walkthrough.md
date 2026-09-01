@@ -1,8 +1,23 @@
 ---
-type: spatial_walkthrough
 title: "Session Walkthrough Log Anchor"
 description: "Chronological walkthrough log for active development session."
-topics: [walkthrough, brain, history]
+type: "spatial_walkthrough"
+id: ".agents/brain/walkthrough.md"
+dsom_governance:
+  domain: "AI"
+  context_tier: "L2-Detail"
+tags:
+  - "walkthrough"
+  - "brain"
+  - "history"
+topics:
+  - "walkthrough"
+  - "brain"
+  - "history"
+related_links:
+  - ".agents/brain/palace_registry.md"
+nav_order: 6
+layout: "default"
 ---
 
 # 📜 Session Walkthrough Log

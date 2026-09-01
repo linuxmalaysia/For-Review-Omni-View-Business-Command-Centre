@@ -1,8 +1,30 @@
 ---
-type: spatial_memory_registry
 title: "Sovereign Markdown Palace Spatial Registry"
 description: "Spatial index mapping Wings, Halls, and Rooms for Omni View Business Command Centre memory palace."
-topics: [palace, registry, spatial-memory, brain, okf, dsom]
+type: "spatial_memory_registry"
+id: ".agents/brain/palace_registry.md"
+dsom_governance:
+  domain: "AI"
+  context_tier: "L1-Overview"
+tags:
+  - "palace"
+  - "registry"
+  - "spatial-memory"
+  - "brain"
+  - "okf"
+  - "dsom"
+topics:
+  - "palace"
+  - "registry"
+  - "spatial-memory"
+  - "brain"
+  - "okf"
+  - "dsom"
+related_links:
+  - ".agents/AGENTS.md"
+  - "docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md"
+nav_order: 2
+layout: "default"
 ---
 
 # 🏛️ Sovereign Markdown Palace Spatial Registry

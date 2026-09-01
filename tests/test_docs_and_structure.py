@@ -159,18 +159,19 @@ def test_okf_02_frontmatter_standard_across_all_md():
             continue
         for root, _, files in os.walk(tdir):
             for file in files:
-                if file.endswith('.md') and not file.endswith('SUMMARY.md'):
+                if file.endswith('.md'):
                     filepath = os.path.join(root, file)
                     with open(filepath, 'r', encoding='utf-8') as f:
                         content = f.read()
 
-                    assert content.startswith("---"), f"OKF 0.2 compliance failure: File {filepath} does not open with YAML frontmatter '---'"
+                    assert content.startswith("---"), f"OKF 0.2 compliance failure: File {filepath} does not open with line-based YAML frontmatter '---'"
                     metadata = parse_yaml_frontmatter(content)
-                    assert "title" in metadata, f"OKF 0.2 compliance failure: File {filepath} missing 'title' in frontmatter"
-                    assert "description" in metadata, f"OKF 0.2 compliance failure: File {filepath} missing 'description' in frontmatter"
+                    assert "title" in metadata and len(metadata["title"]) > 0, f"OKF 0.2 compliance failure: File {filepath} missing non-empty 'title' in frontmatter"
+                    assert "description" in metadata and len(metadata["description"]) > 0, f"OKF 0.2 compliance failure: File {filepath} missing non-empty 'description' in frontmatter"
+                    assert "type" in metadata or "layout" in metadata, f"OKF 0.2 compliance failure: File {filepath} missing 'type' or 'layout' in frontmatter"
                     checked_files += 1
 
-    assert checked_files >= 5, f"Expected at least 5 OKF-checked files, found {checked_files}"
+    assert checked_files >= 10, f"Expected at least 10 OKF-checked files across docs/ and .agents/, found {checked_files}"
 
 
 def test_agents_and_brain_governance():
