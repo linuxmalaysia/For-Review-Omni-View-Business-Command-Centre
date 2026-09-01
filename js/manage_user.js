@@ -229,9 +229,6 @@ async function deleteUser(userId) {
     }
 }
 
-/**
- * Validates the add-user form and creates a new user profile.
- */
 async function addUser() {
     const addButton = document.getElementById('add_user_button');
 

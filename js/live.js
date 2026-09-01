@@ -219,9 +219,6 @@ async function deleteLives(sessionId) {
     loadlives();
 }
 
-/**
- * Populates the employee selector with available staff profiles.
- */
 async function loadEmployeeOptions() {
     const select = document.getElementById('employeeId');
 

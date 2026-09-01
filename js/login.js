@@ -1,7 +1,3 @@
-/**
- * Authenticates the submitted credentials and redirects the user according to their profile role.
- * @param {Event} event - The form submission event.
- */
 async function login(event) {
     event.preventDefault();
 
