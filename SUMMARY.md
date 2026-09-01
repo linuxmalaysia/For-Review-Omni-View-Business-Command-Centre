@@ -18,6 +18,8 @@ description: "Table of Contents and Navigation Index"
 * [Explanation: Architecture & Diátaxis Framework Adoption](docs/explanation/architecture-and-diataxis.md)
 * [Explanation: Open Knowledge Format (OKF 0.2) & DSOM Integration Rationale](docs/explanation/okf-02-and-diataxis.md)
 * [Omni-View System Architecture & Topology](docs/explanation/system-architecture.md)
+* [Web Design Guidelines Skill Adoption & Integration Guide](docs/explanation/web-design-guidelines-skill.md)
+* [Web Interface Audit & Code Improvement Plan](docs/explanation/web-interface-improvements.md)
 
 ## How To
 
