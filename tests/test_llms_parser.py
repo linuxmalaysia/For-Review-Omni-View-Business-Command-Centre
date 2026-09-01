@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import parse_llms_txt
@@ -61,6 +62,27 @@ def test_generate_llms_txt_and_full():
     assert "FILE:" in llms_full
     assert llms_full.endswith("\n")
     assert not llms_full.endswith("\n\n")
+
+
+def test_generate_llms_txt_links_documentation_hub_from_each_output_location():
+    root_index = parse_llms_txt.generate_llms_txt(relative_to_docs=False)
+    docs_index = parse_llms_txt.generate_llms_txt(relative_to_docs=True)
+
+    assert "- [Documentation Hub](docs/index.md):" in root_index
+    assert "- [Documentation Hub](index.md):" in docs_index
+    assert "- [Documentation Hub](docs/index.md):" not in docs_index
+
+
+def test_generate_llms_full_embeds_documentation_hub(tmp_path: Path):
+    docs_dir = tmp_path / "docs"
+    docs_dir.mkdir()
+    hub_content = "# Distinct documentation hub\n\nHub body.\n"
+    (docs_dir / "index.md").write_text(hub_content, encoding="utf-8")
+
+    generated = parse_llms_txt.generate_llms_full(root_dir=str(tmp_path))
+
+    assert "--- FILE: docs/index.md ---" in generated
+    assert hub_content.rstrip() in generated
 
 
 def test_generate_sitemaps():
