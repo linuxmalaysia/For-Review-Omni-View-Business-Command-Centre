@@ -14,7 +14,7 @@ related_links:
   - "docs/explanation/dsom-governance.md"
   - "docs/tutorials/getting-started.md"
 nav_order: 1
-layout: "default"
+layout: default
 ---
 
 # Omni View Business Command Centre Documentation Hub

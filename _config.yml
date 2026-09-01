@@ -15,7 +15,6 @@ theme: null
 permalink: pretty
 
 include:
-  - index.html
   - README.md
   - CHANGELOG.md
   - HISTORY.md
@@ -27,6 +26,7 @@ include:
   - _layouts
 
 exclude:
+  - index.html
   - .venv
   - .pytest_cache
   - .git
