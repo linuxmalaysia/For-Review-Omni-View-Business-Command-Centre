@@ -51,3 +51,4 @@ description: "Table of Contents and Navigation Index"
 * [Omni View Business Command Centre Documentation Hub](docs/index.md)
 * [Omni-View Business Command Centre Documentation Hub](docs/README.md)
 * [Onboarding Standard & Operational Index](docs/START-HERE.md)
+* [SOP: Knowledge-First Discovery & Context Preservation Protocol](docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md)

@@ -138,6 +138,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "",
         "## Core Governance & Architecture",
         "",
+        f"- [Knowledge-First Discovery SOP]({p}SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.",
         f"- [DSOM Governance]({p}explanation/dsom-governance.md): Metacognitive context management and protocol standards.",
         f"- [Diátaxis Framework]({p}explanation/diataxis.md): Quadrant layout and documentation structure.",
         f"- [System Architecture]({p}explanation/system-architecture.md): Subsystem topologies and integration points.",
@@ -198,6 +199,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "START-HERE.md"),
         os.path.join(docs_dir, "CHANGELOG.md"),
         os.path.join(docs_dir, "HISTORY.md"),
+        os.path.join(docs_dir, "SOP-KNOWLEDGE-FIRST-DISCOVERY.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),
         os.path.join(docs_dir, "explanation", "system-architecture.md"),
@@ -243,6 +245,7 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
     urls = [
         f"{base_url}/",
         f"{base_url}/START-HERE",
+        f"{base_url}/SOP-KNOWLEDGE-FIRST-DISCOVERY",
         f"{base_url}/CHANGELOG",
         f"{base_url}/HISTORY",
         f"{base_url}/explanation/dsom-governance",

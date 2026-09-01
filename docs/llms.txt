@@ -4,6 +4,7 @@
 
 ## Core Governance & Architecture
 
+- [Knowledge-First Discovery SOP](SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.
 - [DSOM Governance](explanation/dsom-governance.md): Metacognitive context management and protocol standards.
 - [Diátaxis Framework](explanation/diataxis.md): Quadrant layout and documentation structure.
 - [System Architecture](explanation/system-architecture.md): Subsystem topologies and integration points.
