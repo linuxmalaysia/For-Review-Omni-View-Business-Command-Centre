@@ -20,10 +20,6 @@ include:
   - HISTORY.md
   - SUMMARY.md
   - START-HERE.md
-  - docs
-  - assets
-  - _includes
-  - _layouts
 
 exclude:
   - index.html

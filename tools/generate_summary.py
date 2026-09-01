@@ -40,7 +40,7 @@ def get_title_from_md(filepath: str) -> str:
 
 
 def generate_summary_lines(is_docs_folder: bool = False):
-    prefix = "" if not is_docs_folder else "../"
+    prefix = ""
     doc_prefix = "docs/" if not is_docs_folder else ""
 
     lines = [

@@ -62,7 +62,7 @@ def test_docs_summary_uses_paths_relative_to_docs(
 
     summary = generate_summary.generate_summary_lines(is_docs_folder=True)
 
-    assert "* [Home](../README.md)" in summary
+    assert "* [Home](README.md)" in summary
     assert "* [API](reference/api.md)" in summary
     assert "docs/reference/api.md" not in summary
 

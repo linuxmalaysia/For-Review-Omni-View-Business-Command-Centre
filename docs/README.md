@@ -34,4 +34,4 @@ Explore the four Diátaxis documentation quadrants:
 - **[Reference](reference/file-structure-and-api.md)**: Factual technical specifications, file paths, CLI flags, and database schemas.
 - **[Explanation](explanation/architecture-and-diataxis.md)**: High-level architectural background, design trade-offs, and DSOM governance rationale.
 
-For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](../llms.txt).
+For GitBook navigation, see [SUMMARY.md](SUMMARY.md). For LLM context discovery, see [llms.txt](llms.txt).

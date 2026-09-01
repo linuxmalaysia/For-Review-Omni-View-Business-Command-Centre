@@ -6,10 +6,10 @@ description: "Table of Contents and Navigation Index"
 
 # Summary
 
-* [Home](../README.md)
-* [Getting Started](../START-HERE.md)
-* [Changelog](../CHANGELOG.md)
-* [History](../HISTORY.md)
+* [Home](README.md)
+* [Getting Started](START-HERE.md)
+* [Changelog](CHANGELOG.md)
+* [History](HISTORY.md)
 
 ## Explanation
 
@@ -42,7 +42,10 @@ description: "Table of Contents and Navigation Index"
 
 ## Additional Documentation
 
+* [CHANGELOG](CHANGELOG.md)
 * [GitHub Pages Setup Guide](github-pages-setup.md)
+* [HISTORY](HISTORY.md)
 * [Multi-Platform Hosting Guide](multi-platform-hosting.md)
 * [Omni View Business Command Centre Documentation Hub](index.md)
 * [Omni-View Business Command Centre Documentation Hub](README.md)
+* [Onboarding Standard & Operational Index](START-HERE.md)
