@@ -147,6 +147,32 @@ def test_llm_index_files_exist():
         assert os.path.isfile(filepath), f"Required index file {filename} missing"
 
 
+def test_okf_02_frontmatter_standard_across_all_md():
+    """Verify that documentation and governance Markdown files conform to OKF 0.2 YAML frontmatter standards."""
+    target_dirs = [
+        os.path.join(ROOT_DIR, 'docs'),
+        os.path.join(ROOT_DIR, '.agents')
+    ]
+    checked_files = 0
+    for tdir in target_dirs:
+        if not os.path.exists(tdir):
+            continue
+        for root, _, files in os.walk(tdir):
+            for file in files:
+                if file.endswith('.md') and not file.endswith('SUMMARY.md'):
+                    filepath = os.path.join(root, file)
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        content = f.read()
+
+                    assert content.startswith("---"), f"OKF 0.2 compliance failure: File {filepath} does not open with YAML frontmatter '---'"
+                    metadata = parse_yaml_frontmatter(content)
+                    assert "title" in metadata, f"OKF 0.2 compliance failure: File {filepath} missing 'title' in frontmatter"
+                    assert "description" in metadata, f"OKF 0.2 compliance failure: File {filepath} missing 'description' in frontmatter"
+                    checked_files += 1
+
+    assert checked_files >= 5, f"Expected at least 5 OKF-checked files, found {checked_files}"
+
+
 def test_agents_and_brain_governance():
     """Verify that AGENTS.md, .agents/AGENTS.md, and .agents/brain/ structure exist with required rules."""
     root_agents = os.path.join(ROOT_DIR, 'AGENTS.md')
