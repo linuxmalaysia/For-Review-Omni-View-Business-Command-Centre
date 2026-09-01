@@ -9,7 +9,7 @@ async function login(event) {
     loginError.style.display = "none";
     loginSuccess.style.display = "none";
     loginButton.disabled = true;
-    loginButtonLabel.innerHTML = '<span class="spinner-border" role="status" aria-hidden="true"></span>Logging in...';
+    loginButtonLabel.innerHTML = '<span class="spinner-border" role="status" aria-hidden="true"></span>Logging in…';
 
     const email = document.getElementById('email').value.trim().toLowerCase();
     const password = document.getElementById('password').value;
@@ -40,7 +40,7 @@ async function login(event) {
             return;
         }
 
-        loginSuccess.innerText = "Login successful. Redirecting...";
+        loginSuccess.innerText = "Login successful. Redirecting…";
         loginSuccess.style.display = "block";
         await new Promise(resolve => setTimeout(resolve, 700));
 

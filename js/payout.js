@@ -263,7 +263,7 @@ async function loadEmployees() {
         return;
     }
 
-    select.innerHTML = '<option value="">Loading employees...</option>';
+    select.innerHTML = '<option value="">Loading employees…</option>';
 
     const { data, error } = await fetchStaffProfiles();
 

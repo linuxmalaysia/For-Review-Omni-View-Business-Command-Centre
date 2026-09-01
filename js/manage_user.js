@@ -238,7 +238,7 @@ async function addUser() {
 
     isAddingUser = true;
     addButton.disabled = true;
-    addButton.textContent = "Adding...";
+    addButton.textContent = "Adding…";
 
 try {
     const userId = document.getElementById('UserID').value;

@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded',async () => {
         }
         
         resetButton.disabled = true;
-        resetButton.textContent = "Resetting...";
+        resetButton.textContent = "Resetting…";
 
         message.innerHTML = '';
 
