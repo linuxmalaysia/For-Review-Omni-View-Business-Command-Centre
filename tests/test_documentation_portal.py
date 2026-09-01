@@ -40,11 +40,20 @@ def test_documentation_hub_has_frontmatter_and_resolvable_navigation():
 
 def test_jekyll_build_uses_docs_hub_without_overwriting_application_index():
     config = read_repo_file("_config.yml")
+    workflow = read_repo_file(".github/workflows/jekyll-gh-pages.yml")
 
     assert "docs" in yaml_list(config, "include")
     assert "index.html" in yaml_list(config, "exclude")
     assert "index.html" not in yaml_list(config, "include")
     assert (ROOT_DIR / "index.html").is_file(), "Application redirect entry point must remain"
+
+    build_step = re.search(
+        r"(?ms)^\s+- name: Build with Jekyll\s*$\n(?P<body>.*?)(?=^\s+- name:|\Z)",
+        workflow,
+    )
+    assert build_step is not None, "GitHub Pages workflow is missing its Jekyll build step"
+    assert re.search(r"(?m)^\s+source:\s*\./docs\s*$", build_step.group("body"))
+    assert not re.search(r"(?m)^\s+source:\s*\./\s*$", build_step.group("body"))
 
 
 def test_default_layout_wires_shared_chrome_and_theme_assets():
