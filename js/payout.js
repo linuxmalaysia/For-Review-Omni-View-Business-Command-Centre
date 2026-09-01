@@ -256,6 +256,9 @@ async function getNextPayoutID() {
     return `Payout${nextPayoutID}`;
 }
 
+/**
+ * Populates the payout employee selector with unique employee profiles.
+ */
 async function loadEmployees() {
     const select = document.getElementById('payoutEmployee');
 
