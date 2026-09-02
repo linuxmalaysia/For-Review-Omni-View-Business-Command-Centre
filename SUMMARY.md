@@ -23,6 +23,7 @@ description: "Table of Contents and Navigation Index"
 
 ## How To
 
+* [Deploying Omni-View Business Command Centre on Render.com](docs/how-to/deploy-omni-view-on-render.md)
 * [How-To: Client-Side Routing and Session Caching](docs/how-to/client-side-routing-and-caching.md)
 * [How-To: Execute Tool Workflows](docs/how-to/run-tool.md)
 * [How-To: Generate LLM Context XML & Sitemaps](docs/how-to/generate-llms-context.md)

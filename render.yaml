@@ -1,8 +1,7 @@
-# Render.com static site / web service specification
+# Render.com static site specification
 services:
-  - type: web
+  - type: static
     name: omni-view-command-centre
-    env: static
     buildCommand: python3 parse_llms_txt.py --generate-all
     staticPublishPath: ./
     headers:

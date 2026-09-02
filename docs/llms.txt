@@ -21,6 +21,7 @@
 ## Practical Operational Guides
 
 - [Operational Recipes Index](how-to/index.md): Operational recipes index.
+- [Deploy Omni-View on Render.com](how-to/deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.
 - [Manage Inventory and Payouts](how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.
 - [Generate LLMs Context Guide](how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.
 - [Execute Tool Workflows](how-to/run-tool.md): Task-oriented execution recipes for tools and pipelines.
