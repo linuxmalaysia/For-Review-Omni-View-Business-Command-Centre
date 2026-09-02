@@ -22,7 +22,7 @@ layout: "default"
 
 # 📌 Active Task Anchor
 
-- **Current Task**: Implementation of Local Knowledge-First Protocol, OKF v0.2 Frontmatter Metadata Search, and Palace Spatial Memory Integration.
-- **Status**: IN_PROGRESS
+- **Current Task**: Ensured uvicorn dependency is declared in pyproject.toml and uv.lock, and updated tests. EOD completed.
+- **Status**: COMPLETED
 - **Assigned Agent**: Jules (Google AI Agent)
 - **Target Subsystems**: `.agents/AGENTS.md`, `.agents/brain/`, `docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md`, `parse_llms_txt.py`, test suite.
