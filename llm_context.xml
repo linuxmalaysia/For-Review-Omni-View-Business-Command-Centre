@@ -678,6 +678,7 @@ tags:
   - &quot;how-to&quot;
   - &quot;operations&quot;
 related_links:
+  - &quot;docs/how-to/deploy-omni-view-on-render.md&quot;
   - &quot;docs/how-to/manage-inventory-and-payouts.md&quot;
   - &quot;docs/how-to/generate-llms-context.md&quot;
   - &quot;docs/how-to/client-side-routing-and-caching.md&quot;
@@ -694,6 +695,7 @@ This index categorizes all task-oriented procedural guides for operational manag
 
 ## 🛠 Available How-To Recipes
 
+- [Deploy Omni-View on Render.com](deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.
 - [Manage Inventory, Live Sessions, and Payouts](manage-inventory-and-payouts.md): Procedural steps for inventory updates, tracking streams, and processing employee payouts.
 - [Generate LLM XML Context and Sitemaps](generate-llms-context.md): How-to guide for executing `parse_llms_txt.py` to build machine-parseable context artifacts.
 - [Client-Side Routing and Session Caching](client-side-routing-and-caching.md): Practical guide on navigating Omni-View without full page reloads and persisting session data.
