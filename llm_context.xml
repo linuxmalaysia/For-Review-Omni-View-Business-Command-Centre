@@ -833,7 +833,7 @@ If creating the service manually in the Render Dashboard:
 
 - **Root Cause:** The Render service was misconfigured as a **Web Service** (Python runtime) with a start command (`uvicorn src.dca_service.web_app:app ...`), rather than a **Static Site**. Omni-View is a static web application and automated documentation portal that does not contain a `src` Python package or backend web server.
 - **Resolution:**
-  1. In the Render Dashboard, check the service type. If it is set to a Web Service expecting a start command, change the service or delete it and create a new **Static Site** service (note that an existing Web Service cannot be converted directly into a Static Site in-place).
+  1. In the Render Dashboard, check the service type. An existing Web Service cannot be converted directly into a Static Site in-place. If configured as a Web Service, delete the Web Service and create a new **Static Site** service.
   2. Alternatively, ensure your repository root contains the correct `render.yaml` with `type: static` so Render Blueprint deploys it as a static site.
   3. Clear any leftover Start Command input in the Render service settings (Static Sites do not require a Start Command).
 

@@ -103,7 +103,7 @@ def test_render_guide_explains_the_root_cause_and_complete_recovery():
 
     recovery_steps = re.findall(r"(?m)^  \d+\. (.+)$", section)
     assert len(recovery_steps) == 3
-    assert "change the service or delete it" in recovery_steps[0]
+    assert "delete the Web Service and create a new **Static Site** service" in recovery_steps[0]
 
 
 def test_render_guide_has_deployment_specific_okf_metadata():
