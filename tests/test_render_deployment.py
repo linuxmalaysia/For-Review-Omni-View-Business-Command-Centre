@@ -78,6 +78,8 @@ def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():
     assert f'**Build Command:** `{fields["buildCommand"]}`' in guide
     assert f'**Publish Directory:** `{fields["staticPublishPath"]}`' in guide
     assert "**Service Type:** `Static Site`" in guide
+    assert "ModuleNotFoundError: No module named 'src'" in guide
+    assert "Exit Status 1" in guide
     assert "uvicorn: command not found" in guide
     assert "Exit Status 127" in guide
     assert "Web Service" in guide
