@@ -3,6 +3,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Union
 
+import parse_llms_txt
+
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 GUIDE_PATH = Path("docs/how-to/deploy-omni-view-on-render.md")
@@ -27,6 +29,16 @@ def render_service_fields() -> dict[str, str]:
 
 def markdown_links(contents: str) -> list[tuple[str, str]]:
     return re.findall(r"\[([^]]+)]\(([^)]+)\)", contents)
+
+
+def render_troubleshooting_section() -> str:
+    guide = read_repo_file(GUIDE_PATH)
+    match = re.search(
+        r"(?ms)^### 1\. Error:.*?(?=^### 2\.)",
+        guide,
+    )
+    assert match is not None, "Render guide is missing its first troubleshooting entry"
+    return match.group(0)
 
 
 def test_render_blueprint_defines_the_static_site_build_contract():
@@ -78,12 +90,44 @@ def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():
     assert f'**Build Command:** `{fields["buildCommand"]}`' in guide
     assert f'**Publish Directory:** `{fields["staticPublishPath"]}`' in guide
     assert "**Service Type:** `Static Site`" in guide
-    assert "ModuleNotFoundError: No module named 'src'" in guide
-    assert "Exit Status 1" in guide
     assert "uvicorn: command not found" in guide
     assert "Exit Status 127" in guide
     assert "Web Service" in guide
     assert "Static Site" in guide
+
+
+def test_render_guide_maps_each_web_service_failure_to_its_exit_status():
+    section = render_troubleshooting_section()
+    logs = re.findall(r"(?ms)^  ```text\n(.*?)^  ```", section)
+
+    assert len(logs) == 2
+    expected_failures = [
+        ("ModuleNotFoundError: No module named 'src'", "Exited with status 1"),
+        ("uvicorn: command not found", "Exited with status 127"),
+    ]
+    start_command = (
+        "uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT"
+    )
+
+    for log, (failure, status) in zip(logs, expected_failures):
+        assert start_command in log
+        assert failure in log
+        assert status in log
+
+
+def test_render_guide_explains_the_root_cause_and_complete_recovery():
+    section = render_troubleshooting_section()
+
+    assert "misconfigured as a **Web Service** (Python runtime)" in section
+    assert "rather than a **Static Site**" in section
+    assert "does not contain a `src` Python package or backend web server" in section
+    assert not (ROOT_DIR / "src").exists(), "The guide's no-backend diagnosis is stale"
+
+    recovery_steps = re.findall(r"(?m)^  \d+\. (.+)$", section)
+    assert len(recovery_steps) == 3
+    assert "change the service or delete it" in recovery_steps[0]
+    assert "`render.yaml` with `type: static`" in recovery_steps[1]
+    assert "Clear any leftover Start Command input" in recovery_steps[2]
 
 
 def test_render_guide_has_deployment_specific_okf_metadata():
@@ -119,8 +163,17 @@ def test_render_guide_is_present_in_generated_context_artifacts():
     docs_full = read_repo_file("docs/llms-full.txt")
     xml_root = ET.fromstring(read_repo_file("llm_context.xml"))
     xml_text = "".join(xml_root.itertext())
-    guide_reference = "deploy-omni-view-on-render.md"
+    expected_full = parse_llms_txt.generate_llms_full(root_dir=str(ROOT_DIR))
+    parsed_index = parse_llms_txt.parse_llms_txt(str(ROOT_DIR / "llms.txt"))
+    expected_xml = ET.fromstring(
+        parse_llms_txt.generate_xml_context(parsed_index, root_dir=str(ROOT_DIR))
+    )
 
-    assert root_full == docs_full
-    assert guide_reference in root_full
-    assert guide_reference in xml_text
+    assert root_full == docs_full == expected_full
+    assert ET.tostring(xml_root) == ET.tostring(expected_xml)
+    for failure in (
+        "ModuleNotFoundError: No module named 'src'",
+        "uvicorn: command not found",
+    ):
+        assert failure in root_full
+        assert failure in xml_text
