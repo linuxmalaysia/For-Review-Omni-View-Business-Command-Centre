@@ -48,9 +48,9 @@ Omni View documentation and static site can be published across multiple hosting
 - **GitLab Pages**: Configured via `.gitlab-ci.yml`
 - **GitBook**: Configured via `.gitbook.yaml`
 - **ReadTheDocs**: Configured via `.readthedocs.yaml`
-- **Render.com**: Web service configuration via `render.yaml`
+- **Render.com**: Static site configuration via `render.yaml` (see [Deploying Omni-View on Render.com Guide](docs/how-to/deploy-omni-view-on-render.md))
 
-For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-pages-setup.md) and [Multi-Platform Hosting Guide](docs/multi-platform-hosting.md).
+For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-pages-setup.md), [Deploying on Render.com Guide](docs/how-to/deploy-omni-view-on-render.md), and [Multi-Platform Hosting Guide](docs/multi-platform-hosting.md).
 
 ---
 
