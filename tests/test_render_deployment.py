@@ -26,10 +26,28 @@ def render_service_fields() -> dict[str, str]:
 
 
 def markdown_links(contents: str) -> list[tuple[str, str]]:
+    """
+    Extract Markdown link titles and targets from text.
+    
+    Parameters:
+    	contents (str): Markdown text to search.
+    
+    Returns:
+    	list[tuple[str, str]]: Link title and target pairs.
+    """
     return re.findall(r"\[([^]]+)]\(([^)]+)\)", contents)
 
 
 def render_troubleshooting_section() -> str:
+    """
+    Extract the troubleshooting section from the Render deployment guide.
+    
+    Returns:
+    	str: The content following the troubleshooting section heading.
+    
+    Raises:
+    	AssertionError: If the troubleshooting section is missing from the guide.
+    """
     guide = read_repo_file(GUIDE_PATH)
     match = re.search(r"(?ms)^## 🔧 Troubleshooting Render Deploys\n\n(.+)$", guide)
     assert match is not None, "Troubleshooting section not found in guide"
