@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Omni-View Business Command Centre - Integrated Operations Management System"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "uvicorn>=0.30.0",
+]
 
 [dependency-groups]
 dev = [

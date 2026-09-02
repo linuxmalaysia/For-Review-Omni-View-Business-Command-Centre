@@ -46,6 +46,13 @@ def test_render_blueprint_does_not_regress_to_a_web_service():
     assert "uvicorn" not in read_repo_file("render.yaml").lower()
 
 
+def test_uvicorn_dependency_is_declared_in_pyproject():
+    import tomllib
+    pyproject_data = tomllib.loads(read_repo_file("pyproject.toml"))
+    dependencies = pyproject_data.get("project", {}).get("dependencies", [])
+    assert any("uvicorn>=0.30.0" in dep for dep in dependencies)
+
+
 def test_render_blueprint_configures_cache_control_for_all_routes():
     contents = read_repo_file("render.yaml")
     header = re.search(

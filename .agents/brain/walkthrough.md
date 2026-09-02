@@ -24,3 +24,5 @@ layout: "default"
 
 - **Session Date**: 2026-09-01
 - **Activity**: Established `.agents/AGENTS.md` AI Constitution and `.agents/brain/` spatial memory structures. Added Local Knowledge-First mandate requiring AI agents to check local brain and docs before remote server/external searches.
+- **Session Date**: 2026-09-02
+- **Activity**: Added uvicorn dependency to pyproject.toml & uv.lock, updated unit tests in test_render_deployment.py to strictly parse pyproject dependencies, verified build & pytest (128 passing tests), and performed DSOM EOD memory sync.
