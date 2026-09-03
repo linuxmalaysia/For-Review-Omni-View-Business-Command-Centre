@@ -236,7 +236,7 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
     """Generate text and XML sitemaps for the documentation site.
     
     Args:
-        docs_dir: Documentation directory path.
+        docs_dir: Documentation directory path retained for API compatibility.
         base_url: Base URL used to construct sitemap entries.
     
     Returns:
