@@ -811,17 +811,29 @@ If creating the service manually in the Render Dashboard:
 
 ## 🔧 Troubleshooting Render Deploys
 
-### 1. Error: `bash: line 1: uvicorn: command not found` (Exit Status 127)
+### 1. Error: `ModuleNotFoundError: No module named 'src'` (Exit Status 1) or `uvicorn: command not found` (Exit Status 127)
 
 - **Symptom:** Deployment log fails during the start/deploy phase with:
+
+  ```text
+  ==&gt; Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
+  Traceback (most recent call last):
+    ...
+  ModuleNotFoundError: No module named 'src'
+  ==&gt; Exited with status 1
+  ```
+
+  or:
+
   ```text
   ==&gt; Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
   bash: line 1: uvicorn: command not found
   ==&gt; Exited with status 127
   ```
-- **Root Cause:** The Render service was configured as a **Web Service** (Python runtime) using a default or copied start command (`uvicorn ...`), rather than a **Static Site**. Omni-View is a static web application and documentation portal that does not require an ASGI web server like Uvicorn.
+
+- **Root Cause:** The Render service was misconfigured as a **Web Service** (Python runtime) with a start command (`uvicorn src.dca_service.web_app:app ...`), rather than a **Static Site**. Omni-View is a static web application and automated documentation portal that does not contain a `src` Python package or backend web server.
 - **Resolution:**
-  1. In the Render Dashboard, check the service type. If it is set to a Web Service expecting a start command, change the service or delete it and create a new **Static Site** service.
+  1. In the Render Dashboard, check the service type. An existing Web Service cannot be converted directly into a Static Site in-place. If configured as a Web Service, delete the Web Service and create a new **Static Site** service.
   2. Alternatively, ensure your repository root contains the correct `render.yaml` with `type: static` so Render Blueprint deploys it as a static site.
   3. Clear any leftover Start Command input in the Render service settings (Static Sites do not require a Start Command).
 
@@ -834,6 +846,7 @@ If creating the service manually in the Render Dashboard:
 
 - **Symptom:** Browser caches old assets after updating HTML or CSS.
 - **Resolution:** `render.yaml` configures standard headers for client caching:
+
   ```yaml
   headers:
     - path: /*

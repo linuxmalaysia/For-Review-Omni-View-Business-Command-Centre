@@ -29,6 +29,13 @@ def markdown_links(contents: str) -> list[tuple[str, str]]:
     return re.findall(r"\[([^]]+)]\(([^)]+)\)", contents)
 
 
+def render_troubleshooting_section() -> str:
+    guide = read_repo_file(GUIDE_PATH)
+    match = re.search(r"(?ms)^## 🔧 Troubleshooting Render Deploys\n\n(.+)$", guide)
+    assert match is not None, "Troubleshooting section not found in guide"
+    return match.group(1)
+
+
 def test_render_blueprint_defines_the_static_site_build_contract():
     fields = render_service_fields()
 
@@ -78,10 +85,25 @@ def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():
     assert f'**Build Command:** `{fields["buildCommand"]}`' in guide
     assert f'**Publish Directory:** `{fields["staticPublishPath"]}`' in guide
     assert "**Service Type:** `Static Site`" in guide
+    assert "ModuleNotFoundError: No module named 'src'" in guide
+    assert "Exit Status 1" in guide
     assert "uvicorn: command not found" in guide
     assert "Exit Status 127" in guide
     assert "Web Service" in guide
     assert "Static Site" in guide
+
+
+def test_render_guide_explains_the_root_cause_and_complete_recovery():
+    section = render_troubleshooting_section()
+
+    assert "misconfigured as a **Web Service** (Python runtime)" in section
+    assert "rather than a **Static Site**" in section
+    assert "does not contain a `src` Python package or backend web server" in section
+    assert not (ROOT_DIR / "src").exists(), "The guide's no-backend diagnosis is stale"
+
+    recovery_steps = re.findall(r"(?m)^  \d+\. (.+)$", section)
+    assert len(recovery_steps) == 3
+    assert "delete the Web Service and create a new **Static Site** service" in recovery_steps[0]
 
 
 def test_render_guide_has_deployment_specific_okf_metadata():
