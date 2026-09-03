@@ -71,15 +71,14 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
 
 
 def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
-    """
-    Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
+    """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
     
-    Parameters:
-    	llms_data (Dict[str, Any]): Parsed `llms.txt` data containing the title, summary, sections, and documents.
-    	root_dir (str): Root directory used to resolve relative document paths.
+    Args:
+        llms_data: Parsed `llms.txt` data containing the title, summary, sections, and documents.
+        root_dir: Root directory used to resolve relative document paths.
     
     Returns:
-    	str: Formatted XML context document.
+        Formatted XML context document.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
@@ -119,14 +118,14 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
 
 
 def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) -> str:
-    """
-    Generate the standard Markdown index for the project's documentation.
+    """Generate the standard Markdown index for the project's documentation.
     
-    Parameters:
-    	docs_dir (str): Documentation directory name retained for API compatibility.
+    Args:
+        docs_dir: Documentation directory name retained for API compatibility.
+        relative_to_docs: Whether to generate paths relative to the docs/ directory.
     
     Returns:
-    	str: Markdown content containing the project title, summary, and documentation links.
+        Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
     root_p = "" if relative_to_docs else ""
@@ -179,15 +178,14 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
 
 
 def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
-    """
-    Build a complete documentation index from available repository and documentation files.
+    """Build a complete documentation index from available repository and documentation files.
     
-    Parameters:
-    	docs_dir (str): Directory containing the documentation files.
-    	root_dir (str): Repository root used to resolve file paths.
+    Args:
+        docs_dir: Directory containing the documentation files.
+        root_dir: Repository root used to resolve file paths.
     
     Returns:
-    	str: Formatted documentation text containing the contents of each available file.
+        Formatted documentation text containing the contents of each available file.
     """
     doc_paths = [
         "README.md",
@@ -235,14 +233,14 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
 
 
 def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
-    """
-    Generate text and XML sitemaps for the documentation site.
+    """Generate text and XML sitemaps for the documentation site.
     
-    Parameters:
-        base_url (str): Base URL used to construct sitemap entries.
+    Args:
+        docs_dir: Documentation directory path.
+        base_url: Base URL used to construct sitemap entries.
     
     Returns:
-        Tuple[str, str]: Text sitemap content and XML sitemap content.
+        Tuple containing text sitemap content and XML sitemap content.
     """
     urls = [
         f"{base_url}/",

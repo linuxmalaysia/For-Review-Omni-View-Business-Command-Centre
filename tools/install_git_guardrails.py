@@ -25,7 +25,8 @@ git add SUMMARY.md docs/SUMMARY.md llms.txt llms-full.txt sitemap.txt sitemap.xm
 """
 
 
-def install_guardrails():
+def install_guardrails() -> None:
+    """Install git pre-commit hook guardrails for automated documentation updates."""
     if not os.path.isdir(GIT_HOOKS_DIR):
         print(f"Git hooks directory {GIT_HOOKS_DIR} not found. Skipping hook installation.")
         return

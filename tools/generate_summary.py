@@ -13,7 +13,14 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def get_title_from_md(filepath: str) -> str:
-    """Extracts title from YAML frontmatter or first H1 header in a Markdown file."""
+    """Extract title from YAML frontmatter or first H1 header in a Markdown file.
+
+    Args:
+        filepath: Path to the Markdown file.
+
+    Returns:
+        Extracted title string or fallback title derived from filename.
+    """
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -39,7 +46,15 @@ def get_title_from_md(filepath: str) -> str:
     return filename.replace('.md', '').replace('-', ' ').title()
 
 
-def generate_summary_lines(is_docs_folder: bool = False):
+def generate_summary_lines(is_docs_folder: bool = False) -> str:
+    """Generate markdown summary lines for SUMMARY.md table of contents.
+
+    Args:
+        is_docs_folder: Boolean flag indicating if generating for docs/SUMMARY.md.
+
+    Returns:
+        Formatted summary content as a Markdown string.
+    """
     prefix = ""
     doc_prefix = "docs/" if not is_docs_folder else ""
 
@@ -105,8 +120,8 @@ def generate_summary_lines(is_docs_folder: bool = False):
     return "\n".join(lines).strip() + "\n"
 
 
-def build_summary():
-    """Scans repository and builds structured SUMMARY.md."""
+def build_summary() -> None:
+    """Scan repository and build structured SUMMARY.md files in root and docs/."""
     # Write root SUMMARY.md
     root_summary_content = generate_summary_lines(is_docs_folder=False)
     root_summary_path = os.path.join(ROOT_DIR, 'SUMMARY.md')
