@@ -21,9 +21,14 @@ description: "Table of Contents and Navigation Index"
 * [Web Design Guidelines Skill Adoption & Integration Guide](docs/explanation/web-design-guidelines-skill.md)
 * [Web Interface Audit & Code Improvement Plan](docs/explanation/web-interface-improvements.md)
 
+## Governance
+
+* [Technical Book Design & PDF Compilation Master Prompt Guide](docs/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md)
+
 ## How To
 
 * [Deploying Omni-View Business Command Centre on Render.com](docs/how-to/deploy-omni-view-on-render.md)
+* [How to Produce a Project Technical Handbook: The AI Prompt Engineering & Skill Adoption Blueprint](docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md)
 * [How-To: Client-Side Routing and Session Caching](docs/how-to/client-side-routing-and-caching.md)
 * [How-To: Execute Tool Workflows](docs/how-to/run-tool.md)
 * [How-To: Generate LLM Context XML & Sitemaps](docs/how-to/generate-llms-context.md)
