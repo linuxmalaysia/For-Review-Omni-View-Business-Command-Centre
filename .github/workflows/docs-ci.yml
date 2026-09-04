@@ -48,5 +48,14 @@ jobs:
         run: |
           git diff --exit-code llm_context.xml llms.txt llms-full.txt sitemap.txt sitemap.xml docs/llms.txt docs/llms-full.txt docs/sitemap.txt docs/sitemap.xml
 
+      - name: Security Audit Python Dependencies
+        run: uv audit
+
+      - name: Code Health & Linting (Ruff)
+        run: uv run ruff check .
+
+      - name: Markdown Linting (markdownlint-cli)
+        run: npx markdownlint-cli -c .markdownlint.json "**/*.md"
+
       - name: Run Test Suite (pytest)
         run: uv run pytest

@@ -5,17 +5,18 @@ parse_llms_txt.py - Parser, XML Context Generator, and Site Map Utility for llms
 Adheres to https://llmstxt.org/ specification and Google OKF 0.2 / DSOM principles.
 Provides both CLI and Python API interfaces.
 """
+from __future__ import annotations
 
 import argparse
 import os
 import re
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils
+from typing import Any
 from xml.dom import minidom
-from typing import Dict, List, Any, Tuple, Optional
 
 
-def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
+def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
     """
     Parse llms.txt content or a file into structured metadata and document sections.
     
@@ -33,13 +34,13 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
         text = content_or_path
 
     lines = text.splitlines()
-    data: Dict[str, Any] = {
+    data: dict[str, Any] = {
         "title": "",
         "summary": "",
         "sections": []
     }
 
-    current_section: Optional[Dict[str, Any]] = None
+    current_section: dict[str, Any] | None = None
 
     for line in lines:
         line_str = line.strip()
@@ -54,7 +55,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
             sec_title = line_str[3:].strip()
             current_section = {"title": sec_title, "items": []}
             data["sections"].append(current_section)
-        elif line_str.startswith("- ") or line_str.startswith("* "):
+        elif line_str.startswith(("- ", "* ")):
             item_text = line_str[2:].strip()
             match = re.match(r"\[([^\]]+)\]\(([^)]+)\)(?::\s*(.*))?", item_text)
             if match:
@@ -70,7 +71,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
     return data
 
 
-def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
+def generate_xml_context(llms_data: dict[str, Any], root_dir: str = ".") -> str:
     """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
     
     Args:
@@ -128,7 +129,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
-    root_p = "" if relative_to_docs else ""
+    root_p = ""
 
     content = [
         "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
@@ -232,7 +233,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     return "\n".join(full_text).rstrip() + "\n"
 
 
-def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> tuple[str, str]:
     """Generate text and XML sitemaps for the documentation site.
     
     Args:

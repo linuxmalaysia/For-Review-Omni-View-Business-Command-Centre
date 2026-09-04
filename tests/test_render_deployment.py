@@ -1,15 +1,15 @@
+from __future__ import annotations
+
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Union
-
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 GUIDE_PATH = Path("docs/how-to/deploy-omni-view-on-render.md")
 GUIDE_TITLE = "Deploying Omni-View Business Command Centre on Render.com"
 
 
-def read_repo_file(relative_path: Union[str, Path]) -> str:
+def read_repo_file(relative_path: str | Path) -> str:
     return (ROOT_DIR / relative_path).read_text(encoding="utf-8")
 
 
@@ -62,20 +62,29 @@ def test_uvicorn_dependency_is_declared_in_pyproject():
 
 def test_render_blueprint_configures_cache_control_for_all_routes():
     contents = read_repo_file("render.yaml")
-    header = re.search(
-        r"(?ms)^    headers:\s*$\n"
-        r"\s+- path:\s*(?P<path>\S+)\s*$\n"
-        r"\s+name:\s*(?P<name>[^\n]+)\s*$\n"
-        r"\s+value:\s*(?P<value>[^\n]+)\s*$",
+    headers = re.findall(
+        r"(?m)^\s+- path:\s*(\S+)\s*\n\s+name:\s*([^\n]+)\s*\n\s+value:\s*([^\n]+)\s*$",
         contents,
     )
 
-    assert header is not None, "Render Blueprint is missing its cache header"
-    assert header.groupdict() == {
-        "path": "/*",
-        "name": "Cache-Control",
-        "value": "max-age=3600",
-    }
+    header_dict = {name.strip(): (path.strip(), value.strip()) for path, name, value in headers}
+    assert "Cache-Control" in header_dict
+    assert header_dict["Cache-Control"] == ("/*", "max-age=3600")
+
+
+def test_render_blueprint_configures_csp_header():
+    contents = read_repo_file("render.yaml")
+    headers = re.findall(
+        r"(?m)^\s+- path:\s*(\S+)\s*\n\s+name:\s*([^\n]+)\s*\n\s+value:\s*([^\n]+)\s*$",
+        contents,
+    )
+
+    header_dict = {name.strip(): (path.strip(), value.strip()) for path, name, value in headers}
+    assert "Content-Security-Policy" in header_dict
+    path, value = header_dict["Content-Security-Policy"]
+    assert path == "/*"
+    assert "default-src 'self'" in value
+    assert "cdn.jsdelivr.net" in value
 
 
 def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():

@@ -33,7 +33,7 @@ graph LR
     SubGraph2 --> RLS[Row Level Security]
 ```
 
-### Components:
+### Components
 
 - **Client Presentation Layer (`Web Ui/`, `js/`, `css/`)**: Static HTML5 interface enhanced with Bootstrap 5 and Chart.js. Client authentication guards enforce RBAC rules.
 - **Backend Infrastructure Layer (Supabase)**: Houses core tables (`profiles`, `products`, `lives`, `payouts`) secured via PostgreSQL Row Level Security (RLS).

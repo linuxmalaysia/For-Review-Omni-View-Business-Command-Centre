@@ -26,6 +26,7 @@ This tutorial guides software engineers and autonomous AI agents through initial
 ## 🎯 Learning Objectives
 
 By completing this tutorial, you will:
+
 - Understand the role of `llms.txt` and `llm_context.xml` in DSOM context management.
 - Run `parse_llms_txt.py` to regenerate all index and sitemap files.
 - Validate generated XML context for consumption by Large Language Models.
@@ -45,6 +46,7 @@ python3 parse_llms_txt.py --generate-all
 ## 📋 Step 2: Verify Created Artifacts
 
 Confirm that the following files have been created or updated:
+
 - `llms.txt` and `docs/llms.txt`
 - `llms-full.txt` and `docs/llms-full.txt`
 - `sitemap.txt` and `docs/sitemap.txt`

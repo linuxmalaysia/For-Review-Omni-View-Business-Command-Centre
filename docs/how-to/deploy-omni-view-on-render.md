@@ -85,6 +85,7 @@ If creating the service manually in the Render Dashboard:
 
 > [!NOTE]
 > **Render Static Sites Benefits:**
+>
 > - Free static site hosting on Render's Free tier, subject to standard workspace outbound-bandwidth and build-pipeline limits.
 > - High-availability global CDN distribution.
 > - Fast automated continuous deployment on every git push.

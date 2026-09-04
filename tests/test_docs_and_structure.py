@@ -1,6 +1,5 @@
 import os
 import re
-import pytest
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -78,7 +77,7 @@ def test_summary_and_navigation_files():
     docs_root = os.path.join(ROOT_DIR, 'docs')
     for label, target in links:
         # Ignore external URLs or anchors
-        if target.startswith("http://") or target.startswith("https://") or target.startswith("#"):
+        if target.startswith(("http://", "https://", "#")):
             continue
 
         target_path = os.path.normpath(os.path.join(docs_root, target))
