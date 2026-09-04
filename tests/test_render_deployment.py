@@ -10,14 +10,6 @@ GUIDE_TITLE = "Deploying Omni-View Business Command Centre on Render.com"
 
 
 def read_repo_file(relative_path: str | Path) -> str:
-    """Read a repository file as UTF-8 text.
-    
-    Parameters:
-    	relative_path (str | Path): Path to the file relative to the repository root.
-    
-    Returns:
-    	str: The file contents.
-    """
     return (ROOT_DIR / relative_path).read_text(encoding="utf-8")
 
 
