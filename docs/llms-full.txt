@@ -901,7 +901,7 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
 
-```yaml
+```markdown
 ---
 okf_version: "0.2"
 type: "skill"
@@ -1453,6 +1453,7 @@ tags:
   - "how-to"
   - "operations"
 related_links:
+  - "docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md"
   - "docs/how-to/deploy-omni-view-on-render.md"
   - "docs/how-to/manage-inventory-and-payouts.md"
   - "docs/how-to/generate-llms-context.md"
@@ -1470,6 +1471,7 @@ This index categorizes all task-oriented procedural guides for operational manag
 
 ## 🛠 Available How-To Recipes
 
+- [Produce Project Technical Handbook](HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.
 - [Deploy Omni-View on Render.com](deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.
 - [Manage Inventory, Live Sessions, and Payouts](manage-inventory-and-payouts.md): Procedural steps for inventory updates, tracking streams, and processing employee payouts.
 - [Generate LLM XML Context and Sitemaps](generate-llms-context.md): How-to guide for executing `parse_llms_txt.py` to build machine-parseable context artifacts.
@@ -1913,9 +1915,11 @@ uv run python tools/bake_native_svg.py
 
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```bash
+$tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
 msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw \
-  --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
+  --user-data-dir="$tmpProfile" --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
   file:///path/to/build/book/handbook.html
+Remove-Item -Recurse -Force $tmpProfile -ErrorAction SilentlyContinue
 ```
 
 ### 5. Compile EPUB 3 Ebook

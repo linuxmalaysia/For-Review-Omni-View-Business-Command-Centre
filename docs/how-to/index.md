@@ -11,6 +11,7 @@ tags:
   - "how-to"
   - "operations"
 related_links:
+  - "docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md"
   - "docs/how-to/deploy-omni-view-on-render.md"
   - "docs/how-to/manage-inventory-and-payouts.md"
   - "docs/how-to/generate-llms-context.md"
@@ -28,6 +29,7 @@ This index categorizes all task-oriented procedural guides for operational manag
 
 ## 🛠 Available How-To Recipes
 
+- [Produce Project Technical Handbook](HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.
 - [Deploy Omni-View on Render.com](deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.
 - [Manage Inventory, Live Sessions, and Payouts](manage-inventory-and-payouts.md): Procedural steps for inventory updates, tracking streams, and processing employee payouts.
 - [Generate LLM XML Context and Sitemaps](generate-llms-context.md): How-to guide for executing `parse_llms_txt.py` to build machine-parseable context artifacts.

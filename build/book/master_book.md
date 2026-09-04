@@ -6,8 +6,14 @@
 
 # Part 1: Governance & Compilation Master Prompts {.part}
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Master operational prompt and technical blueprint for compiling multi-file Markdown documentation suites into publication-grade, print-optimized PDF, HTML, EPUB, and ODT handbooks using Pandoc, Headless Chromium, and the Terminal & Cloud design framework.
+</div>
+
 ## Technical Book Design & PDF Compilation Master Prompt Guide
 
 > **Document Type:** Governance Blueprint & Reusable AI Master Prompt
@@ -284,8 +290,8 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
 
-```yaml
-***
+```markdown
+---
 okf_version: "0.2"
 type: "skill"
 title: "Technical Ebook & Handbook Compiler (Pandoc / Print & Terminal Theme)"
@@ -299,7 +305,7 @@ sources:
     title: "The Core AI Rulebook (DSOM Rule 11 & Rule 22)"
     path: ".agents/AGENTS.md"
 name: "dsom-technical-book-compiler"
-***
+---
 
 ## Technical Ebook & Handbook Compiler
 
@@ -345,12 +351,19 @@ Before finalizing any compiled handbook, the AI agent must verify:
 - [ ] **Link Leak Audit:** Grep search the assembled HTML/PDF links for `file:///` or Windows drive letters (`D:/`, `C:/`) — result must be 0.
 - [ ] **Commentary Audit:** Leading playbook dispatches are rendered as human-readable callouts above the code fences.
 - [ ] **Confidentiality Audit:** Running headers state `PRIVATE AND CONFIDENTIAL (P&C)` and attribution reads `Compile by: Harisfazillah Jamel`.
+*Standard: UK English | DBP-standard Bahasa Melayu Malaysia (Piawai) | PRIVATE & CONFIDENTIAL (P&C) | All Rights Reserved*
 
 
 # Part 2: Operational How-To Guides {.part}
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Comprehensive operational handbook and transferable AI prompt library for analyzing code repositories, synthesizing Diataxis documentation, baking native vector diagrams, and compiling publication-grade print-ready handbooks (PDF, HTML, EPUB) using Pandoc and Headless Chromium.
+</div>
+
 ## How to Produce a Project Technical Handbook: The AI Prompt Engineering & Skill Adoption Blueprint
 
 > **Classification:** Technical Standard & Transferable Knowledge Base
@@ -723,7 +736,7 @@ if __name__ == "__main__":
 To adopt this capability in another repository, copy the specification below into `skills/project-technical-book-compiler/SKILL.md`:
 
 ```yaml
-***
+---
 okf_version: "0.2"
 type: "skill"
 title: "Project Technical Book & Handbook Compiler"
@@ -733,7 +746,7 @@ topics: ["pandoc", "pdf", "html", "epub", "print-optimized", "diataxis", "handbo
 status: "stable"
 stale_after: "2027-09-05"
 name: "project-technical-book-compiler"
-***
+---
 
 ## Project Technical Book & Handbook Compiler
 
@@ -766,9 +779,11 @@ uv run python tools/bake_native_svg.py
 
 #### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```bash
+$tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
 msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw \
-  --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
+  --user-data-dir="$tmpProfile" --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
   file:///path/to/build/book/handbook.html
+Remove-Item -Recurse -Force $tmpProfile -ErrorAction SilentlyContinue
 ```
 
 #### 5. Compile EPUB 3 Ebook
@@ -793,10 +808,17 @@ Before delivering any compiled handbook to stakeholders, execute this audit chec
 - [ ] **Inline CSS Audit:** CSS is embedded directly into `<style>` inside `<head>` to prevent external relative link breakage.
 - [ ] **Soft-Path Link Audit:** All internal cross-references point to clean `#chap-...` or `#code-...` fragments without surviving absolute filesystem paths (`file:///` or drive letters).
 - [ ] **Pagination Audit:** Verified zero empty filler pages exist between chapters.
-
+*Standard: UK English | DBP-standard Bahasa Melayu Malaysia (Piawai) | GNU General Public License v3.0*
 
 
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/deploy-omni-view-on-render.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Step-by-step Diátaxis How-To guide for building, configuring, deploying, and troubleshooting the Omni-View Business Command Centre static site and documentation portal on Render.com.
+</div>
+
 ## 🚀 Deploying Omni-View Business Command Centre on Render.com
 
 This guide provides a comprehensive step-by-step walkthrough for deploying the **Omni-View Business Command Centre** interactive web application and documentation portal to [Render.com](https://render.com/).
@@ -930,8 +952,14 @@ Once deployed, verify your service endpoints on Render:
 - **LLM XML Context:** `https://<your-service>.onrender.com/llm_context.xml`
 
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/manage-inventory-and-payouts.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Practical operational guide for stock management, live streaming sales tracking, and staff payouts.
+</div>
+
 ## How-To Guide: Managing Inventory, Live Sessions, and Payouts
 
 This guide provides step-by-step procedural directions for routine operations in Omni-View.
@@ -974,8 +1002,14 @@ This guide provides step-by-step procedural directions for routine operations in
 
 # Part 3: Architecture & System Philosophy {.part}
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/explanation/architecture-and-diataxis.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Conceptual explanation of decoupled web architecture and adoption rationale of Diátaxis documentation framework.
+</div>
+
 ## Architectural Explanation & Diátaxis Framework Adoption
 
 This document explains the system architecture, design decisions, and adoption of the **Diátaxis Documentation Framework** for Omni-View.
@@ -1039,8 +1073,14 @@ Omni-View solves this by adopting the **Diátaxis Documentation Framework** (htt
    - **Scope**: System design, security model, Diátaxis, and OKF 0.2 adoption.
 
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/explanation/okf-02-and-diataxis.md</code></div>
+
+<div class="callout callout-note">
+<strong>📌 Executive Summary</strong>
+
+Conceptual explanation of Open Knowledge Format 0.2 and Domain-Specific Operational Model for AI agents.
+</div>
+
 ## Explanation: Open Knowledge Format (OKF 0.2) & DSOM Integration Rationale
 
 This document explains the integration of **Open Knowledge Format (OKF 0.2)** principles and **Domain-Specific Operational Model (DSOM)** within the Omni-View repository documentation system.
@@ -1081,12 +1121,6 @@ DSOM defines operational boundaries and execution constraints for autonomous age
 ### LLM Parser & Sitemap Utility
 
 **Source File:** `parse_llms_txt.py`
-
-<div class="callout callout-note">
-<strong>💡 Developer Operational Context</strong>
-
-> !/usr/bin/env python3
-</div>
 
 ```python
 #!/usr/bin/env python3
@@ -1191,10 +1225,12 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Embed local document content if file exists
+            # Embed local document content if file exists and stays within root_dir
             rel_path = item.get("url", "").lstrip("/")
-            file_path = os.path.join(root_dir, rel_path)
-            if os.path.isfile(file_path):
+            resolved_root = os.path.realpath(root_dir)
+            file_path = os.path.realpath(os.path.join(root_dir, rel_path))
+
+            if file_path.startswith(resolved_root + os.sep) and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()
@@ -1229,6 +1265,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Core Governance & Architecture",
         "",
         f"- [Knowledge-First Discovery SOP]({p}SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.",
+        f"- [Technical Book Design & PDF Compilation Master Prompt Guide]({p}governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md): Master prompt and blueprint for compiling publication-grade PDF handbooks.",
         f"- [DSOM Governance]({p}explanation/dsom-governance.md): Metacognitive context management and protocol standards.",
         f"- [Diátaxis Framework]({p}explanation/diataxis.md): Quadrant layout and documentation structure.",
         f"- [System Architecture]({p}explanation/system-architecture.md): Subsystem topologies and integration points.",
@@ -1245,6 +1282,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Practical Operational Guides",
         "",
         f"- [Operational Recipes Index]({p}how-to/index.md): Operational recipes index.",
+        f"- [Produce Project Technical Handbook]({p}how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.",
         f"- [Deploy Omni-View on Render.com]({p}how-to/deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.",
         f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
         f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
@@ -1290,6 +1328,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "CHANGELOG.md"),
         os.path.join(docs_dir, "HISTORY.md"),
         os.path.join(docs_dir, "SOP-KNOWLEDGE-FIRST-DISCOVERY.md"),
+        os.path.join(docs_dir, "governance", "TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),
         os.path.join(docs_dir, "explanation", "system-architecture.md"),
@@ -1299,6 +1338,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "tutorials", "getting-started.md"),
         os.path.join(docs_dir, "tutorials", "llms-txt-setup.md"),
         os.path.join(docs_dir, "how-to", "index.md"),
+        os.path.join(docs_dir, "how-to", "HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md"),
         os.path.join(docs_dir, "how-to", "deploy-omni-view-on-render.md"),
         os.path.join(docs_dir, "how-to", "manage-inventory-and-payouts.md"),
         os.path.join(docs_dir, "how-to", "generate-llms-context.md"),
@@ -1337,6 +1377,7 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/",
         f"{base_url}/START-HERE",
         f"{base_url}/SOP-KNOWLEDGE-FIRST-DISCOVERY",
+        f"{base_url}/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE",
         f"{base_url}/CHANGELOG",
         f"{base_url}/HISTORY",
         f"{base_url}/explanation/dsom-governance",
@@ -1348,6 +1389,7 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/tutorials/getting-started",
         f"{base_url}/tutorials/llms-txt-setup",
         f"{base_url}/how-to/index",
+        f"{base_url}/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK",
         f"{base_url}/how-to/deploy-omni-view-on-render",
         f"{base_url}/how-to/manage-inventory-and-payouts",
         f"{base_url}/how-to/generate-llms-context",
@@ -1476,12 +1518,6 @@ if __name__ == "__main__":
 ### Summary Table of Contents Generator
 
 **Source File:** `tools/generate_summary.py`
-
-<div class="callout callout-note">
-<strong>💡 Developer Operational Context</strong>
-
-> !/usr/bin/env python3
-</div>
 
 ```python
 #!/usr/bin/env python3

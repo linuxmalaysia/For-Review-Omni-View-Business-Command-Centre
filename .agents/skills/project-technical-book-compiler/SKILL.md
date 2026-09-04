@@ -40,10 +40,13 @@ uv run python tools/bake_native_svg.py
 ```
 
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
-```bash
-msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw \
-  --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
-  file:///path/to/build/book/handbook.html
+```powershell
+$tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
+Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" \
+  -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", \
+  "--user-data-dir=$tmpProfile", "--no-pdf-header-footer", "--print-to-pdf=build/book/handbook.pdf", \
+  "file:///path/to/build/book/handbook.html" -Wait
+Remove-Item -Recurse -Force $tmpProfile -ErrorAction SilentlyContinue
 ```
 
 ### 5. Compile EPUB 3 Ebook

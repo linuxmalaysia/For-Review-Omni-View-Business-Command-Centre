@@ -25,9 +25,11 @@ WARNING_KEYWORDS = re.compile(
 )
 
 
-def strip_frontmatter_and_footer(content: str) -> str:
-    """Strips leading YAML frontmatter and document signature footers from markdown content."""
-    lines = content.splitlines()
+def extract_frontmatter_metadata(raw_content: str) -> tuple[dict, str]:
+    """Extracts title and description from frontmatter and returns (metadata, content_without_frontmatter)."""
+    metadata = {}
+    content = raw_content
+    lines = raw_content.splitlines()
     if lines and lines[0].strip() == "---":
         end_idx = -1
         for idx in range(1, len(lines)):
@@ -35,10 +37,43 @@ def strip_frontmatter_and_footer(content: str) -> str:
                 end_idx = idx
                 break
         if end_idx != -1:
+            frontmatter_lines = lines[1:end_idx]
             content = "\n".join(lines[end_idx + 1:])
-    content = re.sub(r"\n---\s*\n\*.*", "", content, flags=re.DOTALL)
-    content = re.sub(r"\n---\n", "\n***\n", content)
-    return content.strip()
+            for line in frontmatter_lines:
+                if ":" in line:
+                    k, v = line.split(":", 1)
+                    k = k.strip()
+                    v = v.strip().strip('"').strip("'")
+                    metadata[k] = v
+    return metadata, content.strip()
+
+
+def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
+    """Strips leading YAML frontmatter and document signature footers from markdown content."""
+    metadata, content = extract_frontmatter_metadata(content)
+
+    # Strip only end-of-file anchored signature block
+    content = re.sub(
+        r"\n\n---\s*\n\*[^*]+(?:\(DSOM\)|All Rights Reserved|GNU General|Deep State of Mind).*$",
+        "",
+        content,
+        flags=re.MULTILINE
+    )
+
+    # Convert horizontal rules --- to *** ONLY outside fenced code blocks
+    lines = content.splitlines()
+    new_lines = []
+    in_code_block = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            in_code_block = not in_code_block
+        if not in_code_block and re.match(r"^---\s*$", stripped):
+            new_lines.append("***")
+        else:
+            new_lines.append(line)
+
+    return metadata, "\n".join(new_lines).strip()
 
 
 def convert_github_alerts(text: str) -> str:
@@ -89,7 +124,7 @@ def scale_backticks(code_text: str) -> tuple[str, str]:
 
 
 def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
-    """Extracts leading comment blocks and formats them into operational commentary callouts."""
+    """Extracts leading comment blocks (excluding shebangs) into operational commentary callouts."""
     lines = code_text.splitlines()
     comment_lines = []
     start_idx = 1 if lines and lines[0].strip() == "---" else 0
@@ -99,6 +134,8 @@ def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
         if not stripped:
             continue
         if stripped.startswith("#"):
+            if stripped.startswith("#!"):
+                continue  # Skip shebang line in commentary extraction
             comment_lines.append(stripped.lstrip("#").strip())
         else:
             break
@@ -135,10 +172,17 @@ def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: boo
     if not file_path.exists():
         return f"\n*Documentation file not found: {rel_path}*\n"
     raw = file_path.read_text(encoding="utf-8", errors="replace")
-    clean = strip_frontmatter_and_footer(raw)
+    metadata, clean = strip_frontmatter_and_footer(raw)
     clean = convert_github_alerts(clean)
 
     out = []
+    if show_provenance:
+        out.append(f'<div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>{rel_path}</code></div>\n')
+
+    if "description" in metadata and metadata["description"]:
+        desc = metadata["description"]
+        out.append(f'<div class="callout callout-note">\n<strong>📌 Executive Summary</strong>\n\n{desc}\n</div>\n')
+
     for line in clean.splitlines():
         m = re.match(r"^(#{1,6})\s+(.*)$", line)
         if m:
@@ -148,8 +192,7 @@ def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: boo
         else:
             out.append(line)
 
-    header = f'\n<div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>{rel_path}</code></div>\n' if show_provenance else "\n"
-    return header + "\n".join(out) + "\n"
+    return "\n".join(out) + "\n"
 
 
 def build_master_book():
@@ -174,12 +217,12 @@ def build_master_book():
     parts.append(ingest_doc_file("docs/how-to/deploy-omni-view-on-render.md", heading_offset=1))
     parts.append(ingest_doc_file("docs/how-to/manage-inventory-and-payouts.md", heading_offset=1))
 
-    # Part 3: Architecture & System Explanation
+    # Part 3: Architecture & System Philosophy
     parts.append("# Part 3: Architecture & System Philosophy {.part}")
     parts.append(ingest_doc_file("docs/explanation/architecture-and-diataxis.md", heading_offset=1))
     parts.append(ingest_doc_file("docs/explanation/okf-02-and-diataxis.md", heading_offset=1))
 
-    # Part 4: Code Artifacts & Source Ingestion
+    # Part 4: Core Implementation Source Code
     parts.append("# Part 4: Core Implementation Source Code {.part}")
     parts.append(ingest_code_file(ROOT_DIR / "parse_llms_txt.py", "python", "LLM Parser & Sitemap Utility", "code-parse-llms-txt"))
     parts.append(ingest_code_file(ROOT_DIR / "tools" / "generate_summary.py", "python", "Summary Table of Contents Generator", "code-generate-summary"))

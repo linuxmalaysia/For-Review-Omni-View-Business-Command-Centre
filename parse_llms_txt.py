@@ -100,10 +100,12 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Embed local document content if file exists
+            # Embed local document content if file exists and stays within root_dir
             rel_path = item.get("url", "").lstrip("/")
-            file_path = os.path.join(root_dir, rel_path)
-            if os.path.isfile(file_path):
+            resolved_root = os.path.realpath(root_dir)
+            file_path = os.path.realpath(os.path.join(root_dir, rel_path))
+
+            if file_path.startswith(resolved_root + os.sep) and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()
