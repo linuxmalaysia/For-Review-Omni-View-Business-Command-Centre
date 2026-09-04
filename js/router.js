@@ -105,8 +105,8 @@
     }
 
     /**
-     * Load new external scripts present in the target HTML document that are not yet loaded.
-     * @param {Document} newDoc
+     * Loads new external scripts and executes inline scripts from the target document.
+     * @param {Document} newDoc - The document containing scripts to load or execute.
      */
     async function loadNewScripts(newDoc) {
         const existingScriptSrcs = new Set(
