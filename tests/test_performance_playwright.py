@@ -30,14 +30,14 @@ def local_server():
 def test_dashboard_rendering_performance(local_server):
     """Smoke test to measure initial page load and rendering times for key dashboards in Web Ui/."""
     dashboards = [
-        "Web Ui/login.html",
-        "Web Ui/forgot-password.html",
-        "Web Ui/reset_password.html",
-        "Web Ui/main.html",
-        "Web Ui/product.html",
-        "Web Ui/payout.html",
-        "Web Ui/report.html",
-        "Web Ui/user_management.html",
+        ("Web Ui/login.html", "form"),
+        ("Web Ui/forgot-password.html", "#forgotPasswordForm"),
+        ("Web Ui/reset_password.html", "#resetPasswordForm"),
+        ("Web Ui/main.html", "form, .main-content"),
+        ("Web Ui/product.html", "form, .main-content"),
+        ("Web Ui/payout.html", "form, .main-content"),
+        ("Web Ui/report.html", "form, .main-content"),
+        ("Web Ui/user_management.html", "form, .main-content"),
     ]
 
     with sync_playwright() as p:
@@ -45,9 +45,11 @@ def test_dashboard_rendering_performance(local_server):
         context = browser.new_context()
         page = context.new_page()
 
-        for dashboard in dashboards:
+        for dashboard, readiness_selector in dashboards:
             start_time = time.perf_counter()
             response = page.goto(f"{local_server}/{dashboard}", wait_until="domcontentloaded")
+            # Wait for specific landmark element visibility before measuring rendering time completion
+            page.wait_for_selector(readiness_selector, state="visible", timeout=3000)
             render_time_ms = (time.perf_counter() - start_time) * 1000
 
             assert response.status == 200, f"Failed to load {dashboard}"
@@ -67,7 +69,7 @@ def test_client_side_navigation_performance(local_server):
 
         start_time = time.perf_counter()
         page.click('a[href="forgot-password.html"]')
-        page.wait_for_selector("form", timeout=3000)
+        page.wait_for_selector("#forgotPasswordForm", state="visible", timeout=3000)
         nav_time_ms = (time.perf_counter() - start_time) * 1000
 
         assert "forgot-password.html" in page.url, "Navigation to forgot-password.html failed"

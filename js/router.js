@@ -140,9 +140,12 @@
                     document.body.appendChild(newScript);
                 });
             } else if (oldScript.textContent && oldScript.textContent.trim() !== '') {
-                // Execute inline scripts via Function constructor safely to prevent top-level redeclaration
+                // Execute inline script by appending script node to document
                 try {
-                    new Function(oldScript.textContent)();
+                    const inlineScript = document.createElement('script');
+                    inlineScript.textContent = oldScript.textContent;
+                    document.body.appendChild(inlineScript);
+                    document.body.removeChild(inlineScript);
                 } catch (e) {
                     console.warn('Inline script execution failed:', e);
                 }
