@@ -63,7 +63,7 @@ def test_diataxis_documents_exist():
 
 
 def test_summary_and_navigation_files():
-    """Verify that the documentation summary file exists and links to all Diátaxis sections."""
+    """Verify that the documentation summary exists, contains a heading and Markdown links, and resolves internal links to existing files."""
     summary_path = os.path.join(ROOT_DIR, 'docs', 'SUMMARY.md')
     assert os.path.isfile(summary_path), "docs/SUMMARY.md missing"
     with open(summary_path, 'r', encoding='utf-8') as f:

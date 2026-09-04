@@ -9,6 +9,7 @@ from playwright.sync_api import sync_playwright
 
 class QuietHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
+        """Suppress HTTP request logging."""
         pass
 
 class ReusableTCPServer(socketserver.TCPServer):
@@ -16,6 +17,12 @@ class ReusableTCPServer(socketserver.TCPServer):
 
 @pytest.fixture(scope="module")
 def local_server():
+    """
+    Start a local HTTP server for the test and yield its base URL.
+    
+    Returns:
+    	str: The server's base URL.
+    """
     handler = QuietHTTPRequestHandler
     httpd = ReusableTCPServer(("127.0.0.1", 0), handler)
     host, port = httpd.server_address
@@ -28,7 +35,9 @@ def local_server():
     httpd.server_close()
 
 def test_dashboard_rendering_performance(local_server):
-    """Smoke test to measure initial page load and rendering times for key dashboards in Web Ui/."""
+    """
+    Verify that key dashboard pages load successfully and become ready within 3 seconds.
+    """
     dashboards = [
         ("Web Ui/login.html", "form"),
         ("Web Ui/forgot-password.html", "#forgotPasswordForm"),

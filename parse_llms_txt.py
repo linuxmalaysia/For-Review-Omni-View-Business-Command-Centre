@@ -24,8 +24,8 @@ def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
         content_or_path (str): Path to an llms.txt file or raw llms.txt content.
     
     Returns:
-        Dict[str, Any]: Parsed title, summary, and sections containing document titles,
-            URLs, and optional descriptions.
+        dict[str, Any]: Parsed title, summary, and sections containing document titles,
+            URLs, and descriptions.
     """
     if os.path.exists(content_or_path):
         with open(content_or_path, "r", encoding="utf-8") as f:
@@ -72,14 +72,15 @@ def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
 
 
 def generate_xml_context(llms_data: dict[str, Any], root_dir: str = ".") -> str:
-    """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
+    """
+    Generate formatted XML context from parsed `llms.txt` data, including available local document contents.
     
-    Args:
-        llms_data: Parsed `llms.txt` data containing the title, summary, sections, and documents.
-        root_dir: Root directory used to resolve relative document paths.
+    Parameters:
+    	llms_data (dict[str, Any]): Parsed metadata, sections, and document entries.
+    	root_dir (str): Root directory used to resolve relative document paths.
     
     Returns:
-        Formatted XML context document.
+    	str: The formatted XML context document.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
