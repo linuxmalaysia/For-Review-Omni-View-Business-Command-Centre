@@ -1135,7 +1135,7 @@ import re
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils
 from xml.dom import minidom
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, Any, Tuple, Optional
 
 
 def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:

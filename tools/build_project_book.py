@@ -6,9 +6,7 @@ Universal Technical Handbook Assembler & Multi-Format Compiler
 Standard: Terminal & Cloud Standard (DSOM Rule 11 & Rule 22)
 """
 
-import os
 import re
-import sys
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -200,8 +198,8 @@ def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
 
     comment_lines = []
     for i in range(start_idx, len(lines)):
-        l = lines[i]
-        stripped = l.strip()
+        line_str = lines[i]
+        stripped = line_str.strip()
         if not stripped:
             continue
         if stripped.startswith("#"):
