@@ -5,7 +5,6 @@
 ## Core Governance & Architecture
 
 - [Knowledge-First Discovery SOP](SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.
-- [Technical Book Design & PDF Compilation Master Prompt Guide](governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md): Master prompt and blueprint for compiling publication-grade PDF handbooks.
 - [DSOM Governance](explanation/dsom-governance.md): Metacognitive context management and protocol standards.
 - [Diátaxis Framework](explanation/diataxis.md): Quadrant layout and documentation structure.
 - [System Architecture](explanation/system-architecture.md): Subsystem topologies and integration points.
@@ -22,7 +21,6 @@
 ## Practical Operational Guides
 
 - [Operational Recipes Index](how-to/index.md): Operational recipes index.
-- [Produce Project Technical Handbook](how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.
 - [Deploy Omni-View on Render.com](how-to/deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.
 - [Manage Inventory and Payouts](how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.
 - [Generate LLMs Context Guide](how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.

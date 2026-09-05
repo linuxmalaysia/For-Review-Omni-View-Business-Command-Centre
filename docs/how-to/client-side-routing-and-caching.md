@@ -29,6 +29,7 @@ This guide explains how client-side routing and session caching work in Omni-Vie
 Omni-View uses a lightweight, client-side Single Page Application (SPA) routing mechanism (`js/router.js`) paired with a session caching utility (`js/cache.js`).
 
 ### Core Benefits
+
 - **No Full Page Reloads:** Page transitions intercept navigation link clicks and update view containers (`.app-shell` / `body`) dynamically.
 - **Data Retention Across Navigation:** Data fetched from Supabase (user profiles, dashboard metrics, stock counts, payouts) is stored in browser `sessionStorage`.
 - **Automatic Cache Cleanup:** Session data persists throughout the active session and is completely cleared when the user logs out or closes the browser tab.

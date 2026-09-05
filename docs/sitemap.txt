@@ -1,7 +1,6 @@
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/START-HERE
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/SOP-KNOWLEDGE-FIRST-DISCOVERY
-https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/CHANGELOG
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/HISTORY
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/explanation/dsom-governance
@@ -13,7 +12,6 @@ https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/tut
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/tutorials/getting-started
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/tutorials/llms-txt-setup
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/how-to/index
-https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/how-to/deploy-omni-view-on-render
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/how-to/manage-inventory-and-payouts
 https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre/how-to/generate-llms-context

@@ -44,11 +44,11 @@ Documentation is structured into four distinct modes according to the **Diátaxi
 
 Omni View documentation and static site can be published across multiple hosting platforms:
 
-- **GitHub Pages**: Automated workflow via `.github/workflows/jekyll-gh-pages.yml`
-- **GitLab Pages**: Configured via `.gitlab-ci.yml`
-- **GitBook**: Configured via `.gitbook.yaml`
-- **ReadTheDocs**: Configured via `.readthedocs.yaml`
-- **Render.com**: Static site configuration via `render.yaml` (see [Deploying Omni-View on Render.com Guide](docs/how-to/deploy-omni-view-on-render.md))
+* **GitHub Pages**: Automated workflow via `.github/workflows/jekyll-gh-pages.yml`
+* **GitLab Pages**: Configured via `.gitlab-ci.yml`
+* **GitBook**: Configured via `.gitbook.yaml`
+* **ReadTheDocs**: Configured via `.readthedocs.yaml`
+* **Render.com**: Static site configuration via `render.yaml` (see [Deploying Omni-View on Render.com Guide](docs/how-to/deploy-omni-view-on-render.md))
 
 For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-pages-setup.md), [Deploying on Render.com Guide](docs/how-to/deploy-omni-view-on-render.md), and [Multi-Platform Hosting Guide](docs/multi-platform-hosting.md).
 
@@ -56,6 +56,6 @@ For detailed setup instructions, see the [GitHub Pages Setup Guide](docs/github-
 
 ## 🤝 License, Author & Fork Attribution
 
-- **Original Author & Project Owner**: [chinzihuai](https://github.com/chinzihuai/Omni-View-Business-Command-Centre).
-- **Reviewer / Fork Notice**: This repository is maintained as a review fork for evaluating, testing, and sharing opinions by linuxmalaysia.
-- **License**: Distributed under open repository terms. All original rights reserved by chinzihuai.
+* **Original Author & Project Owner**: [chinzihuai](https://github.com/chinzihuai/Omni-View-Business-Command-Centre).
+* **Reviewer / Fork Notice**: This repository is maintained as a review fork for evaluating, testing, and sharing opinions by linuxmalaysia.
+* **License**: Distributed under open repository terms. All original rights reserved by chinzihuai.
