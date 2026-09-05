@@ -26,7 +26,15 @@ WARNING_KEYWORDS = re.compile(
 
 
 def extract_frontmatter_metadata(raw_content: str) -> tuple[dict, str]:
-    """Extracts title and description from frontmatter and returns (metadata, content_without_frontmatter)."""
+    """
+    Extract metadata and content from an optional leading frontmatter block.
+    
+    Parameters:
+        raw_content (str): Document content that may begin with a `---`-delimited frontmatter block.
+    
+    Returns:
+        tuple[dict, str]: A metadata mapping and the content with the frontmatter removed and surrounding whitespace trimmed.
+    """
     metadata = {}
     content = raw_content
     lines = raw_content.splitlines()
@@ -49,7 +57,17 @@ def extract_frontmatter_metadata(raw_content: str) -> tuple[dict, str]:
 
 
 def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
-    """Strips leading YAML frontmatter and document signature footers from markdown content."""
+    """
+    Remove leading frontmatter and recognized signature footers from Markdown content.
+    
+    Horizontal rules outside fenced code blocks are converted to `***`.
+    
+    Parameters:
+        content (str): Markdown content to process.
+    
+    Returns:
+        tuple[dict, str]: Extracted frontmatter metadata and cleaned Markdown content.
+    """
     metadata, content = extract_frontmatter_metadata(content)
 
     # Strip terminal signature block through end-of-file (\Z)
@@ -77,13 +95,27 @@ def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
 
 
 def convert_github_alerts(text: str) -> str:
-    """Transforms GitHub Markdown alerts into styled HTML callout cards."""
+    """
+    Convert GitHub Markdown alert blocks into styled HTML callouts.
+    
+    Returns:
+    	str: Text with recognized alert blocks replaced by HTML callout elements.
+    """
     pattern = re.compile(
         r"^>\s*(?:\*\*)?\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION|SUCCESS)\](?:\*\*)?(?:[ \t]*(.*))?\n((?:^>.*$\n?)*)",
         re.MULTILINE
     )
 
     def replacer(match):
+        """
+        Convert a matched GitHub alert block into a styled HTML callout.
+        
+        Parameters:
+        	match (re.Match): Match containing the alert type and body text.
+        
+        Returns:
+        	str: HTML callout containing the alert's title, icon, and body.
+        """
         alert_type = match.group(1).upper()
         first_line = match.group(2) or ""
         raw_body = match.group(3) or ""
@@ -113,7 +145,13 @@ def convert_github_alerts(text: str) -> str:
 
 
 def scale_backticks(code_text: str) -> tuple[str, str]:
-    """Dynamically scales outer code fences based on inner backtick counts."""
+    """
+    Create matching Markdown fence strings that safely enclose the provided code.
+    
+    Returns:
+        tuple[str, str]: Two identical fence strings longer than any embedded
+        Markdown fence sequence, with a minimum length of three backticks.
+    """
     max_ticks = 0
     matches = re.findall(r"(`{3,})", code_text)
     for m in matches:
@@ -124,7 +162,16 @@ def scale_backticks(code_text: str) -> tuple[str, str]:
 
 
 def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
-    """Extracts leading comment blocks (excluding shebangs) into operational commentary callouts."""
+    """
+    Extract leading source comments as an operational context or warning callout.
+    
+    Parameters:
+        code_text (str): Source text whose leading comments should be extracted.
+    
+    Returns:
+        str | None: An HTML callout containing up to 15 leading comment lines, or
+            None when no leading comments are found.
+    """
     lines = code_text.splitlines()
     comment_lines = []
     start_idx = 1 if lines and lines[0].strip() == "---" else 0
@@ -151,7 +198,18 @@ def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
 
 
 def ingest_code_file(file_path: Path, lang: str, title: str, anchor: str) -> str:
-    """Ingests a source code file into a markdown chapter with commentary callouts."""
+    """
+    Add a source file and its leading commentary to a Markdown chapter.
+    
+    Parameters:
+    	file_path (Path): Path to the source file.
+    	lang (str): Language identifier for Markdown syntax highlighting.
+    	title (str): Chapter heading for the source file.
+    	anchor (str): HTML anchor identifier for the chapter.
+    
+    Returns:
+    	str: Markdown containing the source file, optional commentary callout, and source path, or a missing-file notice.
+    """
     if not file_path.exists():
         return f"\n*File not found: {file_path}*\n"
     content = file_path.read_text(encoding="utf-8", errors="replace")
@@ -167,7 +225,17 @@ def ingest_code_file(file_path: Path, lang: str, title: str, anchor: str) -> str
 
 
 def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: bool = True) -> str:
-    """Ingests a documentation markdown file into the master handbook."""
+    """
+    Ingest a Markdown documentation file and prepare it for inclusion in the master handbook.
+    
+    Parameters:
+        rel_path (str): Repository-relative path to the documentation file.
+        heading_offset (int): Number of levels to add to Markdown headings.
+        show_provenance (bool): Whether to include the source path in the output.
+    
+    Returns:
+        str: Processed Markdown content, or a notice when the file is missing.
+    """
     file_path = ROOT_DIR / rel_path
     if not file_path.exists():
         return f"\n*Documentation file not found: {rel_path}*\n"
