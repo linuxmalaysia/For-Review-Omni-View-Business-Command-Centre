@@ -26,3 +26,5 @@ layout: "default"
 - **Activity**: Established `.agents/AGENTS.md` AI Constitution and `.agents/brain/` spatial memory structures. Added Local Knowledge-First mandate requiring AI agents to check local brain and docs before remote server/external searches.
 - **Session Date**: 2026-09-02
 - **Activity**: Added uvicorn dependency to pyproject.toml & uv.lock, updated unit tests in test_render_deployment.py to strictly parse pyproject dependencies, verified build & pytest (128 passing tests), and performed DSOM EOD memory sync.
+- **Session Date**: 2026-09-05
+- **Activity**: Created Technical Book Design & PDF Compilation Master Prompt Guide (`docs/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md`), How-To blueprint (`docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md`), agent skills (`skills/` and `.agents/skills/`), universal handbook compiler script (`tools/build_project_book.py`), resolved PR review comments, verified 133 pytest cases pass, and completed DSOM EOD Palace Sync.
