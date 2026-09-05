@@ -35,7 +35,6 @@ This document serves two complementary functions:
 ### 2. The Reusable AI Master Prompt
 
 *Copy and paste the entire block below into your AI prompt window or agent instruction set:*
-
 ```markdown
 You are a Principal Publication Systems Architect and Pandoc Book Engineering Specialist.
 Your task is to take an entire repository of Markdown (.md) documents and source code trees, assemble them into a cohesive, publication-grade technical handbook, and compile them into a print-optimized PDF, standalone interactive HTML, EPUB 3, and styled OpenDocument Text (ODT).
@@ -142,7 +141,6 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   *Characteristics:* Distinct character shaping (disambiguating `0`/`O` and `1`/`l`/`I`), tabular numbers, ligature support. Sized at `8.5pt` with `1.4` line height.
 
 #### 3.3 Print Page Budget & Paging Rules (`@page`)
-
 ```css
 @page {
     size: A4;
@@ -249,7 +247,6 @@ Your task is to take an entire repository of Markdown (.md) documents and source
 ***
 
 ### 5. Multi-Format Compilation Commands
-
 ```bash
 # 1. Compile Standalone Interactive HTML Ebook
 pandoc build/book/master_book.md -o build/book/handbook.html \
@@ -289,7 +286,6 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 ### 6. Complete Embedded Skill: `dsom-technical-book-compiler`
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
-
 ````markdown
 ---
 okf_version: "0.2"
@@ -525,7 +521,7 @@ SYMPTOMS TO REMEDY:
 2. Black Background Code Blocks: Replace dark syntax highlighting (e.g. `--syntax-highlighting=espresso`) with `--syntax-highlighting=tango`. Ensure CSS enforces `pre, code, div.sourceCode { background-color: #F8FAFC !important; border: 1px solid #CBD5E1 !important; color: #0F172A !important; }` to eliminate toner waste.
 3. External CSS Linking Failures: Prevent headless browser path resolution failures by reading `terminal-theme.css` and inlining the complete stylesheet directly into `<style>` inside `<head>` of the HTML before PDF generation.
 4. Raw GitHub Alert Syntax: Detect all `> [!NOTE]`, `> [!WARNING]`, `> [!TIP]`, `> [!IMPORTANT]`, and `> [!CAUTION]` syntax in ingested markdown files and transform them into styled pastel HTML callout cards (`<div class="callout callout-note"><strong>💡 Note</strong><p>...</p></div>`).
-5. Asynchronous Process Premature Exit: When compiling via Microsoft Edge on Windows PowerShell, execute with `Start-Process -FilePath $edge -ArgumentList ... -Wait` using an isolated user profile (`--user-data-dir`) to ensure the process does not terminate before the PDF file buffer is completely written.
+5. Asynchronous Process & Timeout Management: When compiling via Microsoft Edge on Windows PowerShell, invoke Edge with `Start-Process -PassThru`, enforce a 60-second timeout via `$proc.WaitForExit(60000)`, terminate on timeout (`Stop-Process -Force`), validate ExitCode and PDF file presence, and clean up temporary profiles (`--user-data-dir`) inside a `try/finally` block.
 ```
 
 ***
@@ -551,7 +547,7 @@ Any automated compilation pipeline must adhere to these 17 strict invariants:
 | **13** | **Mermaid Namespace Isolation** | Global node ID collisions across multiple diagrams | Prefix node IDs with unique namespace prefixes (`TB_`, `AN_`, `TH_`). |
 | **14** | **Pandoc Code-Tag Wrapping** | Pandoc wraps `<pre class="mermaid"><code>` and escapes HTML | SVG replacement regexes must match both standard and `<code>`-wrapped pre blocks and unescape arrows (`--&gt;`). |
 | **15** | **Windows Isolated Browser Profile** | Edge crashes or hangs if user desktop instances are running | Launch Edge with `--user-data-dir="$env:TEMP/edge-pdf-$(Get-Random)"`. |
-| **16** | **Synchronous Edge Execution** | PowerShell returns before Edge finishes writing PDF | Always use `Start-Process -FilePath $edge -ArgumentList ... -Wait`. |
+| **16** | **Bounded Edge Execution** | PowerShell returns early or Edge hangs indefinitely | Invoke Edge via `Start-Process -PassThru`, enforce `$proc.WaitForExit(60000)`, terminate on timeout, and validate ExitCode and PDF creation. |
 | **17** | **Provenance Audit Banners** | Loss of traceability for ingested runbooks | Inject `<div class="doc-provenance">` detailing the repository source path. |
 
 ***
@@ -559,7 +555,6 @@ Any automated compilation pipeline must adhere to these 17 strict invariants:
 ### 4. Reusable Project Book Assembler Template (`tools/build_project_book.py`)
 
 Below is the clean, modular Python assembler that can be copied directly into any repository:
-
 ```python
 #!/usr/bin/env python3
 """
@@ -733,7 +728,6 @@ if __name__ == "__main__":
 ### 5. Standalone Reusable Skill Specification (`project-technical-book-compiler`)
 
 To adopt this capability in another repository, copy the specification below into `skills/project-technical-book-compiler/SKILL.md`:
-
 ````markdown
 ---
 okf_version: "0.2"
@@ -779,12 +773,13 @@ uv run python tools/bake_native_svg.py
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```powershell
 $tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
-$htmlUri = "file:///" + (Resolve-Path "build/book/handbook.html").Path.Replace("\", "/")
+$resolvedPath = (Resolve-Path "build/book/handbook.html").Path.Replace("\", "/")
+$htmlUri = "file:///" + [uri]::EscapeUriString($resolvedPath)
 try {
     $proc = Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
       -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", `
       "--user-data-dir=""$tmpProfile""", "--no-pdf-header-footer", "--print-to-pdf=build/book/handbook.pdf", `
-      "$htmlUri" -PassThru
+      """$htmlUri""" -PassThru
     if (-not $proc.WaitForExit(60000)) {
         $proc | Stop-Process -Force
         throw "Edge PDF print process timed out after 60 seconds."
@@ -847,7 +842,6 @@ This guide provides a comprehensive step-by-step walkthrough for deploying the *
 ### 📋 Prerequisites & Project Structure
 
 Ensure the repository contains the following deployment artifacts:
-
 ```text
 .
 ├── render.yaml                             # Render Static Site Blueprint specification
@@ -908,7 +902,6 @@ If creating the service manually in the Render Dashboard:
 #### 1. Error: `ModuleNotFoundError: No module named 'src'` (Exit Status 1) or `uvicorn: command not found` (Exit Status 127)
 
 - **Symptom:** Deployment log fails during the start/deploy phase with:
-
   ```text
   ==> Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
   Traceback (most recent call last):
@@ -918,7 +911,6 @@ If creating the service manually in the Render Dashboard:
   ```
 
   or:
-
   ```text
   ==> Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
   bash: line 1: uvicorn: command not found
@@ -940,7 +932,6 @@ If creating the service manually in the Render Dashboard:
 
 - **Symptom:** Browser caches old assets after updating HTML or CSS.
 - **Resolution:** `render.yaml` configures standard headers for client caching:
-
   ```yaml
   headers:
     - path: /*
@@ -1048,7 +1039,6 @@ Omni-View Business Command Centre is engineered using a decoupled web architectu
 Documentation often mixes step-by-step tutorials, practical recipes, and technical API reference into monolithic pages. This increases cognitive load for human developers and causes hallucination in autonomous AI agents.
 
 Omni-View solves this by adopting the **Diátaxis Documentation Framework** (https://diataxis.fr/), structuring content into four distinct quadrants based on user intent and mode:
-
 ```text
                   USER INTENT
            Learning         Practical

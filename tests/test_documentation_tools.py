@@ -175,9 +175,11 @@ def test_four_backtick_fence_handling_and_frontmatter_extraction(tmp_path: Path,
     doc_file.write_text(
         "---\ntitle: Four Ticks\ndescription: Testing four backticks\n---\n\n"
         "# Outer Heading\n\n"
+        "> [!NOTE]\n> Outer alert\n\n"
         "````markdown\n"
         "```bash\n"
         "# Heading inside code\n"
+        "> [!NOTE]\n> Literal alert inside code\n"
         "echo test\n"
         "```\n"
         "````\n",
@@ -187,8 +189,10 @@ def test_four_backtick_fence_handling_and_frontmatter_extraction(tmp_path: Path,
     res = build_project_book.ingest_doc_file("four_ticks.md", heading_offset=1, show_provenance=False)
 
     assert "## Outer Heading" in res
+    assert "callout callout-note" in res
     assert "# Heading inside code" in res
     assert "## Heading inside code" not in res
+    assert "> [!NOTE]\n> Literal alert inside code" in res
 
 
 def test_extract_commentary_skips_yaml_frontmatter(tmp_path: Path):

@@ -94,39 +94,76 @@ def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
 
 
 def convert_github_alerts(text: str) -> str:
-    """Transforms GitHub Markdown alerts into styled HTML callout cards."""
-    pattern = re.compile(
-        r"^>\s*(?:\*\*)?\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION|SUCCESS)\](?:\*\*)?(?:[ \t]*(.*))?\n((?:^>.*$\n?)*)",
-        re.MULTILINE
-    )
+    """Transforms GitHub Markdown alerts into styled HTML callout cards while preserving literal blocks in fences."""
+    lines = text.splitlines()
+    processed_lines = []
+    active_fence: tuple[str, int] | None = None
+    buffer = []
 
-    def replacer(match):
-        alert_type = match.group(1).upper()
-        first_line = match.group(2) or ""
-        raw_body = match.group(3) or ""
-        lines = []
-        if first_line.strip():
-            lines.append(first_line.strip())
-        for line in raw_body.splitlines():
-            lines.append(re.sub(r"^>\s?", "", line))
-        body = "\n".join(lines).strip()
+    def process_buffer(buf_lines: list[str]) -> list[str]:
+        buf_text = "\n".join(buf_lines)
+        if not buf_text:
+            return []
+        pattern = re.compile(
+            r"^>\s*(?:\*\*)?\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION|SUCCESS)\](?:\*\*)?(?:[ \t]*(.*))?\n((?:^>.*$\n?)*)",
+            re.MULTILINE
+        )
 
-        if alert_type in ("WARNING", "CAUTION", "IMPORTANT"):
-            css_class = "callout callout-warning"
-            icon = "⚠️" if alert_type != "CAUTION" else "🛑"
-            title = alert_type.capitalize()
-        elif alert_type in ("TIP", "SUCCESS"):
-            css_class = "callout callout-tip"
-            icon = "💡" if alert_type == "TIP" else "✅"
-            title = alert_type.capitalize()
+        def replacer(match):
+            alert_type = match.group(1).upper()
+            first_line = match.group(2) or ""
+            raw_body = match.group(3) or ""
+            alines = []
+            if first_line.strip():
+                alines.append(first_line.strip())
+            for line in raw_body.splitlines():
+                alines.append(re.sub(r"^>\s?", "", line))
+            body = "\n".join(alines).strip()
+
+            if alert_type in ("WARNING", "CAUTION", "IMPORTANT"):
+                css_class = "callout callout-warning"
+                icon = "⚠️" if alert_type != "CAUTION" else "🛑"
+                title = alert_type.capitalize()
+            elif alert_type in ("TIP", "SUCCESS"):
+                css_class = "callout callout-tip"
+                icon = "💡" if alert_type == "TIP" else "✅"
+                title = alert_type.capitalize()
+            else:
+                css_class = "callout callout-note"
+                icon = "💡"
+                title = "Note"
+
+            return f'\n<div class="{css_class}">\n<strong>{icon} {title}</strong>\n\n{body}\n</div>\n\n'
+
+        res = pattern.sub(replacer, buf_text)
+        return res.splitlines()
+
+    for line in lines:
+        fence = parse_fence_delimiter(line)
+        if fence:
+            if active_fence is None:
+                # Flush prose buffer through alert converter
+                if buffer:
+                    processed_lines.extend(process_buffer(buffer))
+                    buffer = []
+                active_fence = fence
+                processed_lines.append(line)
+            elif fence[0] == active_fence[0] and fence[1] >= active_fence[1]:
+                active_fence = None
+                processed_lines.append(line)
+            else:
+                processed_lines.append(line)
+            continue
+
+        if active_fence is not None:
+            processed_lines.append(line)
         else:
-            css_class = "callout callout-note"
-            icon = "💡"
-            title = "Note"
+            buffer.append(line)
 
-        return f'\n<div class="{css_class}">\n<strong>{icon} {title}</strong>\n\n{body}\n</div>\n\n'
+    if buffer:
+        processed_lines.extend(process_buffer(buffer))
 
-    return pattern.sub(replacer, text)
+    return "\n".join(processed_lines)
 
 
 def scale_backticks(code_text: str) -> tuple[str, str]:
@@ -141,7 +178,7 @@ def scale_backticks(code_text: str) -> tuple[str, str]:
 
 
 def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
-    """Extracts leading comment blocks (excluding shebangs) into operational commentary callouts."""
+    """Extracts leading comment blocks (excluding shebangs and YAML frontmatter) into operational commentary callouts."""
     lines = code_text.splitlines()
     start_idx = 0
 

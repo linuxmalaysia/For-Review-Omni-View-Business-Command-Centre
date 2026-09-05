@@ -1263,7 +1263,7 @@ SYMPTOMS TO REMEDY:
 2. Black Background Code Blocks: Replace dark syntax highlighting (e.g. `--syntax-highlighting=espresso`) with `--syntax-highlighting=tango`. Ensure CSS enforces `pre, code, div.sourceCode { background-color: #F8FAFC !important; border: 1px solid #CBD5E1 !important; color: #0F172A !important; }` to eliminate toner waste.
 3. External CSS Linking Failures: Prevent headless browser path resolution failures by reading `terminal-theme.css` and inlining the complete stylesheet directly into `&lt;style&gt;` inside `&lt;head&gt;` of the HTML before PDF generation.
 4. Raw GitHub Alert Syntax: Detect all `&gt; [!NOTE]`, `&gt; [!WARNING]`, `&gt; [!TIP]`, `&gt; [!IMPORTANT]`, and `&gt; [!CAUTION]` syntax in ingested markdown files and transform them into styled pastel HTML callout cards (`&lt;div class=&quot;callout callout-note&quot;&gt;&lt;strong&gt;💡 Note&lt;/strong&gt;&lt;p&gt;...&lt;/p&gt;&lt;/div&gt;`).
-5. Asynchronous Process Premature Exit: When compiling via Microsoft Edge on Windows PowerShell, execute with `Start-Process -FilePath $edge -ArgumentList ... -Wait` using an isolated user profile (`--user-data-dir`) to ensure the process does not terminate before the PDF file buffer is completely written.
+5. Asynchronous Process &amp; Timeout Management: When compiling via Microsoft Edge on Windows PowerShell, invoke Edge with `Start-Process -PassThru`, enforce a 60-second timeout via `$proc.WaitForExit(60000)`, terminate on timeout (`Stop-Process -Force`), validate ExitCode and PDF file presence, and clean up temporary profiles (`--user-data-dir`) inside a `try/finally` block.
 ```
 
 ---
@@ -1289,7 +1289,7 @@ Any automated compilation pipeline must adhere to these 17 strict invariants:
 | **13** | **Mermaid Namespace Isolation** | Global node ID collisions across multiple diagrams | Prefix node IDs with unique namespace prefixes (`TB_`, `AN_`, `TH_`). |
 | **14** | **Pandoc Code-Tag Wrapping** | Pandoc wraps `&lt;pre class=&quot;mermaid&quot;&gt;&lt;code&gt;` and escapes HTML | SVG replacement regexes must match both standard and `&lt;code&gt;`-wrapped pre blocks and unescape arrows (`--&amp;gt;`). |
 | **15** | **Windows Isolated Browser Profile** | Edge crashes or hangs if user desktop instances are running | Launch Edge with `--user-data-dir=&quot;$env:TEMP/edge-pdf-$(Get-Random)&quot;`. |
-| **16** | **Synchronous Edge Execution** | PowerShell returns before Edge finishes writing PDF | Always use `Start-Process -FilePath $edge -ArgumentList ... -Wait`. |
+| **16** | **Bounded Edge Execution** | PowerShell returns early or Edge hangs indefinitely | Invoke Edge via `Start-Process -PassThru`, enforce `$proc.WaitForExit(60000)`, terminate on timeout, and validate ExitCode and PDF creation. |
 | **17** | **Provenance Audit Banners** | Loss of traceability for ingested runbooks | Inject `&lt;div class=&quot;doc-provenance&quot;&gt;` detailing the repository source path. |
 
 ---
@@ -1517,12 +1517,13 @@ uv run python tools/bake_native_svg.py
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```powershell
 $tmpProfile = &quot;$env:TEMP\edge-pdf-profile-$(Get-Random)&quot;
-$htmlUri = &quot;file:///&quot; + (Resolve-Path &quot;build/book/handbook.html&quot;).Path.Replace(&quot;\&quot;, &quot;/&quot;)
+$resolvedPath = (Resolve-Path &quot;build/book/handbook.html&quot;).Path.Replace(&quot;\&quot;, &quot;/&quot;)
+$htmlUri = &quot;file:///&quot; + [uri]::EscapeUriString($resolvedPath)
 try {
     $proc = Start-Process -FilePath &quot;C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe&quot; `
       -ArgumentList &quot;--headless=new&quot;, &quot;--disable-gpu&quot;, &quot;--run-all-compositor-stages-before-draw&quot;, `
       &quot;--user-data-dir=&quot;&quot;$tmpProfile&quot;&quot;&quot;, &quot;--no-pdf-header-footer&quot;, &quot;--print-to-pdf=build/book/handbook.pdf&quot;, `
-      &quot;$htmlUri&quot; -PassThru
+      &quot;&quot;&quot;$htmlUri&quot;&quot;&quot; -PassThru
     if (-not $proc.WaitForExit(60000)) {
         $proc | Stop-Process -Force
         throw &quot;Edge PDF print process timed out after 60 seconds.&quot;
