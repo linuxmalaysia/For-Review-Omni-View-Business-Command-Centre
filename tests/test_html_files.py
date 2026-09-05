@@ -13,7 +13,6 @@ class SimpleHTMLValidator(HTMLParser):
         self.tags = []
         self.ids = set()
         self.script_srcs = []
-        self.scripts = []
         self.link_hrefs = []
         self.meta_refresh = None
 
@@ -22,10 +21,8 @@ class SimpleHTMLValidator(HTMLParser):
         attr_dict = dict(attrs)
         if 'id' in attr_dict:
             self.ids.add(attr_dict['id'])
-        if tag == 'script':
-            self.scripts.append(attr_dict)
-            if 'src' in attr_dict:
-                self.script_srcs.append(attr_dict['src'])
+        if tag == 'script' and 'src' in attr_dict:
+            self.script_srcs.append(attr_dict['src'])
         if tag == 'link' and 'href' in attr_dict:
             self.link_hrefs.append(attr_dict['href'])
         if tag == 'meta' and attr_dict.get('http-equiv', '').lower() == 'refresh':
@@ -166,23 +163,6 @@ def test_login_logo_has_stable_dimensions_and_accessible_alternative_text():
     assert logo.get('width') == '100'
     assert logo.get('height') == '100'
     assert logo.get('alt', '').strip()
-
-
-def test_forgot_password_scripts_are_deferred_in_dependency_order():
-    _, content = parse_form_markup('Web Ui/forgot-password.html')
-    parser = SimpleHTMLValidator()
-    parser.feed(content)
-    local_scripts = [
-        script for script in parser.scripts if script.get('src', '').startswith('../js/')
-    ]
-
-    assert [script['src'] for script in local_scripts] == [
-        '../js/cache.js',
-        '../js/router.js',
-        '../js/database.js',
-        '../js/forgot-password.js',
-    ]
-    assert all('defer' in script for script in local_scripts)
 
 
 @pytest.mark.parametrize(

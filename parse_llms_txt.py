@@ -24,7 +24,7 @@ def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
         content_or_path (str): Path to an llms.txt file or raw llms.txt content.
     
     Returns:
-        Dict[str, Any]: Parsed title, summary, and sections containing document titles,
+        dict[str, Any]: Parsed title, summary, and sections containing document titles,
             URLs, and optional descriptions.
     """
     if os.path.exists(content_or_path):

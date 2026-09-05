@@ -139,16 +139,6 @@
                     };
                     document.body.appendChild(newScript);
                 });
-            } else if (oldScript.textContent && oldScript.textContent.trim() !== '') {
-                // Execute inline script by appending script node to document
-                try {
-                    const inlineScript = document.createElement('script');
-                    inlineScript.textContent = oldScript.textContent;
-                    document.body.appendChild(inlineScript);
-                    document.body.removeChild(inlineScript);
-                } catch (e) {
-                    console.warn('Inline script execution failed:', e);
-                }
             }
         }
     }
