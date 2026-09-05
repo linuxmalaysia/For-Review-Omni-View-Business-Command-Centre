@@ -26,6 +26,7 @@ Welcome to **Omni-View Business Command Centre**! This tutorial guides you step-
 ## 🎯 Learning Objectives
 
 By completing this tutorial, you will:
+
 - Launch the application interface locally.
 - Authenticate using administrator or staff credentials.
 - Navigate core operational modules: Dashboard, Products, Lives, and Payouts.

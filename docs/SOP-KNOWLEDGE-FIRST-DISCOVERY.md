@@ -62,12 +62,14 @@ All project facts, architectural specifications, UI components, data structures,
 ### Step 1: Local Frontmatter & Metadata Search
 
 Before issuing any remote SSH/Ansible probe or performing external search (e.g. Google):
+
 1. **Query OKF Frontmatter**: Search local `.md` files in `docs/`, `.agents/brain/`, and `.agents/skills/` for relevant `topics:`, `description:`, or `title:` fields.
 2. **Consult Spatial Registry**: Inspect `.agents/brain/palace_registry.md` to identify the designated Wing, Hall, and Room for the domain.
 
 ### Step 2: Targeted File Inspection
 
 Once the relevant document or spatial anchor is located:
+
 - Read specific closet files (`closet.md`) or targeted line ranges to preserve token efficiency.
 - Avoid ingesting unreferenced binary files or entire full-repository dumps.
 

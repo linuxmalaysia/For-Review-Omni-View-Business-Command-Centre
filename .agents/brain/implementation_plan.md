@@ -22,10 +22,8 @@ layout: "default"
 
 # 📋 Active Implementation Plan
 
-1. Codify `AGENTS.md` & `.agents/AGENTS.md` (COMPLETED).
-2. Initialize `.agents/brain/` spatial memory files (COMPLETED).
-3. Create `docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md` with OKF v0.2 frontmatter (COMPLETED).
-4. Update `parse_llms_txt.py` and regenerate sitemaps / llms.txt (COMPLETED).
-5. Update unit tests in `tests/` (COMPLETED).
-6. Pre-commit verification.
-7. Submit changes.
+1. Integrate dependency security scanning (`pip-audit`) and CSP headers in `render.yaml` (COMPLETED).
+2. Add Playwright E2E performance smoke tests for dashboard rendering and navigation (COMPLETED).
+3. Integrate Ruff Python linting and `markdownlint-cli` into CI workflow with `.markdownlint.json` and `.markdownlintignore` (COMPLETED).
+4. Update `.agents/brain/` spatial memory anchors for Palace EOD sync (COMPLETED).
+5. Pre-commit verification & submission (COMPLETED).

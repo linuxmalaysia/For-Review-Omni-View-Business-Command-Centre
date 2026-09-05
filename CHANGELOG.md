@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - GitHub Pages official workflow (`.github/workflows/jekyll-gh-pages.yml`) for automated site builds and deployment on push to `main`.
 - Laboratory design template matching `cmsfornerd2` with dynamic Light / Dark / Auto mode toggle.
 - Root documentation files (`CHANGELOG.md`, `HISTORY.md`, `SUMMARY.md`, `README.md`) and structured `docs/` tree following Diátaxis framework.
