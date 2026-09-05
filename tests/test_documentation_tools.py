@@ -182,6 +182,8 @@ def test_four_backtick_fence_handling_and_frontmatter_extraction(tmp_path: Path,
         "> [!NOTE]\n> Literal alert inside code\n"
         "echo test\n"
         "```\n"
+        "````markdown\n"
+        "# Still inside four-backtick fence\n"
         "````\n",
         encoding="utf-8"
     )
@@ -192,6 +194,8 @@ def test_four_backtick_fence_handling_and_frontmatter_extraction(tmp_path: Path,
     assert "callout callout-note" in res
     assert "# Heading inside code" in res
     assert "## Heading inside code" not in res
+    assert "# Still inside four-backtick fence" in res
+    assert "## Still inside four-backtick fence" not in res
     assert "> [!NOTE]\n> Literal alert inside code" in res
 
 

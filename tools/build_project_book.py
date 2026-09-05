@@ -25,13 +25,17 @@ WARNING_KEYWORDS = re.compile(
 )
 
 
-def parse_fence_delimiter(line: str) -> tuple[str, int] | None:
-    """Parses fence delimiter character and length if line opens/closes a fenced block."""
+def parse_fence_delimiter(line: str) -> tuple[str, int, bool] | None:
+    """Parses fence delimiter character, length, and whether it's a standalone closing fence (no info string).
+    Returns (char, length, is_standalone_closing).
+    """
     stripped = line.strip()
-    m = re.match(r"^(`{3,}|~{3,})", stripped)
+    m = re.match(r"^(`{3,}|~{3,})(.*)$", stripped)
     if m:
         delim = m.group(1)
-        return delim[0], len(delim)
+        info_string = m.group(2).strip()
+        is_closing = (info_string == "")
+        return delim[0], len(delim), is_closing
     return None
 
 
@@ -78,9 +82,10 @@ def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
     for line in lines:
         fence = parse_fence_delimiter(line)
         if fence:
+            f_char, f_len, f_is_closing = fence
             if active_fence is None:
-                active_fence = fence
-            elif fence[0] == active_fence[0] and fence[1] >= active_fence[1]:
+                active_fence = (f_char, f_len)
+            elif f_char == active_fence[0] and f_len >= active_fence[1] and f_is_closing:
                 active_fence = None
             new_lines.append(line)
             continue
@@ -141,14 +146,15 @@ def convert_github_alerts(text: str) -> str:
     for line in lines:
         fence = parse_fence_delimiter(line)
         if fence:
+            f_char, f_len, f_is_closing = fence
             if active_fence is None:
                 # Flush prose buffer through alert converter
                 if buffer:
                     processed_lines.extend(process_buffer(buffer))
                     buffer = []
-                active_fence = fence
+                active_fence = (f_char, f_len)
                 processed_lines.append(line)
-            elif fence[0] == active_fence[0] and fence[1] >= active_fence[1]:
+            elif f_char == active_fence[0] and f_len >= active_fence[1] and f_is_closing:
                 active_fence = None
                 processed_lines.append(line)
             else:
@@ -254,9 +260,10 @@ def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: boo
     for line in clean.splitlines():
         fence = parse_fence_delimiter(line)
         if fence:
+            f_char, f_len, f_is_closing = fence
             if active_fence is None:
-                active_fence = fence
-            elif fence[0] == active_fence[0] and fence[1] >= active_fence[1]:
+                active_fence = (f_char, f_len)
+            elif f_char == active_fence[0] and f_len >= active_fence[1] and f_is_closing:
                 active_fence = None
             out.append(line)
             continue

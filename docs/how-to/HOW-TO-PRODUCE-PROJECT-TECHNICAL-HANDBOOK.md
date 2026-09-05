@@ -435,11 +435,10 @@ uv run python tools/bake_native_svg.py
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```powershell
 $tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
-$resolvedPath = (Resolve-Path "build/book/handbook.html").Path.Replace("\", "/")
-$htmlUri = "file:///" + [uri]::EscapeUriString($resolvedPath)
+$htmlUri = [Uri]::new((Resolve-Path "build/book/handbook.html").Path).AbsoluteUri
 try {
     $proc = Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
-      -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", `
+      -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", "--virtual-time-budget=8000", `
       "--user-data-dir=""$tmpProfile""", "--no-pdf-header-footer", "--print-to-pdf=build/book/handbook.pdf", `
       """$htmlUri""" -PassThru
     if (-not $proc.WaitForExit(60000)) {
