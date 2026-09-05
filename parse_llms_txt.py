@@ -71,14 +71,17 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
 
 
 def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
-    """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
+    """Generate XML context from parsed ``llms.txt`` data, including available local document contents.
     
     Args:
-        llms_data: Parsed `llms.txt` data containing the title, summary, sections, and documents.
+        llms_data: Parsed ``llms.txt`` data containing the title, summary, sections, and documents.
         root_dir: Root directory used to resolve relative document paths.
     
     Returns:
         Formatted XML context document.
+    
+    Raises:
+        RuntimeError: If an eligible local document cannot be read.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
@@ -182,14 +185,15 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
 
 
 def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
-    """Build a complete documentation index from available repository and documentation files.
+    """
+    Build a complete documentation index from available repository and documentation files.
     
-    Args:
-        docs_dir: Directory containing the documentation files.
-        root_dir: Repository root used to resolve file paths.
+    Parameters:
+        docs_dir (str): Directory containing the documentation files.
+        root_dir (str): Repository root used to resolve file paths.
     
     Returns:
-        Formatted documentation text containing the contents of each available file.
+        str: Markdown text containing the contents of each available file, with trailing whitespace removed and a trailing newline.
     """
     doc_paths = [
         "README.md",
