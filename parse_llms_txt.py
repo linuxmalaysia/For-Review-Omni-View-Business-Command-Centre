@@ -12,6 +12,7 @@ import os
 import re
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils
+from pathlib import Path
 from typing import Any
 from xml.dom import minidom
 
@@ -101,17 +102,23 @@ def generate_xml_context(llms_data: dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Embed local document content if file exists
-            rel_path = item.get("url", "").lstrip("/")
-            file_path = os.path.join(root_dir, rel_path)
-            if os.path.isfile(file_path):
-                try:
-                    with open(file_path, "r", encoding="utf-8") as f:
-                        file_content = f.read()
-                    content_elem = ET.SubElement(doc_elem, "content")
-                    content_elem.text = file_content
-                except (OSError, UnicodeDecodeError) as err:
-                    raise RuntimeError(f"Failed to read indexed document '{file_path}': {err}") from err
+            # Embed local document content if file exists and is within root_dir
+            url_str = item.get("url", "").strip()
+            if url_str:
+                resolved_root = Path(root_dir).resolve()
+                if os.path.isabs(url_str):
+                    candidate_path = Path(url_str).resolve()
+                else:
+                    rel_path = url_str.lstrip("/")
+                    candidate_path = (resolved_root / rel_path).resolve()
+
+                if (resolved_root in candidate_path.parents or candidate_path == resolved_root) and candidate_path.is_file():
+                    try:
+                        file_content = candidate_path.read_text(encoding="utf-8")
+                        content_elem = ET.SubElement(doc_elem, "content")
+                        content_elem.text = file_content
+                    except (OSError, UnicodeDecodeError) as err:
+                        raise RuntimeError(f"Failed to read indexed document '{candidate_path}': {err}") from err
 
     xml_str = ET.tostring(root, encoding="utf-8")
     parsed = minidom.parseString(xml_str)
