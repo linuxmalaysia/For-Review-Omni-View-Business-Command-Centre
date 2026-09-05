@@ -22,7 +22,7 @@ layout: "default"
 
 # 📌 Active Task Anchor
 
-- **Current Task**: Ensured uvicorn dependency is declared in pyproject.toml and uv.lock, and updated tests. EOD completed.
-- **Status**: COMPLETED
+- **Current Task**: Technical Book Compiler Documentation, Skill Adoption, Universal Assembler Tooling, Code Review Resolutions, and Final DSOM EOD Palace Sync.
+- **Status**: HIBERNATED / COMPLETED (EOD Palace Sync Complete)
 - **Assigned Agent**: Jules (Google AI Agent)
-- **Target Subsystems**: `.agents/AGENTS.md`, `.agents/brain/`, `docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md`, `parse_llms_txt.py`, test suite.
+- **Target Subsystems**: `.agents/skills/`, `skills/`, `docs/governance/`, `docs/how-to/`, `tools/build_project_book.py`, `parse_llms_txt.py`, `.agents/brain/`.
