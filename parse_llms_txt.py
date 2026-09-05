@@ -71,17 +71,14 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
 
 
 def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
-    """Generate XML context from parsed ``llms.txt`` data, including available local document contents.
+    """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
     
     Args:
-        llms_data: Parsed ``llms.txt`` data containing the title, summary, sections, and documents.
+        llms_data: Parsed `llms.txt` data containing the title, summary, sections, and documents.
         root_dir: Root directory used to resolve relative document paths.
     
     Returns:
         Formatted XML context document.
-    
-    Raises:
-        RuntimeError: If an eligible local document cannot be read.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
@@ -108,7 +105,12 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
             resolved_root = os.path.realpath(root_dir)
             file_path = os.path.realpath(os.path.join(root_dir, rel_path))
 
-            if os.path.commonpath([resolved_root, file_path]) == resolved_root and os.path.isfile(file_path):
+            try:
+                is_contained = os.path.commonpath([resolved_root, file_path]) == resolved_root
+            except ValueError:
+                is_contained = False
+
+            if is_contained and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()
@@ -185,15 +187,14 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
 
 
 def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
-    """
-    Build a complete documentation index from available repository and documentation files.
+    """Build a complete documentation index from available repository and documentation files.
     
-    Parameters:
-        docs_dir (str): Directory containing the documentation files.
-        root_dir (str): Repository root used to resolve file paths.
+    Args:
+        docs_dir: Directory containing the documentation files.
+        root_dir: Repository root used to resolve file paths.
     
     Returns:
-        str: Markdown text containing the contents of each available file, with trailing whitespace removed and a trailing newline.
+        Formatted documentation text containing the contents of each available file.
     """
     doc_paths = [
         "README.md",

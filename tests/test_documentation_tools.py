@@ -167,3 +167,42 @@ def test_ingest_doc_file_preserves_fenced_code_comments(tmp_path: Path, monkeypa
     assert "## Main Title" in res
     assert "# Comment in code" in res
     assert "## Comment in code" not in res
+
+
+def test_four_backtick_fence_handling_and_frontmatter_extraction(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    from tools import build_project_book
+    doc_file = tmp_path / "four_ticks.md"
+    doc_file.write_text(
+        "---\ntitle: Four Ticks\ndescription: Testing four backticks\n---\n\n"
+        "# Outer Heading\n\n"
+        "````markdown\n"
+        "```bash\n"
+        "# Heading inside code\n"
+        "echo test\n"
+        "```\n"
+        "````\n",
+        encoding="utf-8"
+    )
+    monkeypatch.setattr(build_project_book, "ROOT_DIR", tmp_path)
+    res = build_project_book.ingest_doc_file("four_ticks.md", heading_offset=1, show_provenance=False)
+
+    assert "## Outer Heading" in res
+    assert "# Heading inside code" in res
+    assert "## Heading inside code" not in res
+
+
+def test_extract_commentary_skips_yaml_frontmatter(tmp_path: Path):
+    from tools import build_project_book
+    script_text = (
+        "---\n"
+        "key: value\n"
+        "---\n"
+        "#!/usr/bin/env python3\n"
+        "# Real Commentary Warning: BUG in vendor library\n"
+        "import sys\n"
+    )
+    callout = build_project_book.extract_commentary(script_text, lang="python")
+    assert callout is not None
+    assert "callout-warning" in callout
+    assert "Real Commentary Warning: BUG in vendor library" in callout
+    assert "key: value" not in callout

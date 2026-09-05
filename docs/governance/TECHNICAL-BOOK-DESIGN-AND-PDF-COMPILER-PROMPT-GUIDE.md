@@ -301,7 +301,7 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
 
-```markdown
+````markdown
 ---
 okf_version: "0.2"
 type: "skill"
@@ -349,7 +349,7 @@ name: "dsom-technical-book-compiler"
 ```bash
 uv run python tools/build_project_book.py
 ```
-```
+````
 
 ---
 

@@ -290,7 +290,7 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
 
-```markdown
+````markdown
 ---
 okf_version: "0.2"
 type: "skill"
@@ -338,7 +338,7 @@ name: "dsom-technical-book-compiler"
 ```bash
 uv run python tools/build_project_book.py
 ```
-```
+````
 
 ***
 
@@ -734,7 +734,7 @@ if __name__ == "__main__":
 
 To adopt this capability in another repository, copy the specification below into `skills/project-technical-book-compiler/SKILL.md`:
 
-```yaml
+````markdown
 ---
 okf_version: "0.2"
 type: "skill"
@@ -779,11 +779,16 @@ uv run python tools/bake_native_svg.py
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
 ```powershell
 $tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
+$htmlUri = "file:///" + (Resolve-Path "build/book/handbook.html").Path.Replace("\", "/")
 try {
     $proc = Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
       -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", `
       "--user-data-dir=""$tmpProfile""", "--no-pdf-header-footer", "--print-to-pdf=build/book/handbook.pdf", `
-      "file:///path/to/build/book/handbook.html" -Wait -PassThru
+      "$htmlUri" -PassThru
+    if (-not $proc.WaitForExit(60000)) {
+        $proc | Stop-Process -Force
+        throw "Edge PDF print process timed out after 60 seconds."
+    }
     if ($proc.ExitCode -ne 0) { throw "Edge PDF generation failed with exit code $($proc.ExitCode)" }
     if (-not (Test-Path "build/book/handbook.pdf")) { throw "PDF file build/book/handbook.pdf was not produced" }
 } finally {
@@ -798,7 +803,7 @@ pandoc build/book/master_book.md -o build/book/handbook.epub \
   --css=build/book/terminal-theme.css \
   --metadata title="Project Technical Handbook"
 ```
-```
+````
 
 ***
 
@@ -1234,7 +1239,12 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
             resolved_root = os.path.realpath(root_dir)
             file_path = os.path.realpath(os.path.join(root_dir, rel_path))
 
-            if os.path.commonpath([resolved_root, file_path]) == resolved_root and os.path.isfile(file_path):
+            try:
+                is_contained = os.path.commonpath([resolved_root, file_path]) == resolved_root
+            except ValueError:
+                is_contained = False
+
+            if is_contained and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()
