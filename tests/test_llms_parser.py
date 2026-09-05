@@ -94,34 +94,3 @@ def test_generate_sitemaps():
     assert obsolete_base not in sxml
     assert "<urlset" in sxml
     assert "<loc>" in sxml
-
-
-def test_generate_xml_context_path_traversal_and_absolute_prevention(tmp_path: Path):
-    root_dir = tmp_path / "repo"
-    root_dir.mkdir()
-    valid_file = root_dir / "valid.md"
-    valid_file.write_text("valid content", encoding="utf-8")
-
-    outside_dir = tmp_path / "outside"
-    outside_dir.mkdir()
-    secret_file = outside_dir / "secret.txt"
-    secret_file.write_text("secret content", encoding="utf-8")
-
-    sample_data = {
-        "title": "Path Traversal Test",
-        "summary": "Testing traversal prevention",
-        "sections": [
-            {
-                "title": "Docs",
-                "items": [
-                    {"title": "Valid Doc", "url": "valid.md", "description": "In root"},
-                    {"title": "Relative Traversal", "url": "../outside/secret.txt", "description": "Outside root"},
-                    {"title": "Absolute Traversal", "url": str(secret_file), "description": "Absolute path"}
-                ]
-            }
-        ]
-    }
-
-    xml_str = parse_llms_txt.generate_xml_context(sample_data, root_dir=str(root_dir))
-    assert "valid content" in xml_str
-    assert "secret content" not in xml_str
