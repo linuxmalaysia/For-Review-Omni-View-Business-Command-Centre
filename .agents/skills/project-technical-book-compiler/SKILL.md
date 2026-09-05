@@ -13,16 +13,19 @@ name: "project-technical-book-compiler"
 # Project Technical Book & Handbook Compiler
 
 ## Purpose
+
 Standardizes the automated assembly, styling, and multi-format compilation of entire project repositories into unified, publication-grade engineering handbooks.
 
 ## Execution Commands
 
 ### 1. Build Master Markdown
+
 ```bash
 uv run python tools/build_project_book.py
 ```
 
 ### 2. Compile Standalone Interactive HTML (Pandoc 3.x)
+
 ```bash
 pandoc build/book/master_book.md -o build/book/handbook.html \
   --standalone --toc --toc-depth=3 --number-sections \
@@ -35,11 +38,13 @@ pandoc build/book/master_book.md -o build/book/handbook.html \
 ```
 
 ### 3. Bake Native Vector SVGs & Inline Theme CSS
+
 ```bash
 uv run python tools/bake_native_svg.py
 ```
 
 ### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
+
 ```powershell
 $tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
 $htmlUri = [Uri]::new((Resolve-Path "build/book/handbook.html").Path).AbsoluteUri
@@ -60,6 +65,7 @@ try {
 ```
 
 ### 5. Compile EPUB 3 Ebook
+
 ```bash
 pandoc build/book/master_book.md -o build/book/handbook.epub \
   -t epub3 --toc --toc-depth=3 \

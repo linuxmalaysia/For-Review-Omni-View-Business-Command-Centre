@@ -35,7 +35,8 @@ Modern software, DevOps, and infrastructure projects frequently suffer from **fr
 
 This guide provides a **100% transferable blueprint** that enables any engineering repository—whether built on Ansible, Terraform, Kubernetes, Python, Go, or Cloud Native architectures—to synthesize its entire codebase and documentation into a cohesive, print-optimized technical book (PDF, interactive HTML, and EPUB 3).
 
-### What This Blueprint Provides:
+### What This Blueprint Provides
+
 1. **The Prompt Transformation Matrix:** All conversational prompts typically asked by human leads, rewritten into high-fidelity, optimized master prompts that any AI agent can execute without ambiguity.
 2. **The 6-Phase Engineering Pipeline:** Discovery, visual modeling, Diataxis ingestion, narrative storytelling, print formatting, and multi-format compilation.
 3. **The 17 Core Compilation Invariants:** Solutions to every major compilation hurdle (syntax crashes, dark container ink waste, missing covers, unrendered Mermaid blocks, unparsed callout alerts, and browser process timeouts).
@@ -53,10 +54,12 @@ Below is the complete **Before & After Matrix**, translating conversational requ
 
 ### Prompt 1: Project Discovery & Architectural Modeling
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"I need you to produce a book for this project. Start with understanding the project by understanding the ansible playbook and documents that can be related to the ansible playbook. Make sure we have diagram of flow of works and flow of how ansible work."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Principal Technical Author and Systems Architect. Your mission is to analyze this repository and assemble an authoritative, publication-grade Technical Handbook.
 
@@ -79,10 +82,12 @@ OUTPUT REQUIREMENTS:
 
 ### Prompt 2: Resolving Diagram Failures (Mermaid to Native SVG)
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"The diagram is not showing in the book."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Graphics & Headless Browser Print Specialist. The Mermaid diagrams in our compiled HTML/PDF are failing to render or displaying syntax error graphics.
 
@@ -101,10 +106,12 @@ REMEDIATION MANDATE (NATIVE VECTOR SVG PRE-RENDERING):
 
 ### Prompt 3: Diátaxis Documentation Enrichment & Ingestion
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"Add into our books, content from md documents that is related to each of our ansible playbooks. Enrich our book."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Technical Documentation Compiler. Your task is to enrich every playbook chapter in the Technical Handbook by dynamically ingesting its accompanying operational runbooks, explanations, and incident reports.
 
@@ -121,10 +128,12 @@ MANDATORY INGESTION & SANITIZATION RULES:
 
 ### Prompt 4: The Narrative Epic (Heart, Soul, and Sovereign Blood)
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"I need a chapter that's like a story, all about this project and infra from start to end, how it can be built, deployed, and operated. Highlight the use of ansible + semaphoreui + gitea as GitOps, and AIOps with human in the loop. Add about deep state of mind (DSOM) of My AI as the AI memory and brain. This chapter is not technical; it is about the heart, soul, and blood of this project."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Principal Technical Biographer and Systems Philosopher. Author an evocative, inspiring narrative chapter titled:
 "# Prologue: The Story of <Project Name> — Heart, Soul, and Sovereign Blood {.unnumbered}"
@@ -151,10 +160,12 @@ NARRATIVE STRUCTURE & THEMES:
 
 ### Prompt 5: Clean Architecture Separation (Standalone Markdown Document)
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"I need the story to be in its own md file."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Clean Architecture and Diataxis Specialist. Refactor the narrative story chapter out of inline Python script strings into a dedicated, reusable documentation artifact.
 
@@ -169,10 +180,12 @@ IMPLEMENTATION STEPS:
 
 ### Prompt 6: Print-Optimized Formatting Restoration (Zero Toner Waste & Cover Injection)
 
-#### Conversational Human Ask:
+#### Conversational Human Ask
+>
 > *"What happened to my book? We lost the formatting. No cover, black background? That needs to be checked again."*
 
-#### Production-Grade AI Master Prompt:
+#### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Print Production Engineer and CSS Specialist. Diagnose and fix the visual formatting regressions in our compiled PDF and HTML handbook.
 

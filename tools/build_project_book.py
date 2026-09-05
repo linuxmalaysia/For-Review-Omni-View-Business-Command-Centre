@@ -6,6 +6,8 @@ Universal Technical Handbook Assembler & Multi-Format Compiler
 Standard: Terminal & Cloud Standard (DSOM Rule 11 & Rule 22)
 """
 
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
@@ -175,8 +177,7 @@ def scale_backticks(code_text: str) -> tuple[str, str]:
     max_ticks = 0
     matches = re.findall(r"(`{3,})", code_text)
     for m in matches:
-        if len(m) > max_ticks:
-            max_ticks = len(m)
+        max_ticks = max(max_ticks, len(m))
     fence = "`" * max(3, max_ticks + 1)
     return fence, fence
 
@@ -250,7 +251,7 @@ def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: boo
     if show_provenance:
         out.append(f'<div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>{rel_path}</code></div>\n')
 
-    if "description" in metadata and metadata["description"]:
+    if metadata.get("description"):
         desc = metadata["description"]
         out.append(f'<div class="callout callout-note">\n<strong>📌 Executive Summary</strong>\n\n{desc}\n</div>\n')
 

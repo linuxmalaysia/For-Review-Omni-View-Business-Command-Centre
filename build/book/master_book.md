@@ -1,8 +1,8 @@
 # Executive Overview {.unnumbered}
+>
 > **Classification:** PRIVATE AND CONFIDENTIAL (P&C)
 > **Compiled By:** Antigravity Cognitive Twin
 > **Standard:** Terminal & Cloud Technical Handbook Standard
-
 
 # Part 1: Governance & Compilation Master Prompts {.part}
 
@@ -26,6 +26,7 @@ Master operational prompt and technical blueprint for compiling multi-file Markd
 ### 1. Executive Overview & Dual Purpose
 
 This document serves two complementary functions:
+
 1. **The Reusable AI Master Prompt (Section 2):** A complete, drop-in system prompt that can be provided to any advanced AI coding assistant (Google Antigravity, Google Jules, Claude, Cursor, ChatGPT) to autonomously orchestrate, style, and compile an entire repository of multi-file Markdown (`.md`) documentation and source code into a publication-grade PDF handbook.
 2. **The Architectural Blueprint & Engineering Field Manual (Sections 3–7):** An exhaustive technical record documenting the formatting standards, color palettes, typography pairings, CSS `@page` rules, and the **ten critical engineering hurdles** solved to eliminate syntax crashes, blank pages, link leaks, and ink waste during multi-format compilation (PDF, standalone HTML, EPUB 3, and styled ODT).
 3. **The Embedded Skill SOP (Section 6):** The full operational specification of the `dsom-technical-book-compiler` skill, ensuring complete self-containment.
@@ -35,6 +36,7 @@ This document serves two complementary functions:
 ### 2. The Reusable AI Master Prompt
 
 *Copy and paste the entire block below into your AI prompt window or agent instruction set:*
+
 ```markdown
 You are a Principal Publication Systems Architect and Pandoc Book Engineering Specialist.
 Your task is to take an entire repository of Markdown (.md) documents and source code trees, assemble them into a cohesive, publication-grade technical handbook, and compile them into a print-optimized PDF, standalone interactive HTML, EPUB 3, and styled OpenDocument Text (ODT).
@@ -141,6 +143,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   *Characteristics:* Distinct character shaping (disambiguating `0`/`O` and `1`/`l`/`I`), tabular numbers, ligature support. Sized at `8.5pt` with `1.4` line height.
 
 #### 3.3 Print Page Budget & Paging Rules (`@page`)
+
 ```css
 @page {
     size: A4;
@@ -182,14 +185,17 @@ Your task is to take an entire repository of Markdown (.md) documents and source
 ### 4. The 10 Critical Engineering Hurdles Solved
 
 #### Hurdle 1: Pandoc YAML Parser Explosions (`Unknown alias`)
+
 - **Failure Mode:** Stitched multi-document markdowns retain individual OKF frontmatter blocks (`--- ... ---`). Pandoc attempts to parse subsequent frontmatter blocks as YAML document streams, failing with `Unknown alias` or corrupted titles.
 - **Solution:** A pre-processing function (`strip_frontmatter()`) strips leading YAML frontmatter while capturing `title` and `description` to create formatted chapter metadata banners (`.chapter-meta`).
 
 #### Hurdle 2: Nested Backtick Fence Collisions
+
 - **Failure Mode:** Ingested markdown documents or playbook examples already contain triple backticks (```` ``` ````). If the master compiler wraps them in triple backticks, the code block prematurely terminates, leaking raw code into prose.
-- **Solution:** Dynamic backtick scaling. The compiler scans the target code text; if triple backticks exist, it wraps the block in 4 backticks (```` ```` ````); if 4 exist, it scales to 5.
+- **Solution:** Dynamic backtick scaling. The compiler scans the target code text; if triple backticks exist, it wraps the block in 4 backticks (```````` ````); if 4 exist, it scales to 5.
 
 #### Hurdle 3: Blank Overflow Pages & Cover Fragmentation
+
 - **Failure Mode:** Manual page breaks (`<div class="page-break"></div>`) combined with CSS `page-break-before: always;` on H1 elements generate unwanted empty pages. Furthermore, default Pandoc title headers split the cover across Pages 1 and 2.
 - **Solution:**
   1. Eliminate all manual page break divs.
@@ -198,18 +204,22 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   4. Constrain cover page padding and metadata fonts so the entire cover fits inside Page 1.
 
 #### Hurdle 4: Mermaid 10 Syntax Bomb Graphics (HTML Escaping)
+
 - **Failure Mode:** Pandoc automatically escapes HTML entities inside `<pre class="mermaid"><code>` (`&quot;`, `&lt;`, `&gt;`, `--&gt;`). When Mermaid.js runs, it encounters illegal characters, rendering a pink syntax error bomb icon.
 - **Solution:** A dedicated post-pandoc HTML regex unescapes `&quot;`, `&lt;`, `&gt;`, `&amp;` and strips enclosing `<code>` tags before headless browser invocation.
 
 #### Hurdle 5: Mermaid Node Collision in Multi-Diagram Handbooks
+
 - **Failure Mode:** Different diagrams reuse common node identifiers (e.g. `NODE1`, `DB`, `CBE`, `PWP`). Mermaid's internal parser merges identical IDs into the same global SVG graph, corrupting diagram topology.
 - **Solution:** **Mermaid Multi-Diagram Isolation Protocol**. Every diagram must have unique diagram-scoped namespaces prefixed to all nodes (e.g., `TB_` for Master Architecture, `PA_` for Pattern A, `PB_` for Pattern B, `PC_` for Pattern C).
 
 #### Hurdle 6: Headless Chromium Millisecond Timestamp Collision
+
 - **Failure Mode:** Headless Chromium renders all page scripts in milliseconds. Mermaid's default `mermaid.run()` uses `Date.now()` timestamp IDs, causing ID collisions that draw multiple diagrams inside the same container.
 - **Solution:** Sequential DOM replacement. The browser script iterates over `document.querySelectorAll("pre.mermaid")` and calls `mermaid.render("diagram_svg_" + i, code)` sequentially, injecting the returned SVG directly into `el.innerHTML`.
 
 #### Hurdle 7: Tall Vertical Flowcharts Splitting Pages
+
 - **Failure Mode:** Long linear flowcharts (height > 600px) split mid-node across physical page breaks, causing dangling connectors and unreadable diagrams.
 - **Solution:**
   1. Re-architect flowcharts into balanced 2-column grids (e.g., Phase 1 vs Phase 2).
@@ -217,6 +227,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   3. Extract `innerHTML` rather than `textContent` in the Mermaid pre-pass to preserve `<br/>` tags and card formatting.
 
 #### Hurdle 8: Broken Relative Links & Leaked Local Paths (`file:///`)
+
 - **Failure Mode:** Ingested documentation contains relative links (`../how-to/deploy.md`) or absolute filesystem paths (`file:///D:/Users/...`), which break or leak workstation directories in the compiled PDF.
 - **Solution:** **Soft-Path Link Resolution Mandate (3-Tier Normalisation Pipeline)**:
   1. Pre-index all chapters (`#chap-{slug}`) and code files (`#code-{slug}`) into an in-memory `link_map`.
@@ -228,6 +239,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   4. Run an automated post-assembly audit to verify zero absolute paths survive in PDF links.
 
 #### Hurdle 9: Critical Safety Warnings Hidden in Code Comments
+
 - **Failure Mode:** Production playbooks contain vital operational warnings, vendor bug workarounds, and safety dispatches hidden in `#` comments that SysAdmins miss when skimming compiled books.
 - **Solution:** **Developer Commentary Extraction Protocol**:
   1. Inspect the leading `#` comment block of every playbook, script, and configuration file.
@@ -237,16 +249,20 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   5. Preserve the original `#` comments inside the code block intact.
 
 #### Hurdle 10: Headless Browser Print Timeouts & Compositor Stalls
+
 - **Failure Mode:** Headless Chrome/Edge can hang indefinitely if web fonts or ESM modules fail to trigger draw completion, stalling CI/CD pipelines.
 - **Solution:** Execute Chromium with strict flags:
+
   ```bash
   msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw --virtual-time-budget=8000 --print-to-pdf=<out.pdf> <file_uri>
   ```
+
   Enforce a hard Python subprocess timeout (45–60s) to gracefully catch draw completion.
 
 ***
 
 ### 5. Multi-Format Compilation Commands
+
 ```bash
 # 1. Compile Standalone Interactive HTML Ebook
 pandoc build/book/master_book.md -o build/book/handbook.html \
@@ -286,6 +302,7 @@ pandoc build/book/master_book.md -o build/book/handbook.odt \
 ### 6. Complete Embedded Skill: `dsom-technical-book-compiler`
 
 Below is the full, unabridged operational specification of the `dsom-technical-book-compiler` skill:
+
 ````markdown
 ---
 okf_version: "0.2"
@@ -341,13 +358,13 @@ uv run python tools/build_project_book.py
 ### 7. Operational Checklist for AI Agents & Compilers
 
 Before finalizing any compiled handbook, the AI agent must verify:
+
 - [ ] **Pure White Audit:** No solid black terminal blocks exist in the compiled PDF.
 - [ ] **Blank Page Audit:** Verified total page count has zero empty filler pages between chapters.
 - [ ] **Mermaid Audit:** All diagrams render as clean vector SVGs with zero syntax error bomb icons.
 - [ ] **Link Leak Audit:** Grep search the assembled HTML/PDF links for `file:///` or Windows drive letters (`D:/`, `C:/`) — result must be 0.
 - [ ] **Commentary Audit:** Leading playbook dispatches are rendered as human-readable callouts above the code fences.
 - [ ] **Confidentiality Audit:** Running headers state `PRIVATE AND CONFIDENTIAL (P&C)` and attribution reads `Compile by: Harisfazillah Jamel`.
-
 
 # Part 2: Operational How-To Guides {.part}
 
@@ -375,7 +392,8 @@ Modern software, DevOps, and infrastructure projects frequently suffer from **fr
 
 This guide provides a **100% transferable blueprint** that enables any engineering repository—whether built on Ansible, Terraform, Kubernetes, Python, Go, or Cloud Native architectures—to synthesize its entire codebase and documentation into a cohesive, print-optimized technical book (PDF, interactive HTML, and EPUB 3).
 
-#### What This Blueprint Provides:
+#### What This Blueprint Provides
+
 1. **The Prompt Transformation Matrix:** All conversational prompts typically asked by human leads, rewritten into high-fidelity, optimized master prompts that any AI agent can execute without ambiguity.
 2. **The 6-Phase Engineering Pipeline:** Discovery, visual modeling, Diataxis ingestion, narrative storytelling, print formatting, and multi-format compilation.
 3. **The 17 Core Compilation Invariants:** Solutions to every major compilation hurdle (syntax crashes, dark container ink waste, missing covers, unrendered Mermaid blocks, unparsed callout alerts, and browser process timeouts).
@@ -393,10 +411,12 @@ Below is the complete **Before & After Matrix**, translating conversational requ
 
 #### Prompt 1: Project Discovery & Architectural Modeling
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"I need you to produce a book for this project. Start with understanding the project by understanding the ansible playbook and documents that can be related to the ansible playbook. Make sure we have diagram of flow of works and flow of how ansible work."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Principal Technical Author and Systems Architect. Your mission is to analyze this repository and assemble an authoritative, publication-grade Technical Handbook.
 
@@ -419,10 +439,12 @@ OUTPUT REQUIREMENTS:
 
 #### Prompt 2: Resolving Diagram Failures (Mermaid to Native SVG)
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"The diagram is not showing in the book."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Graphics & Headless Browser Print Specialist. The Mermaid diagrams in our compiled HTML/PDF are failing to render or displaying syntax error graphics.
 
@@ -441,10 +463,12 @@ REMEDIATION MANDATE (NATIVE VECTOR SVG PRE-RENDERING):
 
 #### Prompt 3: Diátaxis Documentation Enrichment & Ingestion
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"Add into our books, content from md documents that is related to each of our ansible playbooks. Enrich our book."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Technical Documentation Compiler. Your task is to enrich every playbook chapter in the Technical Handbook by dynamically ingesting its accompanying operational runbooks, explanations, and incident reports.
 
@@ -461,10 +485,12 @@ MANDATORY INGESTION & SANITIZATION RULES:
 
 #### Prompt 4: The Narrative Epic (Heart, Soul, and Sovereign Blood)
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"I need a chapter that's like a story, all about this project and infra from start to end, how it can be built, deployed, and operated. Highlight the use of ansible + semaphoreui + gitea as GitOps, and AIOps with human in the loop. Add about deep state of mind (DSOM) of My AI as the AI memory and brain. This chapter is not technical; it is about the heart, soul, and blood of this project."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Principal Technical Biographer and Systems Philosopher. Author an evocative, inspiring narrative chapter titled:
 "# Prologue: The Story of <Project Name> — Heart, Soul, and Sovereign Blood {.unnumbered}"
@@ -491,10 +517,12 @@ NARRATIVE STRUCTURE & THEMES:
 
 #### Prompt 5: Clean Architecture Separation (Standalone Markdown Document)
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"I need the story to be in its own md file."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Clean Architecture and Diataxis Specialist. Refactor the narrative story chapter out of inline Python script strings into a dedicated, reusable documentation artifact.
 
@@ -509,10 +537,12 @@ IMPLEMENTATION STEPS:
 
 #### Prompt 6: Print-Optimized Formatting Restoration (Zero Toner Waste & Cover Injection)
 
-##### Conversational Human Ask:
+##### Conversational Human Ask
+>
 > *"What happened to my book? We lost the formatting. No cover, black background? That needs to be checked again."*
 
-##### Production-Grade AI Master Prompt:
+##### Production-Grade AI Master Prompt
+
 ```markdown
 You are a Print Production Engineer and CSS Specialist. Diagnose and fix the visual formatting regressions in our compiled PDF and HTML handbook.
 
@@ -555,6 +585,7 @@ Any automated compilation pipeline must adhere to these 17 strict invariants:
 ### 4. Reusable Project Book Assembler Template (`tools/build_project_book.py`)
 
 Below is the clean, modular Python assembler that can be copied directly into any repository:
+
 ```python
 #!/usr/bin/env python3
 """
@@ -728,6 +759,7 @@ if __name__ == "__main__":
 ### 5. Standalone Reusable Skill Specification (`project-technical-book-compiler`)
 
 To adopt this capability in another repository, copy the specification below into `skills/project-technical-book-compiler/SKILL.md`:
+
 ````markdown
 ---
 okf_version: "0.2"
@@ -813,7 +845,6 @@ Before delivering any compiled handbook to stakeholders, execute this audit chec
 - [ ] **Soft-Path Link Audit:** All internal cross-references point to clean `#chap-...` or `#code-...` fragments without surviving absolute filesystem paths (`file:///` or drive letters).
 - [ ] **Pagination Audit:** Verified zero empty filler pages exist between chapters.
 
-
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/deploy-omni-view-on-render.md</code></div>
 
 <div class="callout callout-note">
@@ -841,6 +872,7 @@ This guide provides a comprehensive step-by-step walkthrough for deploying the *
 ### 📋 Prerequisites & Project Structure
 
 Ensure the repository contains the following deployment artifacts:
+
 ```text
 .
 ├── render.yaml                             # Render Static Site Blueprint specification
@@ -872,16 +904,16 @@ Ensure the repository contains the following deployment artifacts:
 
 If creating the service manually in the Render Dashboard:
 
-
 <div class="callout callout-note">
 <strong>💡 Note</strong>
 
 **Render Static Sites Benefits:**
+
 - Free static site hosting on Render's Free tier, subject to standard workspace outbound-bandwidth and build-pipeline limits.
 - High-availability global CDN distribution.
 - Fast automated continuous deployment on every git push.
-</div>
 
+</div>
 
 1. Log into the [Render Dashboard](https://dashboard.render.com/).
 2. Click **New +** -> **Static Site**.
@@ -901,6 +933,7 @@ If creating the service manually in the Render Dashboard:
 #### 1. Error: `ModuleNotFoundError: No module named 'src'` (Exit Status 1) or `uvicorn: command not found` (Exit Status 127)
 
 - **Symptom:** Deployment log fails during the start/deploy phase with:
+
   ```text
   ==> Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
   Traceback (most recent call last):
@@ -910,6 +943,7 @@ If creating the service manually in the Render Dashboard:
   ```
 
   or:
+
   ```text
   ==> Running 'uvicorn src.dca_service.web_app:app --host 0.0.0.0 --port $PORT'
   bash: line 1: uvicorn: command not found
@@ -931,6 +965,7 @@ If creating the service manually in the Render Dashboard:
 
 - **Symptom:** Browser caches old assets after updating HTML or CSS.
 - **Resolution:** `render.yaml` configures standard headers for client caching:
+
   ```yaml
   headers:
     - path: /*
@@ -949,7 +984,6 @@ Once deployed, verify your service endpoints on Render:
 - **LLM Text Summary:** `https://<your-service>.onrender.com/llms.txt`
 - **LLM Full Context:** `https://<your-service>.onrender.com/llms-full.txt`
 - **LLM XML Context:** `https://<your-service>.onrender.com/llm_context.xml`
-
 
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/manage-inventory-and-payouts.md</code></div>
 
@@ -998,7 +1032,6 @@ This guide provides step-by-step procedural directions for routine operations in
 3. Select Employee, enter payout amount and payout date.
 4. Set status to `Pending` or `Completed` and save.
 
-
 # Part 3: Architecture & System Philosophy {.part}
 
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/explanation/architecture-and-diataxis.md</code></div>
@@ -1037,7 +1070,8 @@ Omni-View Business Command Centre is engineered using a decoupled web architectu
 
 Documentation often mixes step-by-step tutorials, practical recipes, and technical API reference into monolithic pages. This increases cognitive load for human developers and causes hallucination in autonomous AI agents.
 
-Omni-View solves this by adopting the **Diátaxis Documentation Framework** (https://diataxis.fr/), structuring content into four distinct quadrants based on user intent and mode:
+Omni-View solves this by adopting the **Diátaxis Documentation Framework** (<https://diataxis.fr/>), structuring content into four distinct quadrants based on user intent and mode:
+
 ```text
                   USER INTENT
            Learning         Practical
@@ -1052,7 +1086,7 @@ Omni-View solves this by adopting the **Diátaxis Documentation Framework** (htt
         +----------------+----------------+
 ```
 
-#### Four Quadrants in Omni-View:
+#### Four Quadrants in Omni-View
 
 1. **Tutorials (`docs/tutorials/`)**:
    - **Goal**: Guided learning through execution.
@@ -1069,7 +1103,6 @@ Omni-View solves this by adopting the **Diátaxis Documentation Framework** (htt
 4. **Explanation (`docs/explanation/`)**:
    - **Goal**: Conceptual context and architectural rationale.
    - **Scope**: System design, security model, Diátaxis, and OKF 0.2 adoption.
-
 
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/explanation/okf-02-and-diataxis.md</code></div>
 
@@ -1111,11 +1144,10 @@ DSOM defines operational boundaries and execution constraints for autonomous age
 - **Reference Anchoring**: `docs/reference/file-structure-and-api.md` serves as the single source of truth for file paths and backend schemas.
 - **Deterministic Verification Contract**: Every code change must be validated by running automated unit tests (`uv run pytest`) prior to PR submission.
 
-
 # Part 4: Core Implementation Source Code {.part}
 
-
 <a id="code-parse-llms-txt"></a>
+
 ### LLM Parser & Sitemap Utility
 
 **Source File:** `parse_llms_txt.py`
@@ -1128,17 +1160,19 @@ parse_llms_txt.py - Parser, XML Context Generator, and Site Map Utility for llms
 Adheres to https://llmstxt.org/ specification and Google OKF 0.2 / DSOM principles.
 Provides both CLI and Python API interfaces.
 """
+from __future__ import annotations
 
 import argparse
 import os
 import re
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils
+from pathlib import Path
+from typing import Any
 from xml.dom import minidom
-from typing import Dict, Any, Tuple, Optional
 
 
-def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
+def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
     """
     Parse llms.txt content or a file into structured metadata and document sections.
 
@@ -1146,7 +1180,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
         content_or_path (str): Path to an llms.txt file or raw llms.txt content.
 
     Returns:
-        Dict[str, Any]: Parsed title, summary, and sections containing document titles,
+        dict[str, Any]: Parsed title, summary, and sections containing document titles,
             URLs, and optional descriptions.
     """
     if os.path.exists(content_or_path):
@@ -1156,13 +1190,13 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
         text = content_or_path
 
     lines = text.splitlines()
-    data: Dict[str, Any] = {
+    data: dict[str, Any] = {
         "title": "",
         "summary": "",
         "sections": []
     }
 
-    current_section: Optional[Dict[str, Any]] = None
+    current_section: dict[str, Any] | None = None
 
     for line in lines:
         line_str = line.strip()
@@ -1177,7 +1211,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
             sec_title = line_str[3:].strip()
             current_section = {"title": sec_title, "items": []}
             data["sections"].append(current_section)
-        elif line_str.startswith("- ") or line_str.startswith("* "):
+        elif line_str.startswith(("- ", "* ")):
             item_text = line_str[2:].strip()
             match = re.match(r"\[([^\]]+)\]\(([^)]+)\)(?::\s*(.*))?", item_text)
             if match:
@@ -1193,7 +1227,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
     return data
 
 
-def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
+def generate_xml_context(llms_data: dict[str, Any], root_dir: str = ".") -> str:
     """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
 
     Args:
@@ -1223,24 +1257,23 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Embed local document content if file exists and stays within root_dir
-            rel_path = item.get("url", "").lstrip("/")
-            resolved_root = os.path.realpath(root_dir)
-            file_path = os.path.realpath(os.path.join(root_dir, rel_path))
+            # Embed local document content if file exists and is within root_dir
+            url_str = item.get("url", "").strip()
+            if url_str:
+                resolved_root = Path(root_dir).resolve()
+                if os.path.isabs(url_str):
+                    candidate_path = Path(url_str).resolve()
+                else:
+                    rel_path = url_str.lstrip("/")
+                    candidate_path = (resolved_root / rel_path).resolve()
 
-            try:
-                is_contained = os.path.commonpath([resolved_root, file_path]) == resolved_root
-            except ValueError:
-                is_contained = False
-
-            if is_contained and os.path.isfile(file_path):
-                try:
-                    with open(file_path, "r", encoding="utf-8") as f:
-                        file_content = f.read()
-                    content_elem = ET.SubElement(doc_elem, "content")
-                    content_elem.text = file_content
-                except (OSError, UnicodeDecodeError) as err:
-                    raise RuntimeError(f"Failed to read indexed document '{file_path}': {err}") from err
+                if (resolved_root in candidate_path.parents or candidate_path == resolved_root) and candidate_path.is_file():
+                    try:
+                        file_content = candidate_path.read_text(encoding="utf-8")
+                        content_elem = ET.SubElement(doc_elem, "content")
+                        content_elem.text = file_content
+                    except (OSError, UnicodeDecodeError) as err:
+                        raise RuntimeError(f"Failed to read indexed document '{candidate_path}': {err}") from err
 
     xml_str = ET.tostring(root, encoding="utf-8")
     parsed = minidom.parseString(xml_str)
@@ -1258,7 +1291,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
-    root_p = "" if relative_to_docs else ""
+    root_p = ""
 
     content = [
         "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
@@ -1268,7 +1301,6 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Core Governance & Architecture",
         "",
         f"- [Knowledge-First Discovery SOP]({p}SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.",
-        f"- [Technical Book Design & PDF Compilation Master Prompt Guide]({p}governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md): Master prompt and blueprint for compiling publication-grade PDF handbooks.",
         f"- [DSOM Governance]({p}explanation/dsom-governance.md): Metacognitive context management and protocol standards.",
         f"- [Diátaxis Framework]({p}explanation/diataxis.md): Quadrant layout and documentation structure.",
         f"- [System Architecture]({p}explanation/system-architecture.md): Subsystem topologies and integration points.",
@@ -1285,7 +1317,6 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Practical Operational Guides",
         "",
         f"- [Operational Recipes Index]({p}how-to/index.md): Operational recipes index.",
-        f"- [Produce Project Technical Handbook]({p}how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.",
         f"- [Deploy Omni-View on Render.com]({p}how-to/deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.",
         f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
         f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
@@ -1331,7 +1362,6 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "CHANGELOG.md"),
         os.path.join(docs_dir, "HISTORY.md"),
         os.path.join(docs_dir, "SOP-KNOWLEDGE-FIRST-DISCOVERY.md"),
-        os.path.join(docs_dir, "governance", "TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),
         os.path.join(docs_dir, "explanation", "system-architecture.md"),
@@ -1341,7 +1371,6 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "tutorials", "getting-started.md"),
         os.path.join(docs_dir, "tutorials", "llms-txt-setup.md"),
         os.path.join(docs_dir, "how-to", "index.md"),
-        os.path.join(docs_dir, "how-to", "HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md"),
         os.path.join(docs_dir, "how-to", "deploy-omni-view-on-render.md"),
         os.path.join(docs_dir, "how-to", "manage-inventory-and-payouts.md"),
         os.path.join(docs_dir, "how-to", "generate-llms-context.md"),
@@ -1366,7 +1395,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     return "\n".join(full_text).rstrip() + "\n"
 
 
-def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> tuple[str, str]:
     """Generate text and XML sitemaps for the documentation site.
 
     Args:
@@ -1380,7 +1409,6 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/",
         f"{base_url}/START-HERE",
         f"{base_url}/SOP-KNOWLEDGE-FIRST-DISCOVERY",
-        f"{base_url}/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE",
         f"{base_url}/CHANGELOG",
         f"{base_url}/HISTORY",
         f"{base_url}/explanation/dsom-governance",
@@ -1392,7 +1420,6 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/tutorials/getting-started",
         f"{base_url}/tutorials/llms-txt-setup",
         f"{base_url}/how-to/index",
-        f"{base_url}/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK",
         f"{base_url}/how-to/deploy-omni-view-on-render",
         f"{base_url}/how-to/manage-inventory-and-payouts",
         f"{base_url}/how-to/generate-llms-context",
@@ -1515,9 +1542,8 @@ if __name__ == "__main__":
     main()
 ```
 
-
-
 <a id="code-generate-summary"></a>
+
 ### Summary Table of Contents Generator
 
 **Source File:** `tools/generate_summary.py`

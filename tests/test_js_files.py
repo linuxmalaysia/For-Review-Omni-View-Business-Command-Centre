@@ -1,6 +1,7 @@
-import os
 import glob
+import os
 import re
+
 import pytest
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -183,7 +184,7 @@ def test_js_file_syntax_and_structure(filepath):
     for char in clean_content:
         if char in pairs.values():
             stack.append(char)
-        elif char in pairs.keys():
+        elif char in pairs:
             assert len(stack) > 0 and stack[-1] == pairs[char], (
                 f"Unmatched closing bracket '{char}' in JS file: {os.path.basename(filepath)}"
             )

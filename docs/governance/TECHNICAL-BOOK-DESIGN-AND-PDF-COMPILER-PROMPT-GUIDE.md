@@ -37,6 +37,7 @@ verified:
 ## 1. Executive Overview & Dual Purpose
 
 This document serves two complementary functions:
+
 1. **The Reusable AI Master Prompt (Section 2):** A complete, drop-in system prompt that can be provided to any advanced AI coding assistant (Google Antigravity, Google Jules, Claude, Cursor, ChatGPT) to autonomously orchestrate, style, and compile an entire repository of multi-file Markdown (`.md`) documentation and source code into a publication-grade PDF handbook.
 2. **The Architectural Blueprint & Engineering Field Manual (Sections 3–7):** An exhaustive technical record documenting the formatting standards, color palettes, typography pairings, CSS `@page` rules, and the **ten critical engineering hurdles** solved to eliminate syntax crashes, blank pages, link leaks, and ink waste during multi-format compilation (PDF, standalone HTML, EPUB 3, and styled ODT).
 3. **The Embedded Skill SOP (Section 6):** The full operational specification of the `dsom-technical-book-compiler` skill, ensuring complete self-containment.
@@ -195,14 +196,17 @@ Your task is to take an entire repository of Markdown (.md) documents and source
 ## 4. The 10 Critical Engineering Hurdles Solved
 
 ### Hurdle 1: Pandoc YAML Parser Explosions (`Unknown alias`)
+
 - **Failure Mode:** Stitched multi-document markdowns retain individual OKF frontmatter blocks (`--- ... ---`). Pandoc attempts to parse subsequent frontmatter blocks as YAML document streams, failing with `Unknown alias` or corrupted titles.
 - **Solution:** A pre-processing function (`strip_frontmatter()`) strips leading YAML frontmatter while capturing `title` and `description` to create formatted chapter metadata banners (`.chapter-meta`).
 
 ### Hurdle 2: Nested Backtick Fence Collisions
+
 - **Failure Mode:** Ingested markdown documents or playbook examples already contain triple backticks (```` ``` ````). If the master compiler wraps them in triple backticks, the code block prematurely terminates, leaking raw code into prose.
-- **Solution:** Dynamic backtick scaling. The compiler scans the target code text; if triple backticks exist, it wraps the block in 4 backticks (```` ```` ````); if 4 exist, it scales to 5.
+- **Solution:** Dynamic backtick scaling. The compiler scans the target code text; if triple backticks exist, it wraps the block in 4 backticks (```````` ````); if 4 exist, it scales to 5.
 
 ### Hurdle 3: Blank Overflow Pages & Cover Fragmentation
+
 - **Failure Mode:** Manual page breaks (`<div class="page-break"></div>`) combined with CSS `page-break-before: always;` on H1 elements generate unwanted empty pages. Furthermore, default Pandoc title headers split the cover across Pages 1 and 2.
 - **Solution:**
   1. Eliminate all manual page break divs.
@@ -211,18 +215,22 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   4. Constrain cover page padding and metadata fonts so the entire cover fits inside Page 1.
 
 ### Hurdle 4: Mermaid 10 Syntax Bomb Graphics (HTML Escaping)
+
 - **Failure Mode:** Pandoc automatically escapes HTML entities inside `<pre class="mermaid"><code>` (`&quot;`, `&lt;`, `&gt;`, `--&gt;`). When Mermaid.js runs, it encounters illegal characters, rendering a pink syntax error bomb icon.
 - **Solution:** A dedicated post-pandoc HTML regex unescapes `&quot;`, `&lt;`, `&gt;`, `&amp;` and strips enclosing `<code>` tags before headless browser invocation.
 
 ### Hurdle 5: Mermaid Node Collision in Multi-Diagram Handbooks
+
 - **Failure Mode:** Different diagrams reuse common node identifiers (e.g. `NODE1`, `DB`, `CBE`, `PWP`). Mermaid's internal parser merges identical IDs into the same global SVG graph, corrupting diagram topology.
 - **Solution:** **Mermaid Multi-Diagram Isolation Protocol**. Every diagram must have unique diagram-scoped namespaces prefixed to all nodes (e.g., `TB_` for Master Architecture, `PA_` for Pattern A, `PB_` for Pattern B, `PC_` for Pattern C).
 
 ### Hurdle 6: Headless Chromium Millisecond Timestamp Collision
+
 - **Failure Mode:** Headless Chromium renders all page scripts in milliseconds. Mermaid's default `mermaid.run()` uses `Date.now()` timestamp IDs, causing ID collisions that draw multiple diagrams inside the same container.
 - **Solution:** Sequential DOM replacement. The browser script iterates over `document.querySelectorAll("pre.mermaid")` and calls `mermaid.render("diagram_svg_" + i, code)` sequentially, injecting the returned SVG directly into `el.innerHTML`.
 
 ### Hurdle 7: Tall Vertical Flowcharts Splitting Pages
+
 - **Failure Mode:** Long linear flowcharts (height > 600px) split mid-node across physical page breaks, causing dangling connectors and unreadable diagrams.
 - **Solution:**
   1. Re-architect flowcharts into balanced 2-column grids (e.g., Phase 1 vs Phase 2).
@@ -230,6 +238,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   3. Extract `innerHTML` rather than `textContent` in the Mermaid pre-pass to preserve `<br/>` tags and card formatting.
 
 ### Hurdle 8: Broken Relative Links & Leaked Local Paths (`file:///`)
+
 - **Failure Mode:** Ingested documentation contains relative links (`../how-to/deploy.md`) or absolute filesystem paths (`file:///D:/Users/...`), which break or leak workstation directories in the compiled PDF.
 - **Solution:** **Soft-Path Link Resolution Mandate (3-Tier Normalisation Pipeline)**:
   1. Pre-index all chapters (`#chap-{slug}`) and code files (`#code-{slug}`) into an in-memory `link_map`.
@@ -241,6 +250,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   4. Run an automated post-assembly audit to verify zero absolute paths survive in PDF links.
 
 ### Hurdle 9: Critical Safety Warnings Hidden in Code Comments
+
 - **Failure Mode:** Production playbooks contain vital operational warnings, vendor bug workarounds, and safety dispatches hidden in `#` comments that SysAdmins miss when skimming compiled books.
 - **Solution:** **Developer Commentary Extraction Protocol**:
   1. Inspect the leading `#` comment block of every playbook, script, and configuration file.
@@ -250,11 +260,14 @@ Your task is to take an entire repository of Markdown (.md) documents and source
   5. Preserve the original `#` comments inside the code block intact.
 
 ### Hurdle 10: Headless Browser Print Timeouts & Compositor Stalls
+
 - **Failure Mode:** Headless Chrome/Edge can hang indefinitely if web fonts or ESM modules fail to trigger draw completion, stalling CI/CD pipelines.
 - **Solution:** Execute Chromium with strict flags:
+
   ```bash
   msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw --virtual-time-budget=8000 --print-to-pdf=<out.pdf> <file_uri>
   ```
+
   Enforce a hard Python subprocess timeout (45–60s) to gracefully catch draw completion.
 
 ---
@@ -356,6 +369,7 @@ uv run python tools/build_project_book.py
 ## 7. Operational Checklist for AI Agents & Compilers
 
 Before finalizing any compiled handbook, the AI agent must verify:
+
 - [ ] **Pure White Audit:** No solid black terminal blocks exist in the compiled PDF.
 - [ ] **Blank Page Audit:** Verified total page count has zero empty filler pages between chapters.
 - [ ] **Mermaid Audit:** All diagrams render as clean vector SVGs with zero syntax error bomb icons.
