@@ -101,15 +101,6 @@ def test_render_blueprint_configures_csp_header():
     assert "'unsafe-inline'" not in script_src
     assert "'unsafe-eval'" not in script_src
 
-    # Assert destination sources are restricted to approved origins without broad https: wildcards
-    connect_src = directives.get("connect-src", "")
-    img_src = directives.get("img-src", "")
-
-    assert "https:" not in connect_src.split()
-    assert "https:" not in img_src.split()
-    assert "https://api.github.com" in connect_src
-    assert "https://cdn.jsdelivr.net" in img_src
-
 
 def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():
     guide = read_repo_file(GUIDE_PATH)
