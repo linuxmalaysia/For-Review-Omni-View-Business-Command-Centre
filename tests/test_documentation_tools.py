@@ -139,3 +139,31 @@ def test_reinstalling_managed_guardrails_does_not_create_a_backup(
 
     assert not (hooks_dir / "pre-commit.bak").exists()
     assert hook_path.read_text(encoding="utf-8") == install_git_guardrails.HOOK_CONTENT
+
+
+def test_strip_frontmatter_and_footer_terminal_signature(tmp_path: Path):
+    from tools import build_project_book
+    sample = (
+        "---\ntitle: Sample\n---\n\n# Heading\n\nSome body text\n\n"
+        "---\n*Deep State of Mind (DSOM) For My AI Protocol | Harisfazillah Jamel*\n"
+        "*Standard: UK English | All Rights Reserved*"
+    )
+    metadata, clean = build_project_book.strip_frontmatter_and_footer(sample)
+    assert metadata.get("title") == "Sample"
+    assert "All Rights Reserved" not in clean
+    assert "Some body text" in clean
+
+
+def test_ingest_doc_file_preserves_fenced_code_comments(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    from tools import build_project_book
+    doc_file = tmp_path / "sample.md"
+    doc_file.write_text(
+        "---\ntitle: Test\ndescription: Desc\n---\n\n# Main Title\n\n```bash\n# Comment in code\necho hello\n```\n",
+        encoding="utf-8"
+    )
+    monkeypatch.setattr(build_project_book, "ROOT_DIR", tmp_path)
+    res = build_project_book.ingest_doc_file("sample.md", heading_offset=1, show_provenance=False)
+
+    assert "## Main Title" in res
+    assert "# Comment in code" in res
+    assert "## Comment in code" not in res

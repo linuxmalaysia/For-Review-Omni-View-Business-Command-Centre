@@ -71,20 +71,14 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
 
 
 def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
-    """
-    Generate an XML context document from parsed `llms.txt` data.
+    """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
     
-    Parameters:
-        llms_data (Dict[str, Any]): Parsed data containing the title, summary,
-            sections, and document entries.
-        root_dir (str): Root directory used to resolve relative document paths.
+    Args:
+        llms_data: Parsed `llms.txt` data containing the title, summary, sections, and documents.
+        root_dir: Root directory used to resolve relative document paths.
     
     Returns:
-        str: Formatted XML context containing document metadata and available
-            local file contents.
-    
-    Raises:
-        RuntimeError: If an indexed local document cannot be read.
+        Formatted XML context document.
     """
     root = ET.Element("llm_context", title=llms_data.get("title", "Documentation Context"))
 
@@ -111,7 +105,7 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
             resolved_root = os.path.realpath(root_dir)
             file_path = os.path.realpath(os.path.join(root_dir, rel_path))
 
-            if file_path.startswith(resolved_root + os.sep) and os.path.isfile(file_path):
+            if os.path.commonpath([resolved_root, file_path]) == resolved_root and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()

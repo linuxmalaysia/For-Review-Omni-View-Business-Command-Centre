@@ -40,7 +40,7 @@ This document serves two complementary functions:
 You are a Principal Publication Systems Architect and Pandoc Book Engineering Specialist.
 Your task is to take an entire repository of Markdown (.md) documents and source code trees, assemble them into a cohesive, publication-grade technical handbook, and compile them into a print-optimized PDF, standalone interactive HTML, EPUB 3, and styled OpenDocument Text (ODT).
 
-#### MANDATORY DESIGN & STYLING SPECIFICATIONS (TERMINAL & CLOUD STANDARD)
+### MANDATORY DESIGN & STYLING SPECIFICATIONS (TERMINAL & CLOUD STANDARD)
 
 1. PRINT-OPTIMIZED PURE WHITE STANDARD (ZERO TONER WASTE):
    - For all PDF and print compilations, dark or black container backgrounds are STRICTLY FORBIDDEN.
@@ -76,7 +76,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
    - Metadata grid: 2-column key-value grid (Architect, Compiler, Audience, Classification, Covenant, Edition).
    - CSS Guard: Hide duplicate Pandoc title header (#title-block-header { display: none !important; }) and prevent cover title page break (.cover-title { break-before: avoid !important; }).
 
-#### NON-NEGOTIABLE ENGINEERING PIPELINE CONSTRAINTS
+### NON-NEGOTIABLE ENGINEERING PIPELINE CONSTRAINTS
 
 1. FRONTMATTER & FOOTER STRIPPING:
    - Systematically strip individual YAML frontmatter (lines between leading '---' fences) and individual document signature footers from every ingested .md file to prevent Pandoc YAML parser crashes ('Unknown alias').
@@ -251,7 +251,7 @@ Your task is to take an entire repository of Markdown (.md) documents and source
 ### 5. Multi-Format Compilation Commands
 
 ```bash
-## 1. Compile Standalone Interactive HTML Ebook
+# 1. Compile Standalone Interactive HTML Ebook
 pandoc build/book/master_book.md -o build/book/handbook.html \
   --standalone --toc --toc-depth=3 --number-sections \
   --include-before-body=build/book/cover.html \
@@ -261,14 +261,14 @@ pandoc build/book/master_book.md -o build/book/handbook.html \
   --metadata author="Compile by: Harisfazillah Jamel" \
   --metadata date="September 2026" -V lang=en
 
-## 2. Compile Publication-Grade PDF via Headless Chromium
+# 2. Compile Publication-Grade PDF via Headless Chromium
 msedge.exe --headless=new --disable-gpu \
   --run-all-compositor-stages-before-draw \
   --virtual-time-budget=8000 \
   --print-to-pdf=build/book/handbook.pdf \
   file:///path/to/build/book/handbook.html
 
-## 3. Compile EPUB 3 Ebook
+# 3. Compile EPUB 3 Ebook
 pandoc build/book/master_book.md -o build/book/handbook.epub \
   -t epub3 --toc --toc-depth=3 \
   --css=build/book/terminal-theme.css \
@@ -276,7 +276,7 @@ pandoc build/book/master_book.md -o build/book/handbook.epub \
   --metadata author="Compile by: Harisfazillah Jamel" \
   --metadata publisher="Deep State of Mind (DSOM)"
 
-## 4. Compile Styled OpenDocument Text (ODT) for Google Docs
+# 4. Compile Styled OpenDocument Text (ODT) for Google Docs
 pandoc build/book/master_book.md -o build/book/handbook.odt \
   --reference-doc=build/book/custom_reference.odt \
   --toc --toc-depth=3 \
@@ -307,11 +307,11 @@ sources:
 name: "dsom-technical-book-compiler"
 ---
 
-## Technical Ebook & Handbook Compiler
+# Technical Ebook & Handbook Compiler
 
 **Purpose:** Standardizes the automated compilation of complex multi-part Diátaxis documentation palaces and complete source code directories into unified, publication-grade technical handbooks (PDF, HTML, EPUB, ODT) tailored for SysAdmins, DevOps Engineers, and SREs.
 
-### Dual-Mode "Terminal & Cloud" Design System
+## Dual-Mode "Terminal & Cloud" Design System
 1. **Interactive / Screen Mode:** Optional dark slate container (#0F172A) for code and off-white (#F8FAFC) reading background.
 2. **Physical Print / PDF Handbook Mode (Zero Ink Waste):**
    - **Pure White Background:** `@page { background: #FFFFFF; }` and `body { background-color: #FFFFFF !important; }` to eliminate grayish tints and toner waste.
@@ -320,7 +320,7 @@ name: "dsom-technical-book-compiler"
    - **Full Confidentiality Statement:** Must be written as `Private And Confidential (P&C)` (uppercase `PRIVATE AND CONFIDENTIAL (P&C)` in running headers).
    - **Attribution Standard:** Compilations must be credited as `Compile by: Harisfazillah Jamel`.
 
-### Technical Execution Constraints
+## Technical Execution Constraints
 1. **Footer & Frontmatter Stripping:** When assembling 100+ documents, individual OKF frontmatter and DSOM signature footers must be stripped to prevent Pandoc YAML parser collisions (`Unknown alias`).
 2. **Dynamic Backtick Fence Scaling:** When wrapping source code containing triple backticks (` ``` `), the enclosing fence must scale dynamically to 4 or 5 backticks (` ```` `).
 3. **Mermaid HTML Unescaping Protocol:** Pandoc automatically escapes HTML entities inside `<pre class="mermaid"><code>` (`&quot;`, `&lt;br/&gt;`, `--&gt;`). The compilation pipeline must decode these entities before browser rendering to prevent Mermaid 10 syntax error bomb graphics.
@@ -334,7 +334,7 @@ name: "dsom-technical-book-compiler"
 9. **Full-Spectrum Code Ingestion:** Ingest all production playbooks, Jinja2 templates, inventories, host/group variables, shell scripts, and candidate staging playbooks into dedicated book chapters to produce self-contained handbooks.
 10. **Developer Commentary Extraction Protocol:** For every YAML playbook, shell script, or INI file ingested, extract the leading `#` comment block (all contiguous comment lines before the first YAML key, after the `---` fence) and render it as an HTML callout div above the code fence. Classify by keyword scan: comments containing `BUG`, `FIX`, `Confirmed`, `live`, `vendor`, `NEVER`, `ORA-\d+`, `destroy`, `destructive`, `hard way`, or `escalation` render as `callout-warning` (⚠️ orange, label `Read Before Executing`); all others render as `callout-note` (💡 blue). Preserve original `#` lines inside the code fence unchanged. CSS must define `.callout-warning p`, `.callout-note p`, and `strong` selectors with explicit `padding: 12px 16px` and `page-break-inside: avoid` for clean print rendering.
 
-### Execution Command
+## Execution Command
 ```bash
 uv run python tools/build_project_book.py
 ```
@@ -351,7 +351,6 @@ Before finalizing any compiled handbook, the AI agent must verify:
 - [ ] **Link Leak Audit:** Grep search the assembled HTML/PDF links for `file:///` or Windows drive letters (`D:/`, `C:/`) — result must be 0.
 - [ ] **Commentary Audit:** Leading playbook dispatches are rendered as human-readable callouts above the code fences.
 - [ ] **Confidentiality Audit:** Running headers state `PRIVATE AND CONFIDENTIAL (P&C)` and attribution reads `Compile by: Harisfazillah Jamel`.
-*Standard: UK English | DBP-standard Bahasa Melayu Malaysia (Piawai) | PRIVATE & CONFIDENTIAL (P&C) | All Rights Reserved*
 
 
 # Part 2: Operational How-To Guides {.part}
@@ -748,19 +747,19 @@ stale_after: "2027-09-05"
 name: "project-technical-book-compiler"
 ---
 
-## Project Technical Book & Handbook Compiler
+# Project Technical Book & Handbook Compiler
 
-### Purpose
+## Purpose
 Standardizes the automated assembly, styling, and multi-format compilation of entire project repositories into unified, publication-grade engineering handbooks.
 
-### Execution Commands
+## Execution Commands
 
-#### 1. Build Master Markdown
+### 1. Build Master Markdown
 ```bash
 uv run python tools/build_project_book.py
 ```
 
-#### 2. Compile Standalone Interactive HTML (Pandoc 3.x)
+### 2. Compile Standalone Interactive HTML (Pandoc 3.x)
 ```bash
 pandoc build/book/master_book.md -o build/book/handbook.html \
   --standalone --toc --toc-depth=3 --number-sections \
@@ -772,21 +771,27 @@ pandoc build/book/master_book.md -o build/book/handbook.html \
   --metadata date="September 2026" -V lang=en
 ```
 
-#### 3. Bake Native Vector SVGs & Inline Theme CSS
+### 3. Bake Native Vector SVGs & Inline Theme CSS
 ```bash
 uv run python tools/bake_native_svg.py
 ```
 
-#### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
-```bash
+### 4. Compile Publication-Grade PDF (Headless Chromium / Edge)
+```powershell
 $tmpProfile = "$env:TEMP\edge-pdf-profile-$(Get-Random)"
-msedge.exe --headless=new --disable-gpu --run-all-compositor-stages-before-draw \
-  --user-data-dir="$tmpProfile" --no-pdf-header-footer --print-to-pdf=build/book/handbook.pdf \
-  file:///path/to/build/book/handbook.html
-Remove-Item -Recurse -Force $tmpProfile -ErrorAction SilentlyContinue
+try {
+    $proc = Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
+      -ArgumentList "--headless=new", "--disable-gpu", "--run-all-compositor-stages-before-draw", `
+      "--user-data-dir=""$tmpProfile""", "--no-pdf-header-footer", "--print-to-pdf=build/book/handbook.pdf", `
+      "file:///path/to/build/book/handbook.html" -Wait -PassThru
+    if ($proc.ExitCode -ne 0) { throw "Edge PDF generation failed with exit code $($proc.ExitCode)" }
+    if (-not (Test-Path "build/book/handbook.pdf")) { throw "PDF file build/book/handbook.pdf was not produced" }
+} finally {
+    Remove-Item -Recurse -Force $tmpProfile -ErrorAction SilentlyContinue
+}
 ```
 
-#### 5. Compile EPUB 3 Ebook
+### 5. Compile EPUB 3 Ebook
 ```bash
 pandoc build/book/master_book.md -o build/book/handbook.epub \
   -t epub3 --toc --toc-depth=3 \
@@ -808,7 +813,6 @@ Before delivering any compiled handbook to stakeholders, execute this audit chec
 - [ ] **Inline CSS Audit:** CSS is embedded directly into `<style>` inside `<head>` to prevent external relative link breakage.
 - [ ] **Soft-Path Link Audit:** All internal cross-references point to clean `#chap-...` or `#code-...` fragments without surviving absolute filesystem paths (`file:///` or drive letters).
 - [ ] **Pagination Audit:** Verified zero empty filler pages exist between chapters.
-*Standard: UK English | DBP-standard Bahasa Melayu Malaysia (Piawai) | GNU General Public License v3.0*
 
 
 <div class="doc-provenance"><strong>Operational Reference Guide:</strong> <code>docs/how-to/deploy-omni-view-on-render.md</code></div>
@@ -1230,7 +1234,7 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
             resolved_root = os.path.realpath(root_dir)
             file_path = os.path.realpath(os.path.join(root_dir, rel_path))
 
-            if file_path.startswith(resolved_root + os.sep) and os.path.isfile(file_path):
+            if os.path.commonpath([resolved_root, file_path]) == resolved_root and os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()

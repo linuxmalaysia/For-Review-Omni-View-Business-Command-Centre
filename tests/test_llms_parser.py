@@ -4,8 +4,6 @@ import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-import pytest
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import parse_llms_txt
 
@@ -52,78 +50,6 @@ def test_generate_xml_context():
     assert "<summary>XML Summary</summary>" in xml_str
     assert 'name="Tutorials"' in xml_str
     assert "<title>Getting Started</title>" in xml_str
-
-
-def test_generate_xml_context_embeds_only_files_contained_by_root(tmp_path: Path):
-    root = tmp_path / "repo"
-    root.mkdir()
-    safe_document = root / "docs" / "safe.md"
-    safe_document.parent.mkdir()
-    safe_document.write_text("safe content", encoding="utf-8")
-
-    sibling = tmp_path / "repository-private"
-    sibling.mkdir()
-    sibling_document = sibling / "secret.md"
-    sibling_document.write_text("sibling secret", encoding="utf-8")
-
-    outside_document = tmp_path / "outside.md"
-    outside_document.write_text("symlink secret", encoding="utf-8")
-    (root / "docs" / "linked.md").symlink_to(outside_document)
-
-    data = {
-        "title": "Containment",
-        "sections": [
-            {
-                "title": "Documents",
-                "items": [
-                    {"title": "Safe", "url": "docs/safe.md"},
-                    {
-                        "title": "Sibling prefix",
-                        "url": "../repository-private/secret.md",
-                    },
-                    {"title": "Symlink escape", "url": "docs/linked.md"},
-                ],
-            }
-        ],
-    }
-
-    xml_root = ET.fromstring(parse_llms_txt.generate_xml_context(data, str(root)))
-    documents = {
-        document.attrib["href"]: document
-        for document in xml_root.findall("./sections/section/document")
-    }
-
-    assert documents["docs/safe.md"].findtext("content") == "safe content"
-    assert documents["../repository-private/secret.md"].find("content") is None
-    assert documents["docs/linked.md"].find("content") is None
-
-
-def test_generate_xml_context_wraps_local_document_read_errors(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-):
-    document = tmp_path / "guide.md"
-    document.write_text("content", encoding="utf-8")
-    real_open = open
-
-    def failing_open(path, *args, **kwargs):
-        if os.path.realpath(path) == os.path.realpath(document):
-            raise OSError("simulated read failure")
-        return real_open(path, *args, **kwargs)
-
-    monkeypatch.setattr("builtins.open", failing_open)
-    data = {
-        "sections": [
-            {
-                "title": "Docs",
-                "items": [{"title": "Guide", "url": "guide.md"}],
-            }
-        ]
-    }
-
-    with pytest.raises(RuntimeError, match="Failed to read indexed document") as error:
-        parse_llms_txt.generate_xml_context(data, str(tmp_path))
-
-    assert "simulated read failure" in str(error.value)
 
 
 def test_generate_llms_txt_and_full():

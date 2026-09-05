@@ -26,15 +26,7 @@ WARNING_KEYWORDS = re.compile(
 
 
 def extract_frontmatter_metadata(raw_content: str) -> tuple[dict, str]:
-    """
-    Extract metadata from leading YAML-style frontmatter and remove the frontmatter from the content.
-    
-    Parameters:
-        raw_content (str): Text that may begin with frontmatter delimited by `---` lines.
-    
-    Returns:
-        tuple[dict, str]: A metadata mapping and the remaining content with surrounding whitespace removed.
-    """
+    """Extracts title and description from frontmatter and returns (metadata, content_without_frontmatter)."""
     metadata = {}
     content = raw_content
     lines = raw_content.splitlines()
@@ -57,23 +49,15 @@ def extract_frontmatter_metadata(raw_content: str) -> tuple[dict, str]:
 
 
 def strip_frontmatter_and_footer(content: str) -> tuple[dict, str]:
-    """
-    Clean Markdown content by removing frontmatter, signature footers, and standalone horizontal rules.
-    
-    Parameters:
-        content (str): Markdown content to clean.
-    
-    Returns:
-        tuple[dict, str]: Extracted frontmatter metadata and cleaned Markdown content.
-    """
+    """Strips leading YAML frontmatter and document signature footers from markdown content."""
     metadata, content = extract_frontmatter_metadata(content)
 
-    # Strip only end-of-file anchored signature block
+    # Strip terminal signature block through end-of-file (\Z)
     content = re.sub(
-        r"\n\n---\s*\n\*[^*]+(?:\(DSOM\)|All Rights Reserved|GNU General|Deep State of Mind).*$",
+        r"\n\n---\s*\n\*[^*]+(?:\(DSOM\)|All Rights Reserved|GNU General|Deep State of Mind).*\Z",
         "",
         content,
-        flags=re.MULTILINE
+        flags=re.DOTALL
     )
 
     # Convert horizontal rules --- to *** ONLY outside fenced code blocks
@@ -100,15 +84,6 @@ def convert_github_alerts(text: str) -> str:
     )
 
     def replacer(match):
-        """
-        Convert a matched GitHub alert block into a styled HTML callout.
-        
-        Parameters:
-        	match (re.Match): Regex match containing the alert type and body text.
-        
-        Returns:
-        	str: HTML callout markup with the alert's mapped styling, icon, title, and content.
-        """
         alert_type = match.group(1).upper()
         first_line = match.group(2) or ""
         raw_body = match.group(3) or ""
@@ -138,13 +113,7 @@ def convert_github_alerts(text: str) -> str:
 
 
 def scale_backticks(code_text: str) -> tuple[str, str]:
-    """Determines matching Markdown fence strings that safely enclose the provided code text.
-    
-    Parameters:
-        code_text (str): Source text that may contain backtick sequences.
-    
-    Returns:
-        tuple[str, str]: Matching opening and closing fence strings."""
+    """Dynamically scales outer code fences based on inner backtick counts."""
     max_ticks = 0
     matches = re.findall(r"(`{3,})", code_text)
     for m in matches:
@@ -155,15 +124,7 @@ def scale_backticks(code_text: str) -> tuple[str, str]:
 
 
 def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
-    """
-    Extract leading operational comments from source text into an HTML callout.
-    
-    Parameters:
-        code_text (str): Source text to inspect.
-    
-    Returns:
-        str | None: An HTML callout containing up to 15 leading comment lines, or `None` when no commentary is found.
-    """
+    """Extracts leading comment blocks (excluding shebangs) into operational commentary callouts."""
     lines = code_text.splitlines()
     comment_lines = []
     start_idx = 1 if lines and lines[0].strip() == "---" else 0
@@ -190,18 +151,7 @@ def extract_commentary(code_text: str, lang: str = "yaml") -> str | None:
 
 
 def ingest_code_file(file_path: Path, lang: str, title: str, anchor: str) -> str:
-    """
-    Add a source code file to a Markdown chapter with optional commentary and source metadata.
-    
-    Parameters:
-    	file_path (Path): Path to the source code file.
-    	lang (str): Language identifier for the Markdown code fence.
-    	title (str): Chapter heading.
-    	anchor (str): HTML anchor identifier for the chapter.
-    
-    Returns:
-    	str: Markdown containing the chapter, or a file-not-found notice when the source file is absent.
-    """
+    """Ingests a source code file into a markdown chapter with commentary callouts."""
     if not file_path.exists():
         return f"\n*File not found: {file_path}*\n"
     content = file_path.read_text(encoding="utf-8", errors="replace")
@@ -217,17 +167,7 @@ def ingest_code_file(file_path: Path, lang: str, title: str, anchor: str) -> str
 
 
 def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: bool = True) -> str:
-    """
-    Ingest a Markdown documentation file and prepare it for inclusion in the master handbook.
-    
-    Parameters:
-        rel_path (str): Repository-relative path to the documentation file.
-        heading_offset (int): Number of levels to add to Markdown headings, capped at level six.
-        show_provenance (bool): Whether to include the source path in the output.
-    
-    Returns:
-        str: Processed Markdown content, or a notice when the file does not exist.
-    """
+    """Ingests a documentation markdown file into the master handbook."""
     file_path = ROOT_DIR / rel_path
     if not file_path.exists():
         return f"\n*Documentation file not found: {rel_path}*\n"
@@ -243,22 +183,29 @@ def ingest_doc_file(rel_path: str, heading_offset: int = 1, show_provenance: boo
         desc = metadata["description"]
         out.append(f'<div class="callout callout-note">\n<strong>📌 Executive Summary</strong>\n\n{desc}\n</div>\n')
 
+    in_code_block = False
     for line in clean.splitlines():
-        m = re.match(r"^(#{1,6})\s+(.*)$", line)
-        if m:
-            lvl = min(len(m.group(1)) + heading_offset, 6)
-            hashes = "#" * lvl
-            out.append(f"{hashes} {m.group(2)}")
-        else:
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            in_code_block = not in_code_block
             out.append(line)
+            continue
+
+        if not in_code_block:
+            m = re.match(r"^(#{1,6})\s+(.*)$", line)
+            if m:
+                lvl = min(len(m.group(1)) + heading_offset, 6)
+                hashes = "#" * lvl
+                out.append(f"{hashes} {m.group(2)}")
+                continue
+
+        out.append(line)
 
     return "\n".join(out) + "\n"
 
 
 def build_master_book():
-    """
-    Assemble the repository documentation and selected source code into the master handbook Markdown file.
-    """
+    """Assembles the complete repository documentation and source code into master_book.md."""
     print("Assembling master book markdown...")
     parts = []
 
