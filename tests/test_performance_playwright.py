@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 
 class QuietHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
-        pass
+        """Suppress HTTP request logging."""
 
 class ReusableTCPServer(socketserver.TCPServer):
     allow_reuse_address = True
@@ -47,9 +47,11 @@ def test_dashboard_rendering_performance(local_server):
 
         for dashboard, readiness_selector in dashboards:
             start_time = time.perf_counter()
-            response = page.goto(f"{local_server}/{dashboard}", wait_until="domcontentloaded")
-            # Wait for specific landmark element visibility before measuring rendering time completion
-            page.wait_for_selector(readiness_selector, state="visible", timeout=3000)
+            response = page.goto(f"{local_server}/{dashboard}", wait_until="domcontentloaded", timeout=3000)
+            elapsed_ms = (time.perf_counter() - start_time) * 1000
+            remaining_timeout = max(1, 3000 - int(elapsed_ms))
+            # Wait for specific landmark element visibility within remaining deadline budget
+            page.wait_for_selector(readiness_selector, state="visible", timeout=remaining_timeout)
             render_time_ms = (time.perf_counter() - start_time) * 1000
 
             assert response.status == 200, f"Failed to load {dashboard}"
@@ -65,11 +67,13 @@ def test_client_side_navigation_performance(local_server):
         context = browser.new_context()
         page = context.new_page()
 
-        page.goto(f"{local_server}/Web%20Ui/login.html", wait_until="domcontentloaded")
+        page.goto(f"{local_server}/Web%20Ui/login.html", wait_until="domcontentloaded", timeout=3000)
 
         start_time = time.perf_counter()
-        page.click('a[href="forgot-password.html"]')
-        page.wait_for_selector("#forgotPasswordForm", state="visible", timeout=3000)
+        page.click('a[href="forgot-password.html"]', timeout=3000)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        remaining_timeout = max(1, 3000 - int(elapsed_ms))
+        page.wait_for_selector("#forgotPasswordForm", state="visible", timeout=remaining_timeout)
         nav_time_ms = (time.perf_counter() - start_time) * 1000
 
         assert "forgot-password.html" in page.url, "Navigation to forgot-password.html failed"

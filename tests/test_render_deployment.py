@@ -86,6 +86,21 @@ def test_render_blueprint_configures_csp_header():
     assert "default-src 'self'" in value
     assert "cdn.jsdelivr.net" in value
 
+    # Parse directives from CSP value
+    directives = {}
+    for directive in value.split(";"):
+        directive = directive.strip()
+        if directive:
+            parts = directive.split(maxsplit=1)
+            directive_name = parts[0]
+            directive_value = parts[1] if len(parts) > 1 else ""
+            directives[directive_name] = directive_value
+
+    assert "script-src" in directives
+    script_src = directives["script-src"]
+    assert "'unsafe-inline'" not in script_src
+    assert "'unsafe-eval'" not in script_src
+
 
 def test_render_guide_matches_the_blueprint_and_documents_failure_recovery():
     guide = read_repo_file(GUIDE_PATH)

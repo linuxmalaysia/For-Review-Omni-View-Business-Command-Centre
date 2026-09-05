@@ -52,7 +52,7 @@ jobs:
         run: uv run playwright install --with-deps chromium
 
       - name: Security Audit Python Dependencies
-        run: uvx pip-audit
+        run: uv run pip-audit
 
       - name: Code Health & Linting (Ruff)
         run: uv run ruff check .
