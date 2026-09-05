@@ -33,7 +33,7 @@ python3 parse_llms_txt.py --generate-all
 
 Note: The output XML context payload (`llm_context.xml`) is written only to the specified output file path (`--output`, defaulting to `llm_context.xml`), while `llms.txt`, `llms-full.txt`, `sitemap.txt`, and `sitemap.xml` are generated in both root and `docs/` directories.
 
-### Expected Terminal Output:
+### Expected Terminal Output
 
 ```text
 Generating documentation indexes and sitemaps...

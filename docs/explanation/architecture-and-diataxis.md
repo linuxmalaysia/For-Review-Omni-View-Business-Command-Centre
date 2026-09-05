@@ -45,7 +45,7 @@ Omni-View Business Command Centre is engineered using a decoupled web architectu
 
 Documentation often mixes step-by-step tutorials, practical recipes, and technical API reference into monolithic pages. This increases cognitive load for human developers and causes hallucination in autonomous AI agents.
 
-Omni-View solves this by adopting the **Diátaxis Documentation Framework** (https://diataxis.fr/), structuring content into four distinct quadrants based on user intent and mode:
+Omni-View solves this by adopting the **Diátaxis Documentation Framework** (<https://diataxis.fr/>), structuring content into four distinct quadrants based on user intent and mode:
 
 ```text
                   USER INTENT
@@ -61,7 +61,7 @@ Omni-View solves this by adopting the **Diátaxis Documentation Framework** (htt
         +----------------+----------------+
 ```
 
-### Four Quadrants in Omni-View:
+### Four Quadrants in Omni-View
 
 1. **Tutorials (`docs/tutorials/`)**:
    - **Goal**: Guided learning through execution.

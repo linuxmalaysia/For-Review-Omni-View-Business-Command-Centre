@@ -7,8 +7,8 @@ before commits. Preserves existing hooks by creating a backup if present.
 """
 
 import os
-import stat
 import shutil
+import stat
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GIT_HOOKS_DIR = os.path.join(ROOT_DIR, '.git', 'hooks')

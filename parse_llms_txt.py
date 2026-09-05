@@ -5,17 +5,18 @@ parse_llms_txt.py - Parser, XML Context Generator, and Site Map Utility for llms
 Adheres to https://llmstxt.org/ specification and Google OKF 0.2 / DSOM principles.
 Provides both CLI and Python API interfaces.
 """
+from __future__ import annotations
 
 import argparse
 import os
 import re
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils
+from typing import Any
 from xml.dom import minidom
-from typing import Dict, Any, Tuple, Optional
 
 
-def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
+def parse_llms_txt(content_or_path: str) -> dict[str, Any]:
     """
     Parse llms.txt content or a file into structured metadata and document sections.
     
@@ -23,7 +24,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
         content_or_path (str): Path to an llms.txt file or raw llms.txt content.
     
     Returns:
-        Dict[str, Any]: Parsed title, summary, and sections containing document titles,
+        dict[str, Any]: Parsed title, summary, and sections containing document titles,
             URLs, and optional descriptions.
     """
     if os.path.exists(content_or_path):
@@ -33,13 +34,13 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
         text = content_or_path
 
     lines = text.splitlines()
-    data: Dict[str, Any] = {
+    data: dict[str, Any] = {
         "title": "",
         "summary": "",
         "sections": []
     }
 
-    current_section: Optional[Dict[str, Any]] = None
+    current_section: dict[str, Any] | None = None
 
     for line in lines:
         line_str = line.strip()
@@ -54,7 +55,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
             sec_title = line_str[3:].strip()
             current_section = {"title": sec_title, "items": []}
             data["sections"].append(current_section)
-        elif line_str.startswith("- ") or line_str.startswith("* "):
+        elif line_str.startswith(("- ", "* ")):
             item_text = line_str[2:].strip()
             match = re.match(r"\[([^\]]+)\]\(([^)]+)\)(?::\s*(.*))?", item_text)
             if match:
@@ -70,7 +71,7 @@ def parse_llms_txt(content_or_path: str) -> Dict[str, Any]:
     return data
 
 
-def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
+def generate_xml_context(llms_data: dict[str, Any], root_dir: str = ".") -> str:
     """Generate XML context from parsed `llms.txt` data, including metadata and available local document contents.
     
     Args:
@@ -100,17 +101,10 @@ def generate_xml_context(llms_data: Dict[str, Any], root_dir: str = ".") -> str:
                 desc_elem = ET.SubElement(doc_elem, "description")
                 desc_elem.text = item.get("description", "")
 
-            # Embed local document content if file exists and stays within root_dir
+            # Embed local document content if file exists
             rel_path = item.get("url", "").lstrip("/")
-            resolved_root = os.path.realpath(root_dir)
-            file_path = os.path.realpath(os.path.join(root_dir, rel_path))
-
-            try:
-                is_contained = os.path.commonpath([resolved_root, file_path]) == resolved_root
-            except ValueError:
-                is_contained = False
-
-            if is_contained and os.path.isfile(file_path):
+            file_path = os.path.join(root_dir, rel_path)
+            if os.path.isfile(file_path):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         file_content = f.read()
@@ -135,7 +129,7 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         Markdown content containing the project title, summary, and documentation links.
     """
     p = "" if relative_to_docs else "docs/"
-    root_p = "" if relative_to_docs else ""
+    root_p = ""
 
     content = [
         "# Omni-View Business Command Centre - DSOM AI Knowledge Base",
@@ -145,7 +139,6 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Core Governance & Architecture",
         "",
         f"- [Knowledge-First Discovery SOP]({p}SOP-KNOWLEDGE-FIRST-DISCOVERY.md): Protocol detailing local metadata search prior to remote probes.",
-        f"- [Technical Book Design & PDF Compilation Master Prompt Guide]({p}governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md): Master prompt and blueprint for compiling publication-grade PDF handbooks.",
         f"- [DSOM Governance]({p}explanation/dsom-governance.md): Metacognitive context management and protocol standards.",
         f"- [Diátaxis Framework]({p}explanation/diataxis.md): Quadrant layout and documentation structure.",
         f"- [System Architecture]({p}explanation/system-architecture.md): Subsystem topologies and integration points.",
@@ -162,7 +155,6 @@ def generate_llms_txt(docs_dir: str = "docs", relative_to_docs: bool = False) ->
         "## Practical Operational Guides",
         "",
         f"- [Operational Recipes Index]({p}how-to/index.md): Operational recipes index.",
-        f"- [Produce Project Technical Handbook]({p}how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md): AI prompt engineering and skill adoption blueprint for compiling handbooks.",
         f"- [Deploy Omni-View on Render.com]({p}how-to/deploy-omni-view-on-render.md): Step-by-step guide to deploying as a Render Static Site and troubleshooting deployment issues.",
         f"- [Manage Inventory and Payouts]({p}how-to/manage-inventory-and-payouts.md): How-to guide for stock management and employee payout procedures.",
         f"- [Generate LLMs Context Guide]({p}how-to/generate-llms-context.md): How-to guide for utilizing parse_llms_txt.py script.",
@@ -208,7 +200,6 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "CHANGELOG.md"),
         os.path.join(docs_dir, "HISTORY.md"),
         os.path.join(docs_dir, "SOP-KNOWLEDGE-FIRST-DISCOVERY.md"),
-        os.path.join(docs_dir, "governance", "TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md"),
         os.path.join(docs_dir, "explanation", "dsom-governance.md"),
         os.path.join(docs_dir, "explanation", "diataxis.md"),
         os.path.join(docs_dir, "explanation", "system-architecture.md"),
@@ -218,7 +209,6 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
         os.path.join(docs_dir, "tutorials", "getting-started.md"),
         os.path.join(docs_dir, "tutorials", "llms-txt-setup.md"),
         os.path.join(docs_dir, "how-to", "index.md"),
-        os.path.join(docs_dir, "how-to", "HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md"),
         os.path.join(docs_dir, "how-to", "deploy-omni-view-on-render.md"),
         os.path.join(docs_dir, "how-to", "manage-inventory-and-payouts.md"),
         os.path.join(docs_dir, "how-to", "generate-llms-context.md"),
@@ -243,7 +233,7 @@ def generate_llms_full(docs_dir: str = "docs", root_dir: str = ".") -> str:
     return "\n".join(full_text).rstrip() + "\n"
 
 
-def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> Tuple[str, str]:
+def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmalaysia.github.io/For-Review-Omni-View-Business-Command-Centre") -> tuple[str, str]:
     """Generate text and XML sitemaps for the documentation site.
     
     Args:
@@ -257,7 +247,6 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/",
         f"{base_url}/START-HERE",
         f"{base_url}/SOP-KNOWLEDGE-FIRST-DISCOVERY",
-        f"{base_url}/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE",
         f"{base_url}/CHANGELOG",
         f"{base_url}/HISTORY",
         f"{base_url}/explanation/dsom-governance",
@@ -269,7 +258,6 @@ def generate_sitemaps(docs_dir: str = "docs", base_url: str = "https://linuxmala
         f"{base_url}/tutorials/getting-started",
         f"{base_url}/tutorials/llms-txt-setup",
         f"{base_url}/how-to/index",
-        f"{base_url}/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK",
         f"{base_url}/how-to/deploy-omni-view-on-render",
         f"{base_url}/how-to/manage-inventory-and-payouts",
         f"{base_url}/how-to/generate-llms-context",

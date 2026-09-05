@@ -77,7 +77,7 @@ def test_summary_and_navigation_files():
     docs_root = os.path.join(ROOT_DIR, 'docs')
     for label, target in links:
         # Ignore external URLs or anchors
-        if target.startswith("http://") or target.startswith("https://") or target.startswith("#"):
+        if target.startswith(("http://", "https://", "#")):
             continue
 
         target_path = os.path.normpath(os.path.join(docs_root, target))
@@ -171,20 +171,6 @@ def test_okf_02_frontmatter_standard_across_all_md():
                     checked_files += 1
 
     assert checked_files >= 10, f"Expected at least 10 OKF-checked files across docs/ and .agents/, found {checked_files}"
-
-
-def test_okf_02_trust_signals_and_footer_standards():
-    """Verify that OKF 0.2 documents contain valid trust signals (status/stale_after or sources)."""
-    governance_file = os.path.join(ROOT_DIR, 'docs', 'governance', 'TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md')
-    assert os.path.isfile(governance_file)
-    with open(governance_file, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    metadata = parse_yaml_frontmatter(content)
-    assert metadata.get("okf_version") == "0.2"
-    assert "status" in metadata
-    assert "stale_after" in metadata
-    assert "Harisfazillah Jamel" in content
 
 
 def test_agents_and_brain_governance():

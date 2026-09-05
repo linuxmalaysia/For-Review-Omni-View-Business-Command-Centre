@@ -27,7 +27,5 @@ layout: "default"
 3. Create `docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md` with OKF v0.2 frontmatter (COMPLETED).
 4. Update `parse_llms_txt.py` and regenerate sitemaps / llms.txt (COMPLETED).
 5. Update unit tests in `tests/` (COMPLETED).
-6. Create `docs/governance/TECHNICAL-BOOK-DESIGN-AND-PDF-COMPILER-PROMPT-GUIDE.md` and `docs/how-to/HOW-TO-PRODUCE-PROJECT-TECHNICAL-HANDBOOK.md` (COMPLETED).
-7. Create `dsom-technical-book-compiler` and `project-technical-book-compiler` skills in `skills/` and `.agents/skills/` (COMPLETED).
-8. Implement `tools/build_project_book.py` universal handbook assembler script (COMPLETED).
-9. Addressed PR review feedback and performed DSOM EOD Palace Sync (COMPLETED).
+6. Pre-commit verification.
+7. Submit changes.
