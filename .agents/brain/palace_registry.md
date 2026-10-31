@@ -39,7 +39,7 @@ This registry serves as the spatial memory index for AI agents and human operato
 | :--- | :--- | :--- | :--- |
 | `wing_omni_view` | `hall_facts` | `room_overview` | System topology, repository layout, and core governance. |
 | `wing_omni_view` | `hall_facts` | `room_ui_components` | Web UI, CSS themes, and JS controllers. |
-| `wing_omni_view` | `hall_events` | `room_brain_history` | Session checkpoints, PR history, and version transitions. |
+| `wing_omni_view` | `hall_events` | `room_brain_history` | Jules turndown archive, Google Antigravity transition, session checkpoints, and export scripts. |
 | `wing_omni_view` | `hall_discoveries` | `room_okf_dsom` | Google OKF v0.2 metadata discovery and DSOM AI mandates. |
 
 ---
@@ -48,5 +48,6 @@ This registry serves as the spatial memory index for AI agents and human operato
 
 - **Working on UI/Theme toggle?** → `.agents/brain/wings/wing_omni_view/hall_facts/room_ui_components/closet.md`
 - **Searching local facts / OKF SOP?** → Read `docs/SOP-KNOWLEDGE-FIRST-DISCOVERY.md` & `docs/explanation/okf-02-and-diataxis.md`
+- **Jules Turndown & Google Antigravity Transition?** → Read `.agents/brain/wings/wing_omni_view/hall_events/room_brain_history/closet.md`
 - **Checking active task state?** → Read `.agents/brain/task.md`
 - **Inspecting walkthrough logs?** → Read `.agents/brain/walkthrough.md`
