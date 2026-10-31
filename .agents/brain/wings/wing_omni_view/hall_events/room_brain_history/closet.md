@@ -34,7 +34,8 @@ layout: "default"
 ## 📅 Turndown Timeline & Milestone Dates
 
 - **Announcement Date:** October 29, 2026
-- **Read-Only Transition:** November 11, 2026 (active session creation terminates; read-only access until year-end)
+- **Session Availability Window:** Users have until November 11, 2026 to continue finishing up sessions.
+- **Read-Only Transition:** After November 11, 2026, Jules turns to read-only mode until the end of the year.
 - **Official Wind Down:** December 31, 2026
 
 ## 🚀 Successor Platform: Google Antigravity
@@ -71,24 +72,32 @@ Users and autonomous agents can export all data known to Jules into a private lo
 
 ### Export Script (`jules_export.py`)
 
+To run the export:
+1. Save the Python script below to a file in your user home directory (e.g. `~/jules_export.py`).
+2. Run the script using Python 3:
+   ```bash
+   python3 ~/jules_export.py
+   ```
+3. The script exports all data into a dedicated, user-restricted destination outside the repository (`~/jules-export`) with strict directory permissions (`0700`).
+
 ```python
-import base64, json, pathlib, re, subprocess, sys, urllib.error, urllib.parse, urllib.request
+import base64, json, os, pathlib, re, subprocess, sys, urllib.error, urllib.parse, urllib.request
 
 
 def get_token():
     for cmd in [["security", "find-generic-password", "-s", "jules-cli", "-a", "default", "-w"],
                 ["secret-tool", "lookup", "service", "jules-cli", "username", "default"]]:
         try:
-            out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode().strip()
+            out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL).decode("utf-8").strip()
             if out.startswith("go-keyring-base64:"):
-                out = base64.b64decode(out.split(":", 1)[1]).decode()
+                out = base64.b64decode(out.split(":", 1)[1]).decode("utf-8")
             if out:
                 return json.loads(out)["access_token"]
         except Exception:
             pass
     p = pathlib.Path.home() / ".jules/cache/oauth_creds.json"
     if p.exists():
-        return json.loads(p.read_text())["access_token"]
+        return json.loads(p.read_text(encoding="utf-8"))["access_token"]
     sys.exit("Run `jules login` first.")
 
 
@@ -96,21 +105,28 @@ TOKEN = get_token()
 HEADERS = {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}
 RPC = "https://aida.googleapis.com/$rpc/language_labs.aida.swebot.proto.SweBotService"
 REST = "https://aida.googleapis.com/v1/swebot"
-OUT = pathlib.Path("./jules-export")
-OUT.mkdir(exist_ok=True)
+
+# Export outside of the repository to user's home directory with secure permissions
+OUT = pathlib.Path.home() / "jules-export"
+OUT.mkdir(mode=0o700, parents=True, exist_ok=True)
+try:
+    os.chmod(OUT, 0o700)
+except Exception:
+    pass
+
 errors = []
 
 
 def rpc(m, b=None):
-    req = urllib.request.Request(f"{RPC}/{m}", data=json.dumps(b or {}).encode(), headers=HEADERS, method="POST")
+    req = urllib.request.Request(f"{RPC}/{m}", data=json.dumps(b or {}).encode("utf-8"), headers=HEADERS, method="POST")
     with urllib.request.urlopen(req, timeout=60) as r:
-        return json.loads(r.read().decode() or "{}")
+        return json.loads(r.read().decode("utf-8") or "{}")
 
 
 def get(path, **params):
     q = ("?" + urllib.parse.urlencode(params)) if params else ""
     with urllib.request.urlopen(urllib.request.Request(f"{REST}{path}{q}", headers=HEADERS), timeout=60) as r:
-        return json.loads(r.read().decode() or "{}")
+        return json.loads(r.read().decode("utf-8") or "{}")
 
 
 def paged(fetch, key):
@@ -128,8 +144,12 @@ def safe(s):
 
 
 def dump(path, obj):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, indent=2))
+    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    path.write_text(json.dumps(obj, indent=2), encoding="utf-8")
+    try:
+        os.chmod(path, 0o600)
+    except Exception:
+        pass
 
 
 # Account-level data
@@ -152,8 +172,15 @@ for src in sources:
         mem_repos += 1
         d = OUT / "repos" / safe(sid)
         dump(d / "memories.json", mems)
-        (d / "memories.md").write_text("# Memories\n\n" + "\n".join(
-            f"- {m.get('Fact') or m.get('fact') or m.get('content')}" for m in mems if not m.get("archived")) + "\n")
+        mem_text = "# Memories\n\n" + "\n".join(
+            f"- {m.get('Fact') or m.get('fact') or m.get('content')}" for m in mems if not m.get("archived")
+        ) + "\n"
+        mem_file = d / "memories.md"
+        mem_file.write_text(mem_text, encoding="utf-8")
+        try:
+            os.chmod(mem_file, 0o600)
+        except Exception:
+            pass
 
 # Sessions: full detail, activity log, patches, and a readable summary
 sessions = paged(lambda t: get("/tasks", pageSize=100, **({"pageToken": t} if t else {})), "tasks")
@@ -174,7 +201,12 @@ for s in sorted(sessions, key=lambda s: s.get("createdAt", "")):
     commits = [o["gitCommit"] for o in task.get("outputs", []) if "gitCommit" in o]
     for i, c in enumerate(commits, 1):
         if c.get("patch", {}).get("unidiff"):
-            (d / f"patch-{i}.diff").write_text(c["patch"]["unidiff"])
+            patch_file = d / f"patch-{i}.diff"
+            patch_file.write_text(c["patch"]["unidiff"], encoding="utf-8")
+            try:
+                os.chmod(patch_file, 0o600)
+            except Exception:
+                pass
             patches += 1
         meta = c.get("repoMetadata", {})
         if meta.get("environmentSetupScript") or meta.get("testCommand"):
@@ -199,18 +231,45 @@ for s in sorted(sessions, key=lambda s: s.get("createdAt", "")):
     if pub := task.get("latestPublish", {}).get("commitInfo"):
         lines += ["## Published", "", f"- Commit `{pub.get('commitId', '')}` on `{pub.get('branchName', '')}`", ""]
     lines += ["## Activity", "", f"{len(acts)} steps (full log in `activities.json`):", ""] + [f"- {k}: {n}" for k, n in sorted(kinds.items())]
-    (d / "summary.md").write_text("\n".join(lines) + "\n")
+    summary_file = d / "summary.md"
+    summary_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    try:
+        os.chmod(summary_file, 0o600)
+    except Exception:
+        pass
 
 for sid, meta in setup.items():
     d = OUT / "repos" / safe(sid)
-    d.mkdir(parents=True, exist_ok=True)
+    d.mkdir(mode=0o700, parents=True, exist_ok=True)
     if meta.get("environmentSetupScript"):
-        (d / "setup.sh").write_text(meta["environmentSetupScript"] + "\n")
+        f = d / "setup.sh"
+        f.write_text(meta["environmentSetupScript"] + "\n", encoding="utf-8")
+        try:
+            os.chmod(f, 0o600)
+        except Exception:
+            pass
     if meta.get("testCommand"):
-        (d / "test-command.txt").write_text(meta["testCommand"] + "\n")
+        f = d / "test-command.txt"
+        f.write_text(meta["testCommand"] + "\n", encoding="utf-8")
+        try:
+            os.chmod(f, 0o600)
+        except Exception:
+            pass
 
-print(json.dumps({"repos": len(sources), "repos_with_memories": mem_repos, "sessions": len(sessions),
-                  "patches": patches, "repos_with_setup_or_test": len(setup),
-                  "error_count": len(errors), "errors": errors[:10]}, indent=2))
-print(f"Exported all Jules data to {OUT.resolve()}")
+summary_report = {
+    "repos": len(sources),
+    "repos_with_memories": mem_repos,
+    "sessions": len(sessions),
+    "patches": patches,
+    "repos_with_setup_or_test": len(setup),
+    "error_count": len(errors),
+    "errors": errors[:10]
+}
+print(json.dumps(summary_report, indent=2))
+
+if errors:
+    print(f"Export encountered {len(errors)} error(s). Partial output saved to {OUT.resolve()}", file=sys.stderr)
+    sys.exit(1)
+
+print(f"Exported all Jules data successfully to {OUT.resolve()}")
 ```

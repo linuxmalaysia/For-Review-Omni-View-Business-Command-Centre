@@ -1,7 +1,29 @@
 ---
-layout: default
 title: "CHANGELOG"
-description: "Project version history and release logs"
+description: "Project version history, release logs, and Jules turndown transition records."
+type: "reference"
+id: "CHANGELOG.md"
+dsom_governance:
+  domain: "Automation"
+  context_tier: "L1-Overview"
+tags:
+  - "changelog"
+  - "history"
+  - "versioning"
+  - "jules-turndown"
+  - "antigravity"
+topics:
+  - "changelog"
+  - "history"
+  - "versioning"
+  - "jules-turndown"
+  - "antigravity"
+related_links:
+  - "HISTORY.md"
+  - "README.md"
+  - ".agents/brain/wings/wing_omni_view/hall_events/room_brain_history/closet.md"
+nav_order: 8
+layout: "default"
 ---
 
 # Changelog
