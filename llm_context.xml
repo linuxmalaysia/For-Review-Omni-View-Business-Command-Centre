@@ -1515,9 +1515,31 @@ To optimize context window usage and prevent hallucination, agent runtimes must 
         <title>Project Changelog</title>
         <description>Version release history and updates log.</description>
         <content>---
-layout: default
 title: &quot;CHANGELOG&quot;
-description: &quot;Project version history and release logs&quot;
+description: &quot;Project version history, release logs, and Jules turndown transition records.&quot;
+type: &quot;reference&quot;
+id: &quot;CHANGELOG.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;changelog&quot;
+  - &quot;history&quot;
+  - &quot;versioning&quot;
+  - &quot;jules-turndown&quot;
+  - &quot;antigravity&quot;
+topics:
+  - &quot;changelog&quot;
+  - &quot;history&quot;
+  - &quot;versioning&quot;
+  - &quot;jules-turndown&quot;
+  - &quot;antigravity&quot;
+related_links:
+  - &quot;HISTORY.md&quot;
+  - &quot;README.md&quot;
+  - &quot;.agents/brain/wings/wing_omni_view/hall_events/room_brain_history/closet.md&quot;
+nav_order: 8
+layout: &quot;default&quot;
 ---
 
 # Changelog
@@ -1531,6 +1553,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Google Jules Turndown and Google Antigravity transition documentation in spatial memory palace (`.agents/brain/wings/wing_omni_view/hall_events/room_brain_history/closet.md`).
+- Jules data export instructions and standalone Python export script preserved for Google Antigravity autonomous agents.
 - GitHub Pages official workflow (`.github/workflows/jekyll-gh-pages.yml`) for automated site builds and deployment on push to `main`.
 - Laboratory design template matching `cmsfornerd2` with dynamic Light / Dark / Auto mode toggle.
 - Root documentation files (`CHANGELOG.md`, `HISTORY.md`, `SUMMARY.md`, `README.md`) and structured `docs/` tree following Diátaxis framework.
@@ -1542,9 +1566,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         <title>Project History</title>
         <description>Historical milestone background.</description>
         <content>---
-layout: default
 title: &quot;HISTORY&quot;
-description: &quot;Project history and lineage&quot;
+description: &quot;Project history, design lineage, and autonomous agent evolution to Google Antigravity.&quot;
+type: &quot;explanation&quot;
+id: &quot;HISTORY.md&quot;
+dsom_governance:
+  domain: &quot;Automation&quot;
+  context_tier: &quot;L1-Overview&quot;
+tags:
+  - &quot;history&quot;
+  - &quot;lineage&quot;
+  - &quot;evolution&quot;
+  - &quot;jules-turndown&quot;
+  - &quot;antigravity&quot;
+topics:
+  - &quot;history&quot;
+  - &quot;lineage&quot;
+  - &quot;evolution&quot;
+  - &quot;jules-turndown&quot;
+  - &quot;antigravity&quot;
+related_links:
+  - &quot;CHANGELOG.md&quot;
+  - &quot;README.md&quot;
+  - &quot;.agents/brain/wings/wing_omni_view/hall_events/room_brain_history/closet.md&quot;
+nav_order: 9
+layout: &quot;default&quot;
 ---
 
 # Project History
@@ -1569,6 +1615,12 @@ description: &quot;Project history and lineage&quot;
 - Adapted site structure for Jekyll and GitHub Pages automated deployment.
 - Integrated `cmsfornerd2` Laboratory design language with Light/Dark theme switcher.
 - Configured multi-platform hosting support for GitHub Pages, GitLab Pages, GitBook, ReadTheDocs, and Render.com.
+
+### Phase 4: Autonomous Agent Evolution &amp; Google Antigravity Transition
+
+- Google Jules turndown announced October 29, 2026. Users have until November 11, 2026 to finish up sessions, after which Jules turns read-only until the complete wind down on December 31, 2026.
+- Learnings from asynchronous coding agent operations transitioned to Google's agent-first platform, Google Antigravity.
+- Local data export protocol, CLI utilities, and spatial memory palace records preserved in `.agents/brain/` for future Antigravity agent sessions.
 </content>
       </document>
     </section>
