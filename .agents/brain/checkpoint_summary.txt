@@ -9,7 +9,7 @@ Repository: Omni View Business Command Centre (linuxmalaysia/For-Review-Omni-Vie
 ================================================================================
 
 1. EXECUTIVE CONTEXT:
-- Announcement: Google Jules announced its wind down on October 29, 2026.
+- Announcement: Google Jules announced its wind-down on October 29, 2026.
 - Milestone Timeline: Users can finish sessions until November 11, 2026; after November 11, 2026, Jules operates in read-only mode until full turn-down on December 31, 2026.
 - Strategic Successor: Agentic workflows and cognitive state preservation transition to Google Antigravity desktop & local environment.
 
